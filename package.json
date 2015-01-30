@@ -1,0 +1,12 @@
+{
+  "name": "simpleManager",
+  "version": "0.0.1",
+  "description": "It's so simple but yet, so pretty!",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.10.7",
+    "mysql": "^2.5.4",
+    "express-myconnection": "^1.0.4"
+  },
+  "devDependencies": {}
+}
