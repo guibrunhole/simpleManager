@@ -1,4 +1,4 @@
-# How I put this baby to work?
+# How do I put this baby to work?
 Easy peasy lemon squeezy my friend.
 <br>
 Just fire up a pretty little MySQL instance with the info you can get from the server.js file.
