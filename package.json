@@ -2,7 +2,7 @@
   "name": "simpleManager",
   "version": "0.0.1",
   "description": "It's so simple but yet, so pretty!",
-  "main": "app.js",
+  "main": "server.js",
   "dependencies": {
     "express": "^4.10.7",
     "mysql": "^2.5.4",
