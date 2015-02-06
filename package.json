@@ -6,7 +6,8 @@
   "dependencies": {
     "express": "^4.10.7",
     "mysql": "^2.5.4",
-    "express-myconnection": "^1.0.4"
+    "express-myconnection": "^1.0.4",
+    "body-parser": "^1.11.0"
   },
   "devDependencies": {}
 }
