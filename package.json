@@ -7,7 +7,8 @@
     "express": "^4.10.7",
     "mysql": "^2.5.4",
     "body-parser": "^1.11.0",
-    "q": "^1.1.2"
+    "q": "^1.1.2",
+    "excel-export": "^0.4.1"
   },
   "devDependencies": {}
 }

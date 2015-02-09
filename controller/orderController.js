@@ -2,6 +2,8 @@
 
     'use strict';
 
+    var nodeExcel = require('excel-export');
+
     module.exports = function(orderRepository) {
 
         function errorThrown(res) {
@@ -65,6 +67,19 @@
 
                     errorThrown(res);
                 });
+            },
+            getSpreadSheet: function(req, res) {
+
+                var conf ={};
+                conf.cols = [{
+                    caption:'Com o modelo isso aqui deve ser sucesso!',
+                    type:'string'
+                }];
+                conf.rows = [];
+                var result = nodeExcel.execute(conf);
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+                res.setHeader("Content-Disposition", "attachment; filename=" + "SpreadSheet.xlsx");
+                res.end(result, 'binary');
             }
         };
     };

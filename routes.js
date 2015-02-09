@@ -22,5 +22,6 @@
 
         app.get('/order/:id', OrderController.getById);
         app.put('/order/:id', OrderController.update);
+        app.get('/order/:id/spreadSheet', OrderController.getSpreadSheet);
     }
 })();
