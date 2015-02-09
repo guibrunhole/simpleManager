@@ -93,7 +93,7 @@
                     from:  'CCB - Sistema de Compras <' + process.env.MANDRILL_USER + '>',
                     to: '', // put testing email here
                     subject: 'Testing!',
-                    text: 'An awesome test \o/'
+                    text: 'An awesome test \\o/'
                 };
 
                 transporter.sendMail(mailOptions, function(error, info){
