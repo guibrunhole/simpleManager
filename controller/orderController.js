@@ -3,8 +3,19 @@
     'use strict';
 
     var nodeExcel = require('excel-export');
+    var nodemailer = require('nodemailer');
 
     module.exports = function(orderRepository) {
+
+        var transporter = nodemailer.createTransport({
+            host: 'smtp.mandrillapp.com',
+            port: 587,
+            auth: {
+                user: process.env.MANDRILL_USER,
+                pass: process.env.MANDRILL_KEY
+            },
+            secure: true
+        });
 
         function errorThrown(res) {
 
@@ -77,9 +88,26 @@
                 }];
                 conf.rows = [];
                 var result = nodeExcel.execute(conf);
-                res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-                res.setHeader("Content-Disposition", "attachment; filename=" + "SpreadSheet.xlsx");
-                res.end(result, 'binary');
+
+                var mailOptions = {
+                    from:  'CCB - Sistema de Compras <' + process.env.MANDRILL_USER + '>',
+                    to: '', // put testing email here
+                    subject: 'Testing!',
+                    text: 'An awesome test \o/'
+                };
+
+                transporter.sendMail(mailOptions, function(error, info){
+                    if(error){
+                        console.log(error);
+                    }else{
+                        console.log('Message sent: ' + info.response);
+                    }
+                });
+
+                //res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+                //res.setHeader("Content-Disposition", "attachment; filename=" + "SpreadSheet.xlsx");
+                //res.end(result, 'binary');
+                res.send("SUP!");
             }
         };
     };
