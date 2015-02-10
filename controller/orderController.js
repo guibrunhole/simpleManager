@@ -4,6 +4,7 @@
 
     var nodeExcel = require('excel-export');
     var nodemailer = require('nodemailer');
+    var fs = require('fs');
 
     module.exports = function(orderRepository) {
 
@@ -13,8 +14,7 @@
             auth: {
                 user: process.env.MANDRILL_USER,
                 pass: process.env.MANDRILL_KEY
-            },
-            secure: true
+            }
         });
 
         function errorThrown(res) {
@@ -89,11 +89,17 @@
                 conf.rows = [];
                 var result = nodeExcel.execute(conf);
 
+                fs.writeFileSync("./sample.xlsx", result, 'binary');
+
                 var mailOptions = {
                     from:  'CCB - Sistema de Compras <' + process.env.MANDRILL_USER + '>',
                     to: '', // put testing email here
                     subject: 'Testing!',
-                    text: 'An awesome test \\o/'
+                    text: 'An awesome test \\o/',
+                    attachments: [{
+                        filename: 'SpreadThingy.xlsx',
+                        path: './sample.xlsx'
+                    }]
                 };
 
                 transporter.sendMail(mailOptions, function(error, info){
@@ -104,10 +110,9 @@
                     }
                 });
 
-                //res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-                //res.setHeader("Content-Disposition", "attachment; filename=" + "SpreadSheet.xlsx");
-                //res.end(result, 'binary');
-                res.send("SUP!");
+                res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+                res.setHeader("Content-Disposition", "attachment; filename=" + "SpreadSheet.xlsx");
+                res.end(result, 'binary');
             }
         };
     };
