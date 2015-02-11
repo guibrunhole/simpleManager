@@ -1,6 +1,3 @@
-/**
- * Created by Guilherme Brunhole on 08/02/2015.
- */
 (function () {
 
     'use strict';

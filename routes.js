@@ -15,7 +15,7 @@
         app.delete('/product/:id', ProductController.remove);
 
         var UserRepository = require('./repository/userRepository')(pool);
-        var UserController = require('./controller/userController')(UserController);
+        var UserController = require('./controller/userController')(UserRepository);
 
         app.get('/user', UserController.getAll);
         app.post('/user', UserController.addNew);
