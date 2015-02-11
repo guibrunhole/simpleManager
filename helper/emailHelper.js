@@ -3,8 +3,6 @@
     'use strict';
 
     var nodemailer = require('nodemailer');
-    var fs = require('fs');
-    var uuid = require('node-uuid');
 
     module.exports = function() {
 
@@ -18,10 +16,7 @@
         });
 
         return {
-            sendSpreadSheet: function(recipientEmail, spreadSheet) {
-
-                var spreadSheetPath = './temp/' + uuid.v4() + '.xlsx';
-                fs.writeFileSync(spreadSheetPath, spreadSheet, 'binary');
+            sendSpreadSheet: function(recipientEmail, spreadSheetPath) {
 
                 var mailOptions = {
                     from:  'CCB - Sistema de Compras <' + process.env.MANDRILL_USER + '>',
@@ -40,8 +35,6 @@
                         console.log(error);
                     else
                         console.log('Message sent: ' + info.response);
-
-                    fs.unlinkSync(spreadSheetPath);
                 });
             }
         };

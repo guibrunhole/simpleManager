@@ -3,7 +3,8 @@
     'use strict';
 
     var q = require('q');
-    var nodeExcel = require('excel-export');
+    var XLSX = require('xlsx');
+    var uuid = require('node-uuid');
 
     module.exports = function(dbPool) {
 
@@ -88,14 +89,28 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    var conf ={};
-                    conf.cols = [{
-                        caption:'Com o modelo isso aqui deve ser sucesso!',
-                        type:'string'
-                    }];
-                    conf.rows = [];
-                    var spreadSheet = nodeExcel.execute(conf);
-                    deferred.resolve(spreadSheet);
+                    var sheet = {};
+                    var cell_ref = XLSX.utils.encode_cell({c:0,r:0});
+
+                    sheet[cell_ref] = {
+                        t: 's',
+                        v: 'CONGREGAÇÃO CRISTÃ NO BRASIL'
+                    };
+
+                    sheet['!ref'] = XLSX.utils.encode_range({s:{c:0, r:0}, e:{c:0, r:0}});
+                    sheet['!merges'] = [{s:{c:0, r:0}, e:{c:5, r:0}}];
+
+                    var workbook = {
+                        SheetNames: ['test'],
+                        Sheets: {
+                            test: sheet
+                        }
+                    };
+
+                    var spreadSheetPath = './temp/' + uuid.v4() + '.xlsx';
+                    XLSX.writeFile(workbook, spreadSheetPath);
+
+                    deferred.resolve(spreadSheetPath);
                 });
             }
         };

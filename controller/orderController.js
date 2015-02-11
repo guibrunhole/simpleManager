@@ -70,14 +70,13 @@
             },
             getSpreadSheet: function(req, res) {
 
-                orderRepository.getSpreadSheet(req.params.id).then(function(spreadSheet) {
+                orderRepository.getSpreadSheet(req.params.id).then(function(spreadSheetPath) {
 
                     if(req.query.sendTo)
-                        emailHelper.sendSpreadSheet(req.query.sendTo, spreadSheet);
+                        emailHelper.sendSpreadSheet(req.query.sendTo, spreadSheetPath);
 
                     res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-                    res.setHeader("Content-Disposition", "attachment; filename=" + "Pedido.xlsx");
-                    res.end(spreadSheet, 'binary');
+                    res.download(spreadSheetPath, 'Pedido.xlsx');
                 }, function() {
 
                     errorThrown(res);
