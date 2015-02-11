@@ -70,9 +70,10 @@
             },
             getSpreadSheet: function(req, res) {
 
-                orderRepository.getSpreadSheet().then(function(spreadSheet) {
+                orderRepository.getSpreadSheet(req.params.id).then(function(spreadSheet) {
 
-                    emailHelper.sendSpreadSheet('', spreadSheet);
+                    if(req.query.sendTo)
+                        emailHelper.sendSpreadSheet(req.query.sendTo, spreadSheet);
 
                     res.setHeader('Content-Type', 'application/vnd.openxmlformats');
                     res.setHeader("Content-Disposition", "attachment; filename=" + "Pedido.xlsx");
