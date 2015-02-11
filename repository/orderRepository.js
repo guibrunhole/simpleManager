@@ -3,6 +3,7 @@
     'use strict';
 
     var q = require('q');
+    var nodeExcel = require('excel-export');
 
     module.exports = function(dbPool) {
 
@@ -81,6 +82,20 @@
                             else
                                 deferred.resolve();
                         });
+                });
+            },
+            getSpreadSheet: function(orderId) {
+
+                return queryFromPool(function(deferred, connection) {
+
+                    var conf ={};
+                    conf.cols = [{
+                        caption:'Com o modelo isso aqui deve ser sucesso!',
+                        type:'string'
+                    }];
+                    conf.rows = [];
+                    var spreadSheet = nodeExcel.execute(conf);
+                    deferred.resolve(spreadSheet);
                 });
             }
         };

@@ -2,20 +2,9 @@
 
     'use strict';
 
-    var nodeExcel = require('excel-export');
-    var nodemailer = require('nodemailer');
-    var fs = require('fs');
+    var emailHelper = require('../helper/emailHelper')();
 
     module.exports = function(orderRepository) {
-
-        var transporter = nodemailer.createTransport({
-            host: 'smtp.mandrillapp.com',
-            port: 587,
-            auth: {
-                user: process.env.MANDRILL_USER,
-                pass: process.env.MANDRILL_KEY
-            }
-        });
 
         function errorThrown(res) {
 
@@ -81,38 +70,17 @@
             },
             getSpreadSheet: function(req, res) {
 
-                var conf ={};
-                conf.cols = [{
-                    caption:'Com o modelo isso aqui deve ser sucesso!',
-                    type:'string'
-                }];
-                conf.rows = [];
-                var result = nodeExcel.execute(conf);
+                orderRepository.getSpreadSheet().then(function(spreadSheet) {
 
-                fs.writeFileSync("./sample.xlsx", result, 'binary');
+                    emailHelper.sendSpreadSheet('', spreadSheet);
 
-                var mailOptions = {
-                    from:  'CCB - Sistema de Compras <' + process.env.MANDRILL_USER + '>',
-                    to: '', // put testing email here
-                    subject: 'Testing!',
-                    text: 'An awesome test \\o/',
-                    attachments: [{
-                        filename: 'SpreadThingy.xlsx',
-                        path: './sample.xlsx'
-                    }]
-                };
+                    res.setHeader('Content-Type', 'application/vnd.openxmlformats');
+                    res.setHeader("Content-Disposition", "attachment; filename=" + "Pedido.xlsx");
+                    res.end(spreadSheet, 'binary');
+                }, function() {
 
-                transporter.sendMail(mailOptions, function(error, info){
-                    if(error){
-                        console.log(error);
-                    }else{
-                        console.log('Message sent: ' + info.response);
-                    }
+                    errorThrown(res);
                 });
-
-                res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-                res.setHeader("Content-Disposition", "attachment; filename=" + "SpreadSheet.xlsx");
-                res.end(result, 'binary');
             }
         };
     };
