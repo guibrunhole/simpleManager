@@ -35,7 +35,7 @@
         app.get('/order/:id/spreadSheet', OrderController.getSpreadSheet);
 
         var ChurchRepository = require('./repository/churchRepository')(pool);
-        var ChurchController = require('./repository/churchController')(ChurchRepository);
+        var ChurchController = require('./controller/churchController')(ChurchRepository);
 
         app.get('/church', ChurchController.getAll);
         app.post('./church', ChurchController.addNew);
