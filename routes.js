@@ -32,7 +32,7 @@
 
         app.get('/order/:id', OrderController.getById);
         app.put('/order/:id', OrderController.update);
-        app.get('/order/:id/spreadSheet', OrderController.getSpreadSheet);
+        app.get('/order/:id/detailed', OrderController.getDetailedOrder);
 
         var ChurchRepository = require('./repository/churchRepository')(pool);
         var ChurchController = require('./controller/churchController')(ChurchRepository);

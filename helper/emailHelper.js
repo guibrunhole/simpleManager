@@ -16,7 +16,7 @@
         });
 
         return {
-            sendSpreadSheet: function(recipientEmail, spreadSheetPath) {
+            sendDetailedOrder: function(recipientEmail, spreadSheetPath) {
 
                 var mailOptions = {
                     from:  'CCB - Sistema de Compras <' + process.env.MANDRILL_USER + '>',
@@ -24,7 +24,7 @@
                     subject: 'Testing!',
                     text: 'An awesome test \\o/',
                     attachments: [{
-                        filename: 'Pedido.xlsx',
+                        filename: 'Pedido.pdf',
                         path: spreadSheetPath
                     }]
                 };

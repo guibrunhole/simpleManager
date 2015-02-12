@@ -68,15 +68,14 @@
                     errorThrown(res);
                 });
             },
-            getSpreadSheet: function(req, res) {
+            getDetailedOrder: function(req, res) {
 
-                orderRepository.getSpreadSheet(req.params.id).then(function(spreadSheetPath) {
+                orderRepository.produceDetailedOrder(req.params.id).then(function(orderPath) {
 
                     if(req.query.sendTo)
-                        emailHelper.sendSpreadSheet(req.query.sendTo, spreadSheetPath);
+                        emailHelper.sendDetailedOrder(req.query.sendTo, orderPath);
 
-                    res.setHeader('Content-Type', 'application/vnd.openxmlformats');
-                    res.download(spreadSheetPath, 'Pedido.xlsx');
+                    res.download(orderPath, 'Pedido.pdf');
                 }, function() {
 
                     errorThrown(res);

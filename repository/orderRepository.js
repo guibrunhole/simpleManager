@@ -3,8 +3,8 @@
     'use strict';
 
     var q = require('q');
-    var XLSX = require('xlsx');
     var uuid = require('node-uuid');
+    var NodePDF = require('nodepdf');
 
     module.exports = function(dbPool) {
 
@@ -85,32 +85,43 @@
                         });
                 });
             },
-            getSpreadSheet: function(orderId) {
+            produceDetailedOrder: function(orderId) {
 
                 return queryFromPool(function(deferred, connection) {
 
-                    var sheet = {};
-                    var cell_ref = XLSX.utils.encode_cell({c:0,r:0});
+                    var createdPdfPath = 'temp/' + uuid.v4() + '.pdf';
+                    var pdf = new NodePDF(null, createdPdfPath, {
+                        content: '<html><body><p style="color: red">SUP!</p></body></html>',
+                        viewportSize: {
+                            width: 3000,
+                            height: 9000
+                        },
+                        paperSize: {
+                            pageFormat: 'A4',
+                            margin: {
+                                top: '2cm'
+                            },
+                            header: {
+                                height: '1cm',
+                                contents: 'HEADER {currentPage} / {pages}'
+                            },
+                            footer: {
+                                height: '1cm',
+                                contents: 'FOOTER {currentPage} / {pages}'
+                            }
+                        },
+                        zoomFactor: 1
+                    });
 
-                    sheet[cell_ref] = {
-                        t: 's',
-                        v: 'CONGREGAÇÃO CRISTÃ NO BRASIL'
-                    };
+                    pdf.on('error', function(msg){
+                        console.log('Normal error: ' + msg);
+                        deferred.reject();
+                    });
 
-                    sheet['!ref'] = XLSX.utils.encode_range({s:{c:0, r:0}, e:{c:0, r:0}});
-                    sheet['!merges'] = [{s:{c:0, r:0}, e:{c:5, r:0}}];
-
-                    var workbook = {
-                        SheetNames: ['test'],
-                        Sheets: {
-                            test: sheet
-                        }
-                    };
-
-                    var spreadSheetPath = './temp/' + uuid.v4() + '.xlsx';
-                    XLSX.writeFile(workbook, spreadSheetPath);
-
-                    deferred.resolve(spreadSheetPath);
+                    pdf.on('done', function(pathToFile){
+                        console.log('Done \\o/ :' + pathToFile);
+                        deferred.resolve(createdPdfPath);
+                    });
                 });
             }
         };

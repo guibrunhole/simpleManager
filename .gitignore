@@ -3,4 +3,4 @@ node_modules/
 # Webstorm stuff
 .idea/
 
-*.xlsx
+*.pdf
