@@ -75,6 +75,7 @@
                 var orderDeferred = q.defer();
                 var churchDeferred = q.defer();
                 var userDeferred = q.defer();
+                var orderDetailsDeferred = q.defer();
 
                 orderRepository.getById(req.params.id).then(function(orderResult) {
 
@@ -87,11 +88,8 @@
 
                         orderDeferred.resolve(order);
 
-                        console.log(order);
-
                         userRepository.getById(order.user_id).then(function(userResult) {
 
-                            console.log('User Result : ' + userResult);
                             userDeferred.resolve(userResult[0]);
                         });
 
@@ -99,12 +97,18 @@
 
                             churchDeferred.resolve(churchResult[0]);
                         });
+
+                        orderRepository.getOrderDetails(order.id).then(function(orderDetails) {
+
+                            orderDetailsDeferred.resolve(orderDetails);
+                        });
                     }
                 });
 
-                q.spread([orderDeferred.promise, churchDeferred.promise, userDeferred.promise], function(order, church, buyer) {
+                q.spread([orderDeferred.promise, churchDeferred.promise, userDeferred.promise, orderDetailsDeferred.promise],
+                    function(order, church, buyer, orderDetails) {
 
-                    orderHelper.createPdf(order, church, buyer).then(function(pdfPath) {
+                    orderHelper.createPdf(order, church, buyer, orderDetails).then(function(pdfPath) {
 
                         if(req.query.sendTo)
                             emailHelper.sendDetailedOrder(req.query.sendTo, pdfPath);

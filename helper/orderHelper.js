@@ -49,7 +49,28 @@
                     '</div>';
         }
 
-        function getProductsTable() {
+
+        function getProductRow(row){
+            return  '<tr>' +
+                        '<td>' + row.product_id + '</td>' +
+                        '<td>' + row.name + '</td>' +
+                        '<td>' + row.product_quantity + ' ' + row.product_unity +   '</td>' +
+                    '</tr>';
+        }
+
+        function getProductTableContents(orderDetais) {
+
+            var contents = '';
+
+            for(var i = 0; i < orderDetais.length; i++) {
+
+                contents = contents + getProductRow(orderDetais[i]);
+            }
+
+            return contents;
+        }
+
+        function getProductsTable(orderDetails) {
 
             return '<table class="table table-striped">' +
                         '<thead>' +
@@ -60,26 +81,12 @@
                             '</tr>' +
                         '</thead>' +
                         '<tbody>' +
-                            '<tr>' +
-                                '<td>1</td>' +
-                                '<td>Treco</td>' +
-                                '<td>1 caixa</td>' +
-                            '</tr>' +
-                            '<tr>' +
-                                '<td>2</td>' +
-                                '<td>Outro treco</td>' +
-                                '<td>2 latas</td>' +
-                            '</tr>' +
-                            '<tr>' +
-                                '<td>3</td>' +
-                                '<td>Mais um treco</td>' +
-                                '<td>1 galão</td>' +
-                            '</tr>' +
+                             getProductTableContents(orderDetails) +
                         '</tbody>' +
                     '</table>';
         }
 
-        function parseToHtml(order, church, buyer) {
+        function parseToHtml(order, church, buyer, orderDetails) {
 
             return '<html>' +
                         '<head>' +
@@ -114,7 +121,7 @@
                                 '</div>' +
                                 '<div class="col-xs-12">' +
                                     '<div class="col-xs-12">' +
-                                        getProductsTable() +
+                                        getProductsTable(orderDetails) +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +
@@ -135,13 +142,13 @@
 
         return {
 
-            createPdf: function(order, church, buyer) {
+            createPdf: function(order, church, buyer, orderDetails) {
 
                 var deferred = q.defer();
 
                 var createdPdfPath = 'temp/' + uuid.v4() + '.pdf';
                 var pdf = new NodePDF(null, createdPdfPath, {
-                    content: parseToHtml(order, church, buyer),
+                    content: parseToHtml(order, church, buyer, orderDetails),
                     viewportSize: {
                         width: 3000,
                         height: 9000
@@ -161,7 +168,7 @@
 
                 pdf.on('error', function(msg){
                     console.log('Normal error: ' + msg);
-                    deferred.reject();
+                    deferred.reject(msg);
                 });
 
                 pdf.on('done', function(pathToFile){

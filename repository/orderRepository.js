@@ -82,6 +82,24 @@
                                 deferred.resolve();
                         });
                 });
+            },
+            getOrderDetails: function(orderId) {
+
+                return queryFromPool(function(deferred, connection) {
+
+                    console.log(orderId);
+                    connection.query('SELECT order_detail.product_id, products.name, order_detail.product_quantity, order_detail.product_unity ' +
+                                        'FROM order_detail ' +
+                                        'INNER JOIN products ' +
+                                        'ON order_detail.product_id = products.id WHERE order_detail.order_id = ?', [orderId],
+                        function(queryError, rows) {
+
+                            if(queryError)
+                                deferred.reject(queryError);
+                            else
+                                deferred.resolve(rows);
+                        });
+                });
             }
         };
     };
