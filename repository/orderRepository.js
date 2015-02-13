@@ -41,10 +41,10 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('INSERT INTO orders (order_number, product_quantity, church_id, user_id, product_id, unity) ' +
-                        'VALUES (?, ?, ?, ?, ?, ?)',
+                    connection.query('INSERT INTO orders (order_number, product_quantity, church_id, user_id, product_id, unity, created_at) ' +
+                        'VALUES (?, ?, ?, ?, ?, ?, ?)',
                         [newOrder.order_number, newOrder.product_quantity, newOrder.church_id, newOrder.user_id,
-                            newOrder.product_id, newOrder.unity],
+                            newOrder.product_id, newOrder.unity, new Date()],
                         function(queryError, resultInfo) {
 
                             if(queryError)
