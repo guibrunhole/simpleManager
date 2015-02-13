@@ -3,6 +3,7 @@
     'use strict';
 
     var emailHelper = require('../helper/emailHelper')();
+    var orderHelper = require('../helper/orderHelper')();
 
     module.exports = function(orderRepository) {
 
@@ -70,12 +71,12 @@
             },
             getDetailedOrder: function(req, res) {
 
-                orderRepository.produceDetailedOrder(req.params.id).then(function(orderPath) {
+                orderHelper.createPdf().then(function(pdfPath) {
 
                     if(req.query.sendTo)
-                        emailHelper.sendDetailedOrder(req.query.sendTo, orderPath);
+                        emailHelper.sendDetailedOrder(req.query.sendTo, pdfPath);
 
-                    res.download(orderPath, 'Pedido.pdf');
+                    res.download(pdfPath, 'Pedido.pdf');
                 }, function() {
 
                     errorThrown(res);
