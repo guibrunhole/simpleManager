@@ -111,9 +111,9 @@
                     orderHelper.createPdf(order, church, buyer, orderDetails).then(function(pdfPath) {
 
                         if(req.query.sendTo)
-                            emailHelper.sendDetailedOrder(req.query.sendTo, pdfPath);
+                            emailHelper.sendDetailedOrder(req.query.sendTo, req.query.pdfName, pdfPath);
 
-                        res.download(pdfPath, 'Pedido.pdf');
+                        res.download(pdfPath, req.query.pdfName ? req.query.pdfName + '.pdf' : 'Pedido.pdf');
                     }, function() {
 
                         errorThrown(res);
