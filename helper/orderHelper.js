@@ -90,7 +90,7 @@
 
             return '<html>' +
                         '<head>' +
-                            '<link rel="stylesheet" href="http://localhost:3000/libs/bootstrap/css/bootstrap.css" media="print">' +
+                            '<link rel="stylesheet" href="http://localhost:' + (process.env.SV_PORT || 3010) + '/libs/bootstrap/css/bootstrap.css" media="print">' +
                         '</head>' +
                         '<body>' +
                             '<div class="row">' +
