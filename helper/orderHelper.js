@@ -8,6 +8,47 @@
 
     module.exports = function() {
 
+        function buildDeliveryHeader(order, church, buyer) {
+
+            return  '<div class="col-xs-12">' +
+                        '<div class="col-xs-12">' +
+                            '<label>Casa de oração:</label> ' + church.name +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="col-xs-12">' +
+                        '<div class="col-xs-12">' +
+                            '<label>Endereço:</label> ' + church.address +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="col-xs-12">' +
+                        '<div class="col-xs-4">' +
+                            '<label>Cidade:</label> ' + church.city +
+                        '</div>' +
+                        '<div class="col-xs-1">' +
+                            '<label>UF:</label> ' + church.state +
+                        '</div>' +
+                        '<div class="col-xs-3">' +
+                            '<label>CEP:</label> ' + church.zipcode +
+                        '</div>' +
+                        '<div class="col-xs-4">' +
+                            '<label>CNPJ:</label> ' + church.cnpj +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="col-xs-12">' +
+                        '<div class="col-xs-8">' +
+                            '<label>Comprador:</label> ' + buyer.name +
+                        '</div>' +
+                        '<div class="col-xs-4">' +
+                            '<label>Telefone:</label> ' + church.phone_number +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="col-xs-12">' +
+                        '<div class="col-xs-12">' +
+                            '<label>Observação:</label> ' + order.obs +
+                        '</div>' +
+                    '</div>';
+        }
+
         function getProductsTable() {
 
             return '<table class="table table-striped">' +
@@ -62,43 +103,7 @@
                                         'Local de entrega' +
                                     '</h4>' +
                                 '</div>' +
-                                '<div class="col-xs-12">' +
-                                    '<div class="col-xs-12">' +
-                                        '<label>Casa de oração:</label> ' + church.name +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col-xs-12">' +
-                                    '<div class="col-xs-12">' +
-                                        '<label>Endereço:</label> ' + church.address +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col-xs-12">' +
-                                    '<div class="col-xs-4">' +
-                                        '<label>Cidade:</label> ' + church.city +
-                                    '</div>' +
-                                    '<div class="col-xs-1">' +
-                                        '<label>UF:</label> ' + church.state +
-                                    '</div>' +
-                                    '<div class="col-xs-3">' +
-                                        '<label>CEP:</label> ' + church.zipcode +
-                                    '</div>' +
-                                    '<div class="col-xs-4">' +
-                                        '<label>CNPJ:</label> ' + church.cnpj +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col-xs-12">' +
-                                    '<div class="col-xs-8">' +
-                                        '<label>Comprador:</label> ' + buyer.name +
-                                    '</div>' +
-                                    '<div class="col-xs-4">' +
-                                        '<label>Telefone:</label> ' + church.phone_number +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="col-xs-12">' +
-                                    '<div class="col-xs-12">' +
-                                        '<label>Observação:</label> ' + order.obs +
-                                    '</div>' +
-                                '</div>' +
+                                buildDeliveryHeader(order, church, buyer) +
                             '</div>' +
                             '<hr />' +
                             '<div class="row">' +
