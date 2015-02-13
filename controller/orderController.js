@@ -6,7 +6,7 @@
     var orderHelper = require('../helper/orderHelper')();
     var q = require('q');
 
-    module.exports = function(orderRepository, churchRepository) {
+    module.exports = function(orderRepository, churchRepository, userRepository) {
 
         function errorThrown(res) {
 
@@ -74,10 +74,11 @@
 
                 var orderDeferred = q.defer();
                 var churchDeferred = q.defer();
+                var userDeferred = q.defer();
 
-                orderRepository.getById(req.params.id).then(function(result) {
+                orderRepository.getById(req.params.id).then(function(orderResult) {
 
-                    var order = result[0];
+                    var order = orderResult[0];
                     if(!order) {
 
                         orderDeferred.reject();
@@ -85,16 +86,25 @@
                     } else {
 
                         orderDeferred.resolve(order);
-                        churchRepository.getById(order.church_id).then(function(result) {
 
-                            churchDeferred.resolve(result[0]);
+                        console.log(order);
+
+                        userRepository.getById(order.user_id).then(function(userResult) {
+
+                            console.log('User Result : ' + userResult);
+                            userDeferred.resolve(userResult[0]);
+                        });
+
+                        churchRepository.getById(order.church_id).then(function(churchResult) {
+
+                            churchDeferred.resolve(churchResult[0]);
                         });
                     }
                 });
 
-                q.spread([orderDeferred.promise, churchDeferred.promise], function(order, church) {
+                q.spread([orderDeferred.promise, churchDeferred.promise, userDeferred.promise], function(order, church, buyer) {
 
-                    orderHelper.createPdf(order, church).then(function(pdfPath) {
+                    orderHelper.createPdf(order, church, buyer).then(function(pdfPath) {
 
                         if(req.query.sendTo)
                             emailHelper.sendDetailedOrder(req.query.sendTo, pdfPath);

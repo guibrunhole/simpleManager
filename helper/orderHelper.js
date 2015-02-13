@@ -38,7 +38,7 @@
                     '</table>';
         }
 
-        function parseToHtml(order, church) {
+        function parseToHtml(order, church, buyer) {
 
             return '<html>' +
                         '<head>' +
@@ -88,7 +88,7 @@
                                 '</div>' +
                                 '<div class="col-xs-12">' +
                                     '<div class="col-xs-8">' +
-                                        '<label>Comprador:</label> Rode Simione Cunha' +
+                                        '<label>Comprador:</label> ' + buyer.name +
                                     '</div>' +
                                     '<div class="col-xs-4">' +
                                         '<label>Telefone:</label> ' + church.phone_number +
@@ -130,13 +130,13 @@
 
         return {
 
-            createPdf: function(order, church) {
+            createPdf: function(order, church, buyer) {
 
                 var deferred = q.defer();
 
                 var createdPdfPath = 'temp/' + uuid.v4() + '.pdf';
                 var pdf = new NodePDF(null, createdPdfPath, {
-                    content: parseToHtml(order, church),
+                    content: parseToHtml(order, church, buyer),
                     viewportSize: {
                         width: 3000,
                         height: 9000

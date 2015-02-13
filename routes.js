@@ -12,7 +12,7 @@
         var ProductController = require('./controller/productController')(ProductRepository);
         var UserController = require('./controller/userController')(UserRepository);
         var ChurchController = require('./controller/churchController')(ChurchRepository);
-        var OrderController = require('./controller/orderController')(OrderRepository, ChurchRepository);
+        var OrderController = require('./controller/orderController')(OrderRepository, ChurchRepository, UserRepository);
 
         // Product
         app.get('/product', ProductController.getAll);

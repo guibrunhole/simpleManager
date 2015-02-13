@@ -28,7 +28,7 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('SELECT * FROM users', null, function(queryError, rows) {
+                    connection.query('SELECT * FROM user', null, function(queryError, rows) {
 
                         if(queryError)
                             deferred.reject();
@@ -41,7 +41,7 @@
 
                 return queryFromPool(function(deferred, connection) {
 //falta colocar o 'last_login'
-                    connection.query('INSERT INTO users (name, login, password, email) VALUES (?, ?, ?, ?)',
+                    connection.query('INSERT INTO user (name, login, password, email) VALUES (?, ?, ?, ?)',
                         [newUser.name, newUser.login || null, newProduct.password, newUser.email], function(queryError, resultInfo) {
 
                             if(queryError)
@@ -55,7 +55,7 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('SELECT * FROM users WHERE id = ?', [userId], function(queryError, row) {
+                    connection.query('SELECT * FROM user WHERE id = ?', [userId], function(queryError, row) {
 
                         if(queryError)
                             deferred.reject();
@@ -68,7 +68,7 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('UPDATE users SET name = ?, login = ?, password = ?, email = ? WHERE id = ?',
+                    connection.query('UPDATE user SET name = ?, login = ?, password = ?, email = ? WHERE id = ?',
                         [updatedUser.name, updatedUser.login|| null, updatedUser.password, updatedUser.email, userId], function(queryError) {
 
                             if(queryError)
@@ -82,7 +82,7 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('DELETE FROM users WHERE id = ?', [userId], function(queryError) {
+                    connection.query('DELETE FROM user WHERE id = ?', [userId], function(queryError) {
 
                         if(queryError)
                             deferred.reject();
