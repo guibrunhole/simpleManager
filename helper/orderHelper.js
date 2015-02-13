@@ -38,7 +38,7 @@
                     '</table>';
         }
 
-        function parseToHtml() {
+        function parseToHtml(order, church) {
 
             return '<html>' +
                         '<head>' +
@@ -64,26 +64,26 @@
                                 '</div>' +
                                 '<div class="col-xs-12">' +
                                     '<div class="col-xs-12">' +
-                                        '<label>Casa de oração:</label> Rio acima' +
+                                        '<label>Casa de oração:</label> ' + church.name +
                                     '</div>' +
                                 '</div>' +
                                 '<div class="col-xs-12">' +
                                     '<div class="col-xs-12">' +
-                                        '<label>Endereço:</label> Rua um, 287' +
+                                        '<label>Endereço:</label> ' + church.address +
                                     '</div>' +
                                 '</div>' +
                                 '<div class="col-xs-12">' +
                                     '<div class="col-xs-4">' +
-                                        '<label>Cidade:</label> Jundiaí' +
+                                        '<label>Cidade:</label> ' + church.city +
                                     '</div>' +
                                     '<div class="col-xs-1">' +
-                                        '<label>UF:</label> SP' +
+                                        '<label>UF:</label> ' + church.state +
                                     '</div>' +
                                     '<div class="col-xs-3">' +
-                                        '<label>CEP:</label> 13215-802' +
+                                        '<label>CEP:</label> ' + church.zipcode +
                                     '</div>' +
                                     '<div class="col-xs-4">' +
-                                        '<label>CNPJ:</label> 50.981.885/0001-25' +
+                                        '<label>CNPJ:</label> ' + church.cnpj +
                                     '</div>' +
                                 '</div>' +
                                 '<div class="col-xs-12">' +
@@ -91,12 +91,12 @@
                                         '<label>Comprador:</label> Rode Simione Cunha' +
                                     '</div>' +
                                     '<div class="col-xs-4">' +
-                                        '<label>Telefone:</label> (11) 98404-5049' +
+                                        '<label>Telefone:</label> ' + church.phone_number +
                                     '</div>' +
                                 '</div>' +
                                 '<div class="col-xs-12">' +
                                     '<div class="col-xs-12">' +
-                                        '<label>Observação:</label> ENTREGAR NO CHAVEIRO CATU - PONTE DE CAMPINAS PERTO DO SESÃO HORARIO COMERCIAL' +
+                                        '<label>Observação:</label> ' + order.obs +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +
@@ -130,13 +130,13 @@
 
         return {
 
-            createPdf: function() {
+            createPdf: function(order, church) {
 
                 var deferred = q.defer();
 
                 var createdPdfPath = 'temp/' + uuid.v4() + '.pdf';
                 var pdf = new NodePDF(null, createdPdfPath, {
-                    content: parseToHtml(),
+                    content: parseToHtml(order, church),
                     viewportSize: {
                         width: 3000,
                         height: 9000

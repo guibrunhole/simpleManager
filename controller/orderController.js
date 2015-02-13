@@ -4,8 +4,9 @@
 
     var emailHelper = require('../helper/emailHelper')();
     var orderHelper = require('../helper/orderHelper')();
+    var q = require('q');
 
-    module.exports = function(orderRepository) {
+    module.exports = function(orderRepository, churchRepository) {
 
         function errorThrown(res) {
 
@@ -71,15 +72,38 @@
             },
             getDetailedOrder: function(req, res) {
 
-                orderHelper.createPdf().then(function(pdfPath) {
+                var orderDeferred = q.defer();
+                var churchDeferred = q.defer();
 
-                    if(req.query.sendTo)
-                        emailHelper.sendDetailedOrder(req.query.sendTo, pdfPath);
+                orderRepository.getById(req.params.id).then(function(result) {
 
-                    res.download(pdfPath, 'Pedido.pdf');
-                }, function() {
+                    var order = result[0];
+                    if(!order) {
 
-                    errorThrown(res);
+                        orderDeferred.reject();
+                        res.status(404).send('Order not found :(');
+                    } else {
+
+                        orderDeferred.resolve(order);
+                        churchRepository.getById(order.church_id).then(function(result) {
+
+                            churchDeferred.resolve(result[0]);
+                        });
+                    }
+                });
+
+                q.spread([orderDeferred.promise, churchDeferred.promise], function(order, church) {
+
+                    orderHelper.createPdf(order, church).then(function(pdfPath) {
+
+                        if(req.query.sendTo)
+                            emailHelper.sendDetailedOrder(req.query.sendTo, pdfPath);
+
+                        res.download(pdfPath, 'Pedido.pdf');
+                    }, function() {
+
+                        errorThrown(res);
+                    });
                 });
             }
         };
