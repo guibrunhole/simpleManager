@@ -40,7 +40,6 @@
             add: function(newUser) {
 
                 return queryFromPool(function(deferred, connection) {
-//falta colocar o 'last_login'
                     connection.query('INSERT INTO user (name, login, password, email) VALUES (?, ?, ?, ?)',
                         [newUser.name, newUser.login || null, newProduct.password, newUser.email], function(queryError, resultInfo) {
 
@@ -89,6 +88,145 @@
                         else
                             deferred.resolve();
                     });
+                });
+            },
+            getAccessToken: function(bearerToken, callback) {
+
+                queryFromPool(function(deferred, connection) {
+
+                    connection.query('SELECT access_token, client_id, expires, user_id FROM access_tokens ' +
+                        'WHERE access_token = ?', [bearerToken],
+                        function(queryError, row) {
+
+                        if(queryError || !row[0])
+                            deferred.reject(queryError);
+                        else
+                            deferred.resolve(row[0]);
+                    });
+                }).then(function(token) {
+
+                    callback(null, {
+                        accessToken: token.access_token,
+                        clientId: token.client_id,
+                        expires: token.expires,
+                        userId: token.userId
+                    });
+                }, function(err) {
+
+                    return callback(err);
+                });
+            },
+            getClient: function(clientId, clientSecret, callback) {
+
+                queryFromPool(function(deferred, connection) {
+
+                    connection.query('SELECT client_id, client_secret, redirect_uri FROM clients WHERE ' +
+                        'client_id = ?', [clientId],
+                        function(queryError, row) {
+
+                            if(queryError || !row[0])
+                                deferred.reject(queryError);
+                            else
+                                deferred.resolve(row[0]);
+                        });
+                }).then(function(client) {
+
+                    console.log('WASSUP!');
+                    callback(null, {
+                        clientId: client.client_id,
+                        clientSecret: client.client_secret
+                    });
+                }, function(err) {
+
+                    return callback(err);
+                });
+            },
+            getRefreshToken: function(bearerToken, callback) {
+
+                queryFromPool(function(deferred, connection) {
+
+                    connection.query('SELECT refresh_token, client_id, expires, user_id FROM refresh_tokens ' +
+                        'WHERE refresh_token = ?', [bearerToken],
+                        function(queryError, row) {
+
+                            if(queryError || !row[0])
+                                deferred.reject(queryError);
+                            else
+                                deferred.resolve(row[0]);
+                        });
+                }).then(function(refreshToken) {
+
+                    callback(null, refreshToken);
+                }, function(err) {
+
+                    return callback(err, false);
+                });
+            },
+            grantTypeAllowed: function(clientId, grantType, callback) {
+
+                callback(null, true);
+            },
+            saveAccessToken: function(accessToken, clientId, expires, userId, callback) {
+
+                queryFromPool(function(deferred, connection) {
+
+                    connection.query('INSERT INTO access_tokens(access_token, client_id, user_id, expires) ' +
+                        'VALUES (?, ?, ?, ?)', [accessToken, clientId, userId, expires],
+                        function(queryError) {
+
+                            if(queryError)
+                                deferred.reject(queryError);
+                            else
+                                deferred.resolve();
+                        });
+                }).then(function() {
+
+                    callback();
+                }, function(err) {
+
+                    return callback(err);
+                });
+            },
+            saveRefreshToken: function(refreshToken, clientId, expires, userId, callback) {
+
+                queryFromPool(function(deferred, connection) {
+
+                    connection.query('INSERT INTO refresh_tokens(refresh_token, client_id, user_id, ' +
+                        'expires) VALUES (?, ?, ?, ?)', [refreshToken, clientId, userId, expires],
+                        function(queryError) {
+
+                            if(queryError)
+                                deferred.reject(queryError);
+                            else
+                                deferred.resolve();
+                        });
+                }).then(function() {
+
+                    callback();
+                }, function(err) {
+
+                    return callback(err);
+                });
+            },
+            getUser: function(username, password, callback) {
+
+                queryFromPool(function(deferred, connection) {
+
+                    connection.query('SELECT id FROM user WHERE login = ? AND password = ?',
+                        [username, password],
+                        function(queryError, results) {
+
+                            if(queryError || !results[0])
+                                deferred.reject(queryError);
+                            else
+                                deferred.resolve(results[0]);
+                        });
+                }).then(function(user) {
+
+                    callback(null, user);
+                }, function(err) {
+
+                    return callback(err, false);
                 });
             }
         };

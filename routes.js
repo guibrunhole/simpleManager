@@ -2,6 +2,8 @@
 
     'use strict';
 
+    var oauthserver = require('node-oauth2-server');
+
     module.exports = function(app, pool){
 
         var ProductRepository = require('./repository/productRepository')(pool);
@@ -14,32 +16,41 @@
         var ChurchController = require('./controller/churchController')(ChurchRepository);
         var OrderController = require('./controller/orderController')(OrderRepository, ChurchRepository, UserRepository);
 
+        app.oauth = oauthserver({
+            model: UserRepository,
+            grants: ['password', 'refresh_token']
+        });
+
+        app.all('/oauth/token', app.oauth.grant());
+
         // Product
-        app.get('/product', ProductController.getAll);
-        app.post('/product', ProductController.addNew);
-        app.get('/product/:id', ProductController.getById);
-        app.put('/product/:id', ProductController.update);
-        app.delete('/product/:id', ProductController.remove);
+        app.get('/product', app.oauth.authorise(), ProductController.getAll);
+        app.post('/product', app.oauth.authorise(), ProductController.addNew);
+        app.get('/product/:id', app.oauth.authorise(), ProductController.getById);
+        app.put('/product/:id', app.oauth.authorise(), ProductController.update);
+        app.delete('/product/:id', app.oauth.authorise(), ProductController.remove);
 
         // User
-        app.get('/user', UserController.getAll);
-        app.post('/user', UserController.addNew);
-        app.get('/user/:id', UserController.getById);
-        app.put('/user/:id', UserController.update);
-        app.delete('/user/:id', UserController.remove);
+        app.get('/user', app.oauth.authorise(), UserController.getAll);
+        app.post('/user', app.oauth.authorise(), UserController.addNew);
+        app.get('/user/:id', app.oauth.authorise(), UserController.getById);
+        app.put('/user/:id', app.oauth.authorise(), UserController.update);
+        app.delete('/user/:id', app.oauth.authorise(), UserController.remove);
 
         // Church
-        app.get('/church', ChurchController.getAll);
-        app.post('./church', ChurchController.addNew);
-        app.get('/church/:id', ChurchController.getById);
-        app.put('/church/:id', ChurchController.update);
-        app.delete('./church/:id', ChurchController.remove);
+        app.get('/church', app.oauth.authorise(), ChurchController.getAll);
+        app.post('./church', app.oauth.authorise(), ChurchController.addNew);
+        app.get('/church/:id', app.oauth.authorise(), ChurchController.getById);
+        app.put('/church/:id', app.oauth.authorise(), ChurchController.update);
+        app.delete('./church/:id', app.oauth.authorise(), ChurchController.remove);
 
         // Order
-        app.get('/order', OrderController.getAll);
-        app.post('/order', OrderController.addNew);
-        app.get('/order/:id', OrderController.getById);
-        app.put('/order/:id', OrderController.update);
-        app.get('/order/:id/detailed', OrderController.getDetailedOrder);
+        app.get('/order', app.oauth.authorise(), OrderController.getAll);
+        app.post('/order', app.oauth.authorise(), OrderController.addNew);
+        app.get('/order/:id', app.oauth.authorise(), OrderController.getById);
+        app.put('/order/:id', app.oauth.authorise(), OrderController.update);
+        app.get('/order/:id/detailed', app.oauth.authorise(), OrderController.getDetailedOrder);
+
+        app.use(app.oauth.errorHandler());
     }
 })();
