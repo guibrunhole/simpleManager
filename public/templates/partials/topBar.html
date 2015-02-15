@@ -2,10 +2,30 @@
     <div class="container-fluid text-center">
         <div class="navbar-header">
             <span class="navbar-brand">
-                <span class="glyphicon glyphicon-menu-hamburger top-bar-menu-icon"></span>
+                <span class="glyphicon glyphicon-menu-hamburger top-bar-menu-icon" ng-click="switchMenu()"></span>
             </span>
         </div>
         <p class="navbar-text top-bar-title">{{locationTitle}}</p>
         <img class="navbar-right media-object top-bar-user" src="../../img/default_user_img.jpg" alt="Default user image - Koala">
     </div>
 </nav>
+<div class="top-bar-menu-container">
+    <div class="list-group top-bar-menu-list">
+        <a href="#" class="list-group-item">
+            Home
+        </a>
+        <a href="#" class="list-group-item">
+            Pedidos
+        </a>
+        <a href="#" class="list-group-item">
+            Igrejas
+        </a>
+        <a href="#" class="list-group-item">
+            Produtos
+        </a>
+        <a href="#" class="list-group-item">
+            Usuários
+        </a>
+    </div>
+    <div class="arrow-up"></div>
+</div>
