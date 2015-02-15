@@ -1,3 +1,15 @@
 body {
-    background-color: #f3f3f3;
+    background-color: #F7F7F7;
+}
+
+.login-container {
+    padding: 0px;
+    padding-top: 19px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 30em;
+    height: 13em;
+    margin-top: -9em;
+    margin-left: -15em;
 }

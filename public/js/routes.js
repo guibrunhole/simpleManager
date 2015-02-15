@@ -4,12 +4,24 @@
 
     function routesConfig($routeProvider) {
 
-        $routeProvider.when('/', {
-            templateUrl: '/templates/views/main.html',
-            controller: 'MainController'
-        }).otherwise({
-            redirectTo: '/'
-        });
+        $routeProvider
+            .when('/login', {
+                templateUrl: '/templates/views/login.html',
+                controller: 'LoginController',
+                access: {
+                    requireLogin: false
+                }
+            })
+            .when('/', {
+                templateUrl: '/templates/views/main.html',
+                controller: 'MainController',
+                access: {
+                    requireLogin: true
+                }
+            })
+            .otherwise({
+                redirectTo: '/login'
+            });
     }
 
     angular.module('app').config(['$routeProvider', routesConfig]);

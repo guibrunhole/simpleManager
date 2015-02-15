@@ -1,0 +1,29 @@
+<div class="col-xs-4 col-xs-offset-4 well login-container">
+    <form class="form-horizontal" ng-submit="login()">
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Login" ng-model="credentials.login">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-lock"></span>
+                    </span>
+                    <input type="password" class="form-control" placeholder="Senha" ng-model="credentials.password">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-10">
+                <button type="submit" class="btn btn-lg btn-default pull-right">Entrar</button>
+            </div>
+        </div>
+    </form>
+</div>
