@@ -20,7 +20,10 @@
                 }
             })
             .otherwise({
-                redirectTo: '/login'
+                redirectTo: '/login',
+                access: {
+                    requireLogin: true
+                }
             });
     }
 

@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function loginController($scope, LoginService) {
+    function loginController($scope, AuthorizationService, SessionService, $location) {
 
         $scope.setOnLoginScreen(true);
 
@@ -13,10 +13,12 @@
 
         $scope.login = function() {
 
-            LoginService.attemptLogin($scope.credentials)
+            AuthorizationService.attemptLogin($scope.credentials)
                 .success(function(data) {
 
-                    console.log(data);
+                    SessionService.createSession(data);
+                    $scope.setLoggedUser($scope.credentials.login);
+                    $location.url('/');
                 })
                 .error(function(err) {
 

@@ -109,7 +109,7 @@
                         accessToken: token.access_token,
                         clientId: token.client_id,
                         expires: token.expires,
-                        userId: token.userId
+                        userId: token.user_id
                     });
                 }, function(err) {
 
@@ -131,7 +131,6 @@
                         });
                 }).then(function(client) {
 
-                    console.log('WASSUP!');
                     callback(null, {
                         clientId: client.client_id,
                         clientSecret: client.client_secret
@@ -156,7 +155,12 @@
                         });
                 }).then(function(refreshToken) {
 
-                    callback(null, refreshToken);
+                    callback(null, {
+                        refreshToken: refreshToken.refresh_token,
+                        clientId: refreshToken.client_id,
+                        expires: refreshToken.expires,
+                        userId: refreshToken.user_id
+                    });
                 }, function(err) {
 
                     return callback(err, false);
@@ -219,7 +223,7 @@
                             if(queryError || !results[0])
                                 deferred.reject(queryError);
                             else
-                                deferred.resolve(results[0]);
+                                deferred.resolve(results[0].id);
                         });
                 }).then(function(user) {
 
