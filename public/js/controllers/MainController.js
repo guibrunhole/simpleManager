@@ -4,7 +4,9 @@
 
     function mainController($scope) {
 
-        $scope.message = 'WASSUP SON!';
+        $scope.message = 'Eu sou a tela principal :)';
+
+        $scope.setLocationTitle('HOME');
     }
 
     angular.module('app.controllers').controller('MainController', mainController);

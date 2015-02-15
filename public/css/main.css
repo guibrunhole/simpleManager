@@ -1,8 +1,11 @@
 body {
     background-color: #F7F7F7;
+    font-family: "Roboto Light";
 }
 
 .login-container {
+    border: 1px solid #e3e3e3;
+    border-radius: 6px;
     padding: 0px;
     padding-top: 19px;
     position: fixed;
@@ -12,4 +15,60 @@ body {
     height: 13em;
     margin-top: -9em;
     margin-left: -15em;
+    -webkit-box-shadow: 4px 4px 8px 0px rgba(132, 132, 132, 0.71);
+    -moz-box-shadow:    4px 4px 8px 0px rgba(132, 132, 132, 0.71);
+    box-shadow:         4px 4px 8px 0px rgba(132, 132, 132, 0.71);
+}
+
+.top-bar {
+    box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
+    border-radius: 0px;
+    background-color: #26A69A;
+    border-color: #26A69A;
+}
+
+.navbar-default .navbar-brand .top-bar-menu-icon {
+    font-size: 21px;
+    color: #004D40;
+    margin-left: 20px;
+}
+
+.navbar-default .navbar-brand .top-bar-menu-icon:hover {
+    cursor: pointer;
+}
+
+.navbar-default .navbar-text.top-bar-title {
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    width: 30em;
+    margin-left: -15em;
+    font-size: 25px;
+    color: #fff;
+}
+
+.top-bar-user {
+    width: 38px;
+    border-radius: 38px;
+    margin-top: 5px;
+    margin-right: 20px;
+}
+
+.top-bar-user:hover {
+    cursor: pointer;
+}
+
+@font-face {
+    font-family: 'Roboto Regular';
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto Thin';
+    src: url('../fonts/Roboto-Thin.ttf');
+}
+
+@font-face {
+    font-family: 'Roboto Light';
+    src: url('../fonts/Roboto-Light.ttf');
 }

@@ -6,6 +6,7 @@
 
         $scope.onLoginScreen = false;
         $scope.loggedUser = undefined;
+        $scope.locationTitle = undefined;
 
         $scope.setOnLoginScreen = function(onLoginScreen) {
 
@@ -15,6 +16,11 @@
         $scope.setLoggedUser = function(user) {
 
             $scope.loggedUser = user;
+        };
+
+        $scope.setLocationTitle = function(newTitle) {
+
+            $scope.locationTitle = newTitle;
         };
 
         $interval(function() {

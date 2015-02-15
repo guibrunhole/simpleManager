@@ -20,8 +20,13 @@
         <script src="js/services/AuthorizationService.js"></script>
         <script src="js/services/SessionService.js"></script>
         <script src="js/services/TokenInterceptor.js"></script>
+
+        <script src="js/directives/fn-top-bar-directive.js"></script>
     </head>
     <body ng-controller="ApplicationController">
+        <header ng-if="!onLoginScreen">
+            <fn-top-bar></fn-top-bar>
+        </header>
         <div class="container" ng-view></div>
     </body>
 </html>

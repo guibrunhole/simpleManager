@@ -16,7 +16,7 @@
 
                 return $http({
                     method: 'POST',
-                    url: 'oauth/token',
+                    url: '/oauth/token',
                     data: $.param(loginData),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
