@@ -11,11 +11,15 @@
 
         $scope.fetchMoreProducts = function() {
 
-            page++;
-            ProductService.getAll(page).
+            var nextPage = page + 1;
+            ProductService.getAll(nextPage).
                 success(function(moreProducts) {
 
-                    $scope.products = $scope.products.concat(moreProducts);
+                    if(moreProducts.length > 0) {
+
+                        $scope.products = $scope.products.concat(moreProducts);
+                        page = nextPage;
+                    }
                 })
                 .error(function(err) {
 

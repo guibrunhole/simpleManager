@@ -24,11 +24,11 @@
         }
 
         return {
-            getAll: function() {
+            getAll: function(page) {
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('SELECT * FROM products', null, function(queryError, rows) {
+                    connection.query('SELECT * FROM products LIMIT ?,?', [(page - 1) * 10, (page * 10)], function(queryError, rows) {
 
                         if(queryError)
                             deferred.reject();
