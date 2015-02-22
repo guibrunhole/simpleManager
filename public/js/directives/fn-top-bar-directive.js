@@ -7,7 +7,7 @@
         return {
             restrict: 'E',
             templateUrl: '../../templates/partials/topBar.html',
-            controller: function ($scope) {
+            controller: function ($scope, $location) {
 
                 var menuState = false;
 
@@ -38,6 +38,12 @@
                         menuState = true;
                         bindMenuClosingEvent();
                     }
+                };
+
+                $scope.changeView = function(nextView) {
+
+                    $location.url(nextView);
+                    $scope.switchMenu();
                 };
             }
         };

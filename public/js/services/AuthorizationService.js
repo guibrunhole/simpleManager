@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function authService($http, SessionService) {
+    function authService($http, SessionService, BASE_API_ADDRESS, CLIENT_ID) {
 
         return {
 
@@ -16,11 +16,11 @@
 
                 return $http({
                     method: 'POST',
-                    url: '/oauth/token',
+                    url: BASE_API_ADDRESS + '/oauth/token',
                     data: $.param(loginData),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': ''
+                        'Authorization': CLIENT_ID
                     }
                 });
             },
@@ -33,16 +33,17 @@
 
                 return $http({
                     method: 'POST',
-                    url: '/oauth/token',
+                    url: BASE_API_ADDRESS + '/oauth/token',
                     data: $.param(refreshData),
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
-                        'Authorization': ''
+                        'Authorization': CLIENT_ID
                     }
                 });
             }
         };
     }
 
-    angular.module('app.services').service('AuthorizationService', ['$http', 'SessionService', authService]);
+    angular.module('app.services').service('AuthorizationService', ['$http', 'SessionService', 'BASE_API_ADDRESS',
+        'CLIENT_ID', authService]);
 })();

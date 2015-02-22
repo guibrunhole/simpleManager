@@ -6,7 +6,8 @@
     angular.module('app.controllers', []);
     angular.module('app.directives', []);
 
-    var app = angular.module('app', ['app.services', 'app.controllers', 'app.directives', 'ngRoute', 'ngCookies']);
+    var app = angular.module('app', ['app.services', 'app.controllers', 'app.directives',
+        'ngRoute', 'ngCookies', 'infinite-scroll']);
 
     app.config(function ($httpProvider) {
         $httpProvider.interceptors.push('TokenInterceptor');
@@ -28,4 +29,7 @@
         refreshToken: 'REFRESH_TOKEN_KEY',
         expirationDate: 'EXPIRATION_DATE_KEY'
     });
+
+    app.constant('BASE_API_ADDRESS', 'http://localhost:3000');
+    app.constant('CLIENT_ID', 'Basic Y2h1cmNoX21hbmFnZXJfZGVza3RvcDpaR1FzTSRxZ25+OllzNVQ=');
 })();

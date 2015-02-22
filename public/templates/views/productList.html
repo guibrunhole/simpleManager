@@ -1,0 +1,28 @@
+<div>
+    <div class="product-button-container">
+        <button type="button" class="btn new-product-button pull-right"
+                ng-click="newProduct()">Novo produto</button>
+    </div>
+    <div infinite-scroll="fetchMoreProducts()">
+        <div class="row product-card" ng-repeat="product in products track by $index">
+            <div class="col-xs-12 card-title">
+                <h4>{{product.name}}</h4>
+            </div>
+            <div class="card-info">
+                <div class="col-xs-12 card-info-item">
+                    <label>Descrição:</label> {{product.description || 'Sem descrição.'}}
+                </div>
+                <div class="col-xs-12 card-info-item">
+                    <label>Preço:</label> {{product.price | currency:"R$ ":2}}
+                </div>
+            </div>
+            <hr class="faded"/>
+            <div class="col-xs-12 card-options">
+                <div class="pull-right">
+                    <span class="edit-option pointer" title="Editar produto">Editar</span>
+                    <span class="remove-option pointer" title="Remover produto">Remover</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

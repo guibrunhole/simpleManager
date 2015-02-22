@@ -19,8 +19,15 @@
                     requireLogin: true
                 }
             })
+            .when('/product', {
+                templateUrl: '/templates/views/productList.html',
+                controller: 'ProductListController',
+                access: {
+                    requireLogin: true
+                }
+            })
             .otherwise({
-                redirectTo: '/login',
+                redirectTo: '/',
                 access: {
                     requireLogin: true
                 }
