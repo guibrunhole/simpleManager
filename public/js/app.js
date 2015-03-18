@@ -30,6 +30,6 @@
         expirationDate: 'EXPIRATION_DATE_KEY'
     });
 
-    app.constant('BASE_API_ADDRESS', 'http://localhost:3000');
-    app.constant('CLIENT_ID', 'Basic Y2h1cmNoX21hbmFnZXJfZGVza3RvcDpaR1FzTSRxZ25+OllzNVQ=');
+    app.constant('BASE_API_ADDRESS', process.env.BASE_API_ADDRESS);
+    app.constant('CLIENT_ID', process.env.CLIENT_ID);
 })();
