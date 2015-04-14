@@ -13,5 +13,5 @@ Now we have all some things 'envified', so we got to run:
 ```sh
 $ npm install -g envify
 $ envify public/js/app.js > public/js/app.env.js
-``
+```
 Awesome, the server is up and running on localhost:3010 considering you set all the needed environment variables ;).
