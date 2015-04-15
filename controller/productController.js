@@ -13,7 +13,7 @@
         return {
             getAll: function(req, res) {
 
-                productReposiroty.getAll(req.query.page).then(function(results) {
+                productReposiroty.getAll(req.query.page, req.query.searchParam).then(function(results) {
 
                     res.send(results);
                 }, function() {

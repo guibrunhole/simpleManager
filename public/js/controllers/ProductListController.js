@@ -9,6 +9,20 @@
         var page = 0;
         $scope.products = [];
 
+        $scope.searchByParam = function(param) {
+
+            page = 1;
+            ProductService.getAll(page, param).
+                success(function(products) {
+
+                    $scope.products = products;
+                })
+                .error(function(err) {
+
+                    console.error(err);
+                });
+        };
+
         $scope.fetchMoreProducts = function() {
 
             var nextPage = page + 1;
@@ -23,7 +37,7 @@
                 })
                 .error(function(err) {
 
-                    console.error('GOD DAMN!!');
+                    console.error(err);
                 });
         };
 

@@ -6,9 +6,14 @@
 
         return {
 
-            getAll: function(page) {
+            getAll: function(page, searchParam) {
 
-                return $http.get(BASE_API_ADDRESS + '/product' + '?page=' + page);
+                var data = {
+                    page: page,
+                    searchParam: searchParam
+                };
+
+                return $http.get(BASE_API_ADDRESS + '/product', {params: data});
             }
         };
     }

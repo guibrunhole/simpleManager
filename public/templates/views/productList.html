@@ -1,5 +1,6 @@
 <div>
     <div class="product-button-container">
+        <input type="text" class="form-control" placeholder="Buscar produtos" ng-change="searchByParam(search.searchParam)" ng-model="search.searchParam">
         <button type="button" class="btn new-product-button pull-right"
                 ng-click="newProduct()">Novo produto</button>
     </div>
