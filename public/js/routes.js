@@ -26,6 +26,13 @@
                     requireLogin: true
                 }
             })
+            .when('/church', {
+                templateUrl: '/templates/views/churchList.html',
+                controller: 'ChurchListController',
+                access: {
+                    requireLogin: true
+                }
+            })
             .otherwise({
                 redirectTo: '/',
                 access: {

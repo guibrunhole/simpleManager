@@ -79,6 +79,7 @@ hr.faded {
     width: 325px;
     box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
     border-radius: 5px;
+    z-index: 99;
 }
 
 .arrow-up {
@@ -87,6 +88,7 @@ hr.faded {
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-bottom: 5px solid black;
+    z-index: 100;
 }
 
 .top-bar-menu-container {
@@ -169,8 +171,6 @@ hr.faded {
     -webkit-box-shadow: 1px 1px 1px 0 rgba(132, 132, 132, 0.4);
     -moz-box-shadow: 1px 1px 1px 0 rgba(132, 132, 132, 0.4);
     box-shadow: 1px 1px 1px 0 rgba(132, 132, 132, 0.4);
-    margin-left: 200px;
-    margin-right: 200px;
     margin-bottom: 10px;
 }
 
