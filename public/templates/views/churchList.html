@@ -13,28 +13,25 @@
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8">
             <div infinite-scroll="fetchMoreChurches()">
-                <div class="row card" ng-repeat="church in churches track by $index">
-                    <div class="col-xs-12">
-                        <div class="col-xs-12 card-title">
-                            <h4>{{church.name}}</h4>
-                        </div>
-                        <div class="card-info">
-                            <div class="col-xs-12 card-info-item">
-                                <label>CNPJ:</label> {{church.cnpj|| 'Sem cnpj.'}}
-                            </div>
-                            <div class="col-xs-12 card-info-item">
-                                <label>Cidade:</label> {{church.city || 'Sem cidade.'}}
-                            </div>
-                        </div>
-                        <hr class="faded"/>
-                        <div class="col-xs-12 card-options">
-                            <div class="pull-right">
-                                <span class="edit-option pointer" title="Editar igreja">Editar</span>
-                                <span class="remove-option pointer" title="Remover igreja">Remover</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <th>Nome</th>
+                        <th>CNPJ</th>
+                        <th>Cidade</th>
+                        <th>Aç&otilde;es</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="church in churches track by $index">
+                            <td>{{church.name || 'Sem nome.'}}</td>
+                            <td>{{church.cnpj || 'Sem CNPJ.'}}</td>
+                            <td>{{church.city || 'Sem cidade.'}}</td>
+                            <td>
+                                <span class="glyphicon glyphicon-edit pointer edit-btn"  title="Editar"></span>
+                                <span class="glyphicon glyphicon-trash pointer delete-btn"  title="Remover"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
