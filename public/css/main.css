@@ -217,6 +217,14 @@ hr.faded {
     margin-bottom: 5px;
 }
 
+.edit-btn {
+    color: rgb(12, 31, 188);
+}
+
+.delete-btn {
+    color: #d50000      ;
+}
+
 @font-face {
     font-family: 'Roboto Regular';
     src: url('../fonts/Roboto-Regular.ttf');
