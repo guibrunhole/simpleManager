@@ -31,7 +31,7 @@
 
                 if(searchParam) {
                     query = query + ' WHERE name like ?';
-                    queryParams = [searchParam + '%', (page - 1) * 10, (page * 10)];
+                    queryParams = ['%' + searchParam + '%', (page - 1) * 10, (page * 10)];
                 }
 
                 query = query + ' LIMIT ?,?';

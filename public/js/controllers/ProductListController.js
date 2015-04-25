@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function productListController($scope, ProductService) {
+    function productListController($scope, ProductService, $route) {
 
         $scope.setLocationTitle('Produtos');
 
@@ -38,6 +38,19 @@
                 .error(function(err) {
 
                     console.error(err);
+                });
+        };
+
+        $scope.remove = function(product) {
+
+            ProductService.remove(product.id)
+                .success(function() {
+
+                    $route.reload();
+                })
+                .error(function(err) {
+
+                    console.log(err);
                 });
         };
 

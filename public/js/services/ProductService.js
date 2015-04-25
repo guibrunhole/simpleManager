@@ -14,6 +14,10 @@
                 };
 
                 return $http.get(BASE_API_ADDRESS + '/product', {params: data});
+            },
+            remove: function(productId) {
+
+                return $http.delete(BASE_API_ADDRESS + '/product/' + productId);
             }
         };
     }

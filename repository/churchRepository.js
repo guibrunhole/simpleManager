@@ -24,11 +24,21 @@
         }
 
         return {
-            getAll: function() {
+            getAll: function(page, searchParam) {
+
+                var query = 'SELECT * FROM church';
+                var queryParams = [(page - 1) * 10, (page * 10)];
+
+                if(searchParam) {
+                    query = query + ' WHERE name like ?';
+                    queryParams = ['%' + searchParam + '%', (page - 1) * 10, (page * 10)];
+                }
+
+                query = query + ' LIMIT ?,?';
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('SELECT * FROM church', null, function(queryError, rows) {
+                    connection.query(query, queryParams, function(queryError, rows) {
 
                         if(queryError)
                             deferred.reject();

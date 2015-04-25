@@ -164,65 +164,12 @@ hr.faded {
     box-shadow: inset 0 3px 5px rgba(0,0,0,.125);
 }
 
-.card {
-    border: 1px solid #EDEDED;
-    border-radius: 6px;
-    background-color: #EDEDED;
-    -webkit-box-shadow: 1px 1px 1px 0 rgba(132, 132, 132, 0.4);
-    -moz-box-shadow: 1px 1px 1px 0 rgba(132, 132, 132, 0.4);
-    box-shadow: 1px 1px 1px 0 rgba(132, 132, 132, 0.4);
-    margin-bottom: 10px;
-}
-
-.card .card-info {
-    padding-left: 40px;
-    padding-right: 40px;
-}
-
-.card .card-title {
-    margin-bottom: 0.575em;
-    padding-right: 30px;
-    padding-left: 30px;
-    margin-top: 0.575em;
-}
-
-.card .card-options {
-    margin-bottom: 1.2em;
-    margin-top: -0.2em;
-    padding-right: 30px;
-    padding-left: 30px;
-}
-
-.card-options .edit-option {
-    color: #0097A7;
-    font-size: 18px;
-    margin-left: 15px;
-}
-
-.card-options .edit-option:hover {
-    color: #00BCD4;
-}
-
-.card-options .remove-option {
-    color: #C62828;
-    font-size: 18px;
-    margin-left: 15px;
-}
-
-.card-options .remove-option:hover {
-    color: #F44336;
-}
-
-.card .card-info .card-info-item{
-    margin-bottom: 5px;
-}
-
 .edit-btn {
     color: rgb(12, 31, 188);
 }
 
 .delete-btn {
-    color: #d50000      ;
+    color: #d50000;
 }
 
 @font-face {
@@ -238,4 +185,10 @@ hr.faded {
 @font-face {
     font-family: 'Roboto Light';
     src: url('../fonts/Roboto-Light.ttf');
+}
+
+/* bootstrap override */
+
+.table-hover>tbody>tr:hover {
+    background-color: #eaeaea;
 }
