@@ -54,30 +54,39 @@
                 });
         };
 
-        $scope.newProduct = function() {
+        $scope.edit = function(product) {
 
-            var modalInstace = $modal.open({
-                templateUrl: '../templates/views/productNew.html',
+            var modalInstance = $modal.open({
+                templateUrl: '../templates/views/Product/productEdit.html',
                 backdropClass: 'full-height',
-                controller: function($scope, $modalInstance) {
+                controller: 'ProductEditController',
+                resolve: {
+                    productId: function() {
 
-                    $scope.product = {};
-
-                    $scope.cancel = function() {
-
-                        $modalInstance.dismiss('cancel');
-                    };
-
-                    $scope.save = function() {
-
-                        $modalInstance.close($scope.product);
-                    };
+                        return product.id;
+                    }
                 }
             });
 
-            modalInstace.result.then(function(newProduct) {
+            modalInstance.result.then(function() {
 
-                console.log(newProduct);
+                $route.reload();
+                console.log('Product updated like a champ!');
+            });
+        };
+
+        $scope.newProduct = function() {
+
+            var modalInstance = $modal.open({
+                templateUrl: '../templates/views/Product/productNew.html',
+                backdropClass: 'full-height',
+                controller: 'ProductNewController'
+            });
+
+            modalInstance.result.then(function() {
+
+                $route.reload();
+                console.log('Product saved like a boss!');
             });
         };
 

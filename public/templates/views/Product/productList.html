@@ -26,8 +26,8 @@
                             <td>{{product.description || 'Sem descrição'}}</td>
                             <td>{{(product.price | currency:"R$ ":2)|| 'Sem preço'}}</td>
                             <td>
-                                <span class="glyphicon glyphicon-edit pointer edit-btn"  title="Editar"></span>
-                                <span class="glyphicon glyphicon-trash pointer delete-btn"  title="Remover" ng-click="remove(product)"></span>
+                                <span class="glyphicon glyphicon-edit pointer edit-btn" title="Editar" ng-click="edit(product)"></span>
+                                <span class="glyphicon glyphicon-trash pointer delete-btn" title="Remover" ng-click="remove(product)"></span>
                             </td>
                         </tr>
                     </tbody>

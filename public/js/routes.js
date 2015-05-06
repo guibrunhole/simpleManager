@@ -20,7 +20,7 @@
                 }
             })
             .when('/product', {
-                templateUrl: '/templates/views/productList.html',
+                templateUrl: '/templates/views/Product/productList.html',
                 controller: 'ProductListController',
                 access: {
                     requireLogin: true
