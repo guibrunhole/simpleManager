@@ -12,27 +12,7 @@
     </div>
     <div class="row">
         <div class="col-xs-offset-2 col-xs-8">
-            <div infinite-scroll="fetchMoreProducts()">
-                <table class="table table-hover">
-                    <thead>
-                        <th>Nome</th>
-                        <th>Descri&ccedil;&atilde;o</th>
-                        <th>Pre&ccedil;o</th>
-                        <th>A&ccedil;&otilde;es</th>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="product in products track by $index">
-                            <td>{{product.name || 'Sem nome'}}</td>
-                            <td>{{product.description || 'Sem descrição'}}</td>
-                            <td>{{(product.price | currency:"R$ ":2)|| 'Sem preço'}}</td>
-                            <td>
-                                <span class="glyphicon glyphicon-edit pointer edit-btn" title="Editar" ng-click="edit(product)"></span>
-                                <span class="glyphicon glyphicon-trash pointer delete-btn" title="Remover" ng-click="remove(product)"></span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <fn-list table-def="tableDef"></fn-list>
         </div>
     </div>
     <div id="scrollTop" ng-click="moveToTop()" title="Ir para o topo">
