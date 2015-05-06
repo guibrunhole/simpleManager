@@ -7,7 +7,7 @@
     angular.module('app.directives', []);
 
     var app = angular.module('app', ['app.services', 'app.controllers', 'app.directives',
-        'ngRoute', 'ngCookies', 'infinite-scroll']);
+        'ngRoute', 'ngCookies', 'infinite-scroll', 'ui.bootstrap.modal']);
 
     app.config(function ($httpProvider) {
         $httpProvider.interceptors.push('TokenInterceptor');

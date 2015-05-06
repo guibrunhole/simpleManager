@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function productListController($scope, ProductService, $route) {
+    function productListController($scope, ProductService, $route, $modal) {
 
         $scope.setLocationTitle('Produtos');
 
@@ -56,7 +56,29 @@
 
         $scope.newProduct = function() {
 
-            console.log('Hold up! This doesn\'t exist yet :)');
+            var modalInstace = $modal.open({
+                templateUrl: '../templates/views/productNew.html',
+                backdropClass: 'full-height',
+                controller: function($scope, $modalInstance) {
+
+                    $scope.product = {};
+
+                    $scope.cancel = function() {
+
+                        $modalInstance.dismiss('cancel');
+                    };
+
+                    $scope.save = function() {
+
+                        $modalInstance.close($scope.product);
+                    };
+                }
+            });
+
+            modalInstace.result.then(function(newProduct) {
+
+                console.log(newProduct);
+            });
         };
 
         $scope.moveToTop = function() {
