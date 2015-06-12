@@ -24,17 +24,15 @@
         }
 
         return {
-            getAll: function(page, searchParam) {
+            getAll: function(searchParam) {
 
                 var query = 'SELECT * FROM products';
-                var queryParams = [(page - 1) * 10, (page * 10)];
+                var queryParams = [];
 
                 if(searchParam) {
                     query = query + ' WHERE name like ?';
-                    queryParams = ['%' + searchParam + '%', (page - 1) * 10, (page * 10)];
+                    queryParams = ['%' + searchParam + '%'];
                 }
-
-                query = query + ' LIMIT ?,?';
 
                 return queryFromPool(function(deferred, connection) {
 

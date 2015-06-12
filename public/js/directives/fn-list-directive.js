@@ -10,29 +10,9 @@
             scope: {
                 tableDef: '='
             },
-            controller: function($scope) {
+            link: function(scope) {
 
-                $scope.items = [];
-                var page = 0;
-
-                $scope.$on('UPDATE_LIST', function(ev, newItems) {
-
-                    $scope.items = angular.copy(newItems);
-                    page = 1;
-                });
-
-                $scope.$on('CONCAT_LIST', function(ev, itemsToConcat) {
-
-                    $scope.items = $scope.items.concat(itemsToConcat);
-                    page = page + 1;
-                });
-
-                $scope.fetchMoreItems = function() {
-
-                    $scope.tableDef.fetchMoreItems(page + 1);
-                };
-
-                $scope.moveToTop = function() {
+                scope.moveToTop = function() {
 
                     angular.element("html, body").animate({ scrollTop: 0 }, "slow");
                 };

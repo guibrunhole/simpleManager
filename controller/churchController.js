@@ -13,7 +13,7 @@
         return {
             getAll: function(req, res) {
 
-                churchRepository.getAll(req.query.page, req.query.searchParam).then(function(results) {
+                churchRepository.getAll(req.query.searchParam).then(function(results) {
 
                     res.send(results);
                 }, function() {

@@ -1,4 +1,4 @@
-<div infinite-scroll="fetchMoreItems()" infinite-scroll-distance="3" class="full-height">
+<div class="full-height">
     <table class="table table-hover">
         <thead>
             <th ng-repeat="structureItem in tableDef.structure track by $index">
@@ -6,7 +6,7 @@
             </th>
         </thead>
         <tbody>
-            <tr ng-repeat="item in items track by $index">
+            <tr ng-repeat="item in tableDef.items track by $index">
                 <td ng-repeat="structureItem in tableDef.structure track by $index">
 
                     <div ng-switch on="structureItem.type">
@@ -27,4 +27,7 @@
             </tr>
         </tbody>
     </table>
+    <div id="scrollTop" ng-click="moveToTop()" title="Ir para o topo">
+        <span class="glyphicon glyphicon-arrow-up scroll-top-icon"></span>
+    </div>
 </div>

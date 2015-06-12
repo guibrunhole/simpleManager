@@ -6,12 +6,29 @@
 
         $scope.setLocationTitle('Produtos');
 
+        $scope.tableDef = {
+            structure: [
+                { header: 'Nome', cell: 'name', altCell: 'Sem nome'},
+                { header: 'Descrição', cell: 'description', altCell: 'Sem descrição'},
+                { header: 'Preço', cell: 'price', altCell: 'Sem preço', type: 'currency'}
+            ],
+            actions: {
+                edit: {
+                    onClickFunction: editProduct
+                },
+                remove: {
+                    onClickFunction: removeProduct
+                }
+            },
+            items: []
+        };
+
         $scope.searchByParam = function(param) {
 
-            ProductService.getAll(1, param).
+            ProductService.getAll(param).
                 success(function(products) {
 
-                    $scope.$broadcast('UPDATE_LIST', products);
+                    $scope.tableDef.items = angular.copy(products);
                 })
                 .error(function(err) {
 
@@ -33,22 +50,6 @@
                 console.log('Product saved like a boss!');
             });
         };
-
-        function fetchMoreProducts(nextPage) {
-
-            ProductService.getAll(nextPage).
-                success(function(moreProducts) {
-
-                    if(moreProducts.length > 0) {
-
-                        $scope.$broadcast('CONCAT_LIST', moreProducts);
-                    }
-                })
-                .error(function(err) {
-
-                    console.error(err);
-                });
-        }
 
         function editProduct(product) {
 
@@ -84,22 +85,23 @@
                 });
         }
 
-        $scope.tableDef = {
-            structure: [
-                { header: 'Nome', cell: 'name', altCell: 'Sem nome'},
-                { header: 'Descrição', cell: 'description', altCell: 'Sem descrição'},
-                { header: 'Preço', cell: 'price', altCell: 'Sem preço', type: 'currency'}
-            ],
-            actions: {
-                edit: {
-                    onClickFunction: editProduct
-                },
-                remove: {
-                    onClickFunction: removeProduct
-                }
-            },
-            fetchMoreItems: fetchMoreProducts
-        };
+        function fetchProducts() {
+
+            ProductService.getAll().
+                success(function(products) {
+
+                    if(products && products.length > 0) {
+
+                        $scope.tableDef.items = angular.copy(products);
+                    }
+                })
+                .error(function(err) {
+
+                    console.error(err);
+                });
+        }
+
+        fetchProducts();
     }
 
     angular.module('app.controllers').controller('ProductListController', productListController);

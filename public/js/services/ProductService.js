@@ -6,10 +6,9 @@
 
         return {
 
-            getAll: function(page, searchParam) {
+            getAll: function(searchParam) {
 
                 var data = {
-                    page: page,
                     searchParam: searchParam
                 };
 
