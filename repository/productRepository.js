@@ -49,8 +49,8 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('INSERT INTO products (name, description, price) VALUES (?, ?, ?)',
-                        [newProduct.name, newProduct.description || null, newProduct.price], function(queryError, resultInfo) {
+                    connection.query('INSERT INTO products (name, description, price, id_on_supplier) VALUES (?, ?, ?, ?)',
+                        [newProduct.name, newProduct.description || null, newProduct.price, newProduct.id_on_supplier], function(queryError, resultInfo) {
 
                             if(queryError)
                                 deferred.reject();
