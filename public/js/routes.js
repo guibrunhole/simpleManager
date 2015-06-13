@@ -27,7 +27,7 @@
                 }
             })
             .when('/church', {
-                templateUrl: '/templates/views/churchList.html',
+                templateUrl: '/templates/views/Church/churchList.html',
                 controller: 'ChurchListController',
                 access: {
                     requireLogin: true

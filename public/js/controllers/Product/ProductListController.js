@@ -8,6 +8,7 @@
 
         $scope.tableDef = {
             structure: [
+                { header: 'Id no Fornecedor', cell: 'id_on_supplier', altCell: 'Sem nome'},
                 { header: 'Nome', cell: 'name', altCell: 'Sem nome'},
                 { header: 'Descrição', cell: 'description', altCell: 'Sem descrição'},
                 { header: 'Preço', cell: 'price', altCell: 'Sem preço', type: 'currency'}
