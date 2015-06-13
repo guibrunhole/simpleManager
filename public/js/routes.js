@@ -34,7 +34,7 @@
                 }
             })
             .when('/user', {
-                templateUrl: '/templates/views/userList.html',
+                templateUrl: '/templates/views/User/userList.html',
                 controller: 'UserListController',
                 access: {
                     requireLogin: true
