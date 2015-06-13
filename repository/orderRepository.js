@@ -24,11 +24,21 @@
         }
 
         return {
-            getAll: function() {
+            getAll: function(searchParam) {
+
+                var query = 'SELECT o.id, c.name AS church_name, o.created_at FROM orders o ' +
+                    'INNER JOIN church c ON o.church_id = c.id';
+
+                var queryParams = [];
+
+                if(searchParam) {
+                    query = query + ' WHERE c.name like ?';
+                    queryParams = ['%' + searchParam + '%'];
+                }
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('SELECT * FROM orders', null, function(queryError, rows) {
+                    connection.query(query, queryParams, function(queryError, rows) {
 
                         if(queryError)
                             deferred.reject();

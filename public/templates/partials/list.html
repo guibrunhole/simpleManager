@@ -13,6 +13,9 @@
                         <span ng-switch-when="currency">
                             {{(item[structureItem.cell]  | currency:"R$ ":2) || structureItem.altCell}}
                         </span>
+                        <span ng-switch-when="date">
+                            {{(item[structureItem.cell]  | date: 'dd/MM/yyyy - HH:mm') || structureItem.altCell}}
+                        </span>
                         <span ng-switch-default>
                             {{item[structureItem.cell] || structureItem.altCell}}
                         </span>

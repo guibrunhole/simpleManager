@@ -17,7 +17,7 @@
         return {
             getAll: function(req, res) {
 
-                orderRepository.getAll().then(function(results) {
+                orderRepository.getAll(req.query.searchParam).then(function(results) {
 
                     res.send(results);
                 }, function() {
