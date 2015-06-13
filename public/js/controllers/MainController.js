@@ -15,6 +15,11 @@
                 ]
             }
         });
+
+        //GraphService.loadMain()
+        //    .success(function(json) {
+        //        chart.load(json);
+        //    });
     }
 
     angular.module('app.controllers').controller('MainController', mainController);
