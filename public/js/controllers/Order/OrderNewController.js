@@ -10,7 +10,8 @@
             {label: 'Unidade', value: 'UN'},
             {label: 'Galão', value: 'GL'},
             {label: 'Litro', value: 'LT'},
-            {label: 'Pacote', value: 'PCT'}
+            {label: 'Pacote', value: 'PCT'},
+            {label: 'Caixa', value: 'CX'}
         ];
 
         $scope.cancel = function() {
