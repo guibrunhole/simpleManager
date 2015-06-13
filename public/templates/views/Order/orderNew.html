@@ -1,3 +1,29 @@
-<div>
-    {{wut}}
+<div class="modal-header">
+    <button type="button" class="close" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Novo Pedido</h4>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group col-lg-6" ng-repeat="product in order track by $index">
+            <div class="row">
+                <div class="col-lg-12">
+                    <label>{{product.name}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <input type="number" class="form-control" ng-model="order[$index].quantity" placeholder="Quantidade">
+                </div>
+                <div class="col-lg-6">
+                    <select class="form-control" ng-options="unity.value as unity.label for unity in unities" ng-model="order[$index].unity">
+                        <option value="">--</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="cancel()">Cancelar</button>
+    <button type="button" class="btn btn-primary" ng-click="save()">Salvar</button>
 </div>

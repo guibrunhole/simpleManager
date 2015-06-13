@@ -17,6 +17,16 @@ hr.faded {
         rgb(237, 237, 237) 100%);
 }
 
+label {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+form {
+    display: inline-block;
+}
+
 .login-container {
     border: 1px solid #e3e3e3;
     border-radius: 6px;

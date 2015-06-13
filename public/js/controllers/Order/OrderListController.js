@@ -41,7 +41,8 @@
             var modalInstance = $modal.open({
                 templateUrl: '../templates/views/Order/orderNew.html',
                 backdropClass: 'full-height',
-                controller: 'OrderNewController'
+                controller: 'OrderNewController',
+                size: 'lg'
             });
 
             modalInstance.result.then(function() {
