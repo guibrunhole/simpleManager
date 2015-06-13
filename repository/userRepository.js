@@ -41,7 +41,7 @@
 
                 return queryFromPool(function(deferred, connection) {
                     connection.query('INSERT INTO user (name, login, password, email) VALUES (?, ?, ?, ?)',
-                        [newUser.name, newUser.login || null, newProduct.password, newUser.email], function(queryError, resultInfo) {
+                        [newUser.name, newUser.login || null, newUser.password, newUser.email], function(queryError, resultInfo) {
 
                             if(queryError)
                                 deferred.reject();
