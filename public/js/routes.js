@@ -33,6 +33,13 @@
                     requireLogin: true
                 }
             })
+            .when('/user', {
+                templateUrl: '/templates/views/userList.html',
+                controller: 'UserListController',
+                access: {
+                    requireLogin: true
+                }
+            })
             .when('/order', {
                 templateUrl: '/templates/views/Order/orderList.html',
                 controller: 'OrderListController',
