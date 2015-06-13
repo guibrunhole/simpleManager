@@ -20,6 +20,10 @@
         //    .success(function(json) {
         //        chart.load(json);
         //    });
+        //criar repositorio
+        //criar servico
+        //criar controller
+
     }
 
     angular.module('app.controllers').controller('MainController', mainController);
