@@ -40,6 +40,13 @@
                     requireLogin: true
                 }
             })
+            .when('/order', {
+                templateUrl: '/templates/views/Order/orderList.html',
+                controller: 'OrderListController',
+                access: {
+                    requireLogin: true
+                }
+            })
             .otherwise({
                 redirectTo: '/',
                 access: {
