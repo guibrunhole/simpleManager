@@ -47,6 +47,13 @@
                     requireLogin: true
                 }
             })
+            .when('/order/new', {
+                templateUrl: '/templates/views/Order/orderNew.html',
+                controller: 'OrderNewController',
+                access: {
+                    requireLogin: true
+                }
+            })
             .otherwise({
                 redirectTo: '/',
                 access: {

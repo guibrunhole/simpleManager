@@ -2,9 +2,14 @@
 
     'use strict';
 
-    function orderNewCtrl($scope, $modalInstance, OrderService, ProductService) {
+    function orderNewCtrl($scope, OrderService, ProductService, ChurchService, $location) {
 
-        $scope.order = [];
+        $scope.setLocationTitle('Pedidos > Novo');
+
+        $scope.order = {
+            churchId: undefined,
+            products: []
+        };
 
         $scope.unities = [
             {label: 'Unidade', value: 'UN'},
@@ -16,7 +21,7 @@
 
         $scope.cancel = function() {
 
-            $modalInstance.dismiss('cancel');
+            $location.url('/order');
         };
 
         $scope.save = function() {
@@ -24,7 +29,7 @@
             OrderService.add($scope.order)
                 .success(function() {
 
-                    $modalInstance.close($scope.order);
+                    $location.url('/order');
                 })
                 .error(function() {
 
@@ -32,12 +37,26 @@
                 });
         };
 
+        $scope.getChurches = function(searchParam) {
+
+            return ChurchService.getAll(searchParam)
+                .then(function(res) {
+
+                    return res.data;
+                });
+        };
+
+        $scope.setChurch = function(selectedItem) {
+
+            $scope.order.churchId = angular.copy(selectedItem.id);
+        };
+
         function loadProducts() {
 
             ProductService.getAll()
                 .success(function(products) {
 
-                    $scope.order = products;
+                    $scope.order.products = products;
                 })
                 .error(function(err) {
 

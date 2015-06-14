@@ -182,6 +182,27 @@ form {
     color: #d50000;
 }
 
+.product-list-item {
+    margin-top: 12px;
+}
+
+.form-container {
+    padding: 10px;
+    border: 1px solid #E2E2E2;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 0px rgba(189, 189, 189, 0.82);
+}
+
+.form-buttons {
+    display: inline-block;
+    width: 100%;
+}
+
+.form-buttons button {
+    float: right;
+    margin-left: 10px;
+}
+
 @font-face {
     font-family: 'Roboto Regular';
     src: url('../fonts/Roboto-Regular.ttf');

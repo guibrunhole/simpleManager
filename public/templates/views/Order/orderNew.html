@@ -1,29 +1,52 @@
-<div class="modal-header">
-    <button type="button" class="close" aria-label="Close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">Novo Pedido</h4>
-</div>
-<div class="modal-body">
-    <form>
-        <div class="form-group col-lg-6" ng-repeat="product in order track by $index">
+<div>
+    <h3 class="form-title">Novo Pedido</h3>
+    <div class="form-container">
+        <form class="form">
             <div class="row">
                 <div class="col-lg-12">
-                    <label>{{product.name}}</label>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label>Igreja</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <input type="text" ng-model="church" placeholder="Igreja"
+                                       typeahead="church.name for church in getChurches($viewValue)"
+                                       typeahead-loading="loadingChurches" typeahead-on-select="setChurch($item)" class="form-control">
+                                <div class="input-group-addon">
+                                    <span ng-show="loadingChurches" class="fa fa-circle-o-notch fa-spin"></span>
+                                    <span ng-show="!loadingChurches" class="fa fa-info"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">
-                    <input type="number" class="form-control" ng-model="order[$index].quantity" placeholder="Quantidade">
-                </div>
-                <div class="col-lg-6">
-                    <select class="form-control" ng-options="unity.value as unity.label for unity in unities" ng-model="order[$index].unity">
-                        <option value="">--</option>
-                    </select>
+                <div class="col-lg-6 product-list-item" ng-repeat="product in order.products track by $index">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label>{{product.name}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="number" class="form-control" ng-model="order[$index].quantity" placeholder="Quantidade">
+                        </div>
+                        <div class="col-lg-6">
+                            <select class="form-control" ng-options="unity.value as unity.label for unity in unities" ng-model="order[$index].unity">
+                                <option value="">--</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </form>
+        <div class="form-buttons">
+            <button type="button" class="btn btn-default" ng-click="cancel()">Cancelar</button>
+            <button type="button" class="btn btn-primary" ng-click="save()">Salvar</button>
         </div>
-    </form>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default" ng-click="cancel()">Cancelar</button>
-    <button type="button" class="btn btn-primary" ng-click="save()">Salvar</button>
+    </div>
 </div>

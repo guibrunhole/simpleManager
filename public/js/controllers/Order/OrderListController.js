@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function orderListCtrl($scope, OrderService, $route, $modal) {
+    function orderListCtrl($scope, OrderService, $route, $modal, $location) {
 
         $scope.setLocationTitle('Pedidos');
 
@@ -38,18 +38,7 @@
 
         $scope.newOrder = function() {
 
-            var modalInstance = $modal.open({
-                templateUrl: '../templates/views/Order/orderNew.html',
-                backdropClass: 'full-height',
-                controller: 'OrderNewController',
-                size: 'lg'
-            });
-
-            modalInstance.result.then(function() {
-
-                $route.reload();
-                console.log('Order saved like a boss!');
-            });
+            $location.url('/order/new');
         };
 
         function editOrder(order) {
