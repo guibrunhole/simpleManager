@@ -49,10 +49,10 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('INSERT INTO church (name, user_id, cnpj, address, city, state, zipcode, phone_number) ' +
-                                        'VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                    connection.query('INSERT INTO church (name, user_id, cnpj, address, city, state, zipcode, phone_number, responsible_buyer) ' +
+                                        'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         [newChurch.name, newChurch.user_id || null, newChurch.cnpj, newChurch.address, newChurch.city,
-                            newChurch.state, newChurch.zipcode || null, newChurch.phone_number], function(queryError, resultInfo) {
+                            newChurch.state, newChurch.zipcode || null, newChurch.phone_number, newChurch.responsible_buyer], function(queryError, resultInfo) {
 
                             if(queryError)
                                 deferred.reject();
