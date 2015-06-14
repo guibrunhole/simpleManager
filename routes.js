@@ -39,10 +39,10 @@
 
         // Church
         app.get('/church', app.oauth.authorise(), ChurchController.getAll);
-        app.post('./church', app.oauth.authorise(), ChurchController.addNew);
+        app.post('/church', app.oauth.authorise(), ChurchController.addNew);
         app.get('/church/:id', app.oauth.authorise(), ChurchController.getById);
         app.put('/church/:id', app.oauth.authorise(), ChurchController.update);
-        app.delete('./church/:id', app.oauth.authorise(), ChurchController.remove);
+        app.delete('/church/:id', app.oauth.authorise(), ChurchController.remove);
 
         // Order
         app.get('/order', app.oauth.authorise(), OrderController.getAll);
