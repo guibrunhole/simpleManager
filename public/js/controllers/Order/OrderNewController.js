@@ -33,7 +33,7 @@
             OrderService.add($scope.order)
                 .success(function() {
 
-                    //$location.url('/order');
+                    $location.url('/order');
                 })
                 .error(function() {
 

@@ -3,6 +3,10 @@ body {
     font-family: "Roboto Light";
 }
 
+textarea {
+    resize: none;
+}
+
 hr.faded {
     clear: both;
     float: none;
