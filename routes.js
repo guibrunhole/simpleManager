@@ -10,11 +10,13 @@
         var UserRepository = require('./repository/userRepository')(pool);
         var OrderRepository = require('./repository/orderRepository')(pool);
         var ChurchRepository = require('./repository/churchRepository')(pool);
+        var ChartRepository = require('./repository/chartRepository')(pool);
 
         var ProductController = require('./controller/productController')(ProductRepository);
         var UserController = require('./controller/userController')(UserRepository);
         var ChurchController = require('./controller/churchController')(ChurchRepository);
         var OrderController = require('./controller/orderController')(OrderRepository, ChurchRepository, UserRepository);
+        var ChartController = require('./controller/chartController')(ChartRepository);
 
         app.oauth = oauthserver({
             model: UserRepository,
@@ -50,6 +52,9 @@
         app.get('/order/:id', app.oauth.authorise(), OrderController.getById);
         app.put('/order/:id', app.oauth.authorise(), OrderController.update);
         app.get('/order/:id/detailed', app.oauth.authorise(), OrderController.getDetailedOrder);
+
+        // Chart
+        app.get('/chart', app.oauth.authorise(), ChartController.getQuantity);
 
         app.use(app.oauth.errorHandler());
     }

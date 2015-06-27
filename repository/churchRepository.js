@@ -12,7 +12,6 @@
             dbPool.getConnection(function(connectionError, connection){
 
                 if(connectionError) {
-
                     deferred.reject();
                 } else {
                     queryCallback(deferred, connection);
