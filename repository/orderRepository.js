@@ -3,6 +3,7 @@
     'use strict';
 
     var q = require('q');
+    var ORDER_DETAIL_INSERT = 'INSERT INTO order_detail (order_id, product_id, product_quantity, product_unity) VALUES (?, ?, ?, ?);';
 
     module.exports = function(dbPool) {
 
@@ -13,7 +14,7 @@
 
                 if(connectionError) {
 
-                    deferred.reject();
+                    deferred.reject(connectionError);
                 } else {
                     queryCallback(deferred, connection);
                     connection.release();
@@ -51,16 +52,40 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('INSERT INTO orders (order_number, product_quantity, church_id, user_id, product_id, unity, created_at) ' +
-                        'VALUES (?, ?, ?, ?, ?, ?, ?)',
-                        [newOrder.order_number, newOrder.product_quantity, newOrder.church_id, newOrder.user_id,
-                            newOrder.product_id, newOrder.unity, new Date()],
+                    connection.query('INSERT INTO orders (church_id, user_id, obs, created_at) VALUES (?, ?, ?, ?);',
+                        [newOrder.churchId, 1, newOrder.obs || null, new Date()],
                         function(queryError, resultInfo) {
 
                             if(queryError)
-                                deferred.reject();
-                            else
-                                deferred.resolve(resultInfo.insertId);
+                                deferred.reject(queryError);
+                            else {
+
+                                var orderDetailQuery = '';
+                                var orderDetailQueryParams = [];
+
+                                for(var i = 0; i < newOrder.products.length; i++) {
+                                    var product = newOrder.products[i];
+                                    orderDetailQuery = orderDetailQuery + ORDER_DETAIL_INSERT;
+
+                                    var productParams = [resultInfo.insertId, product.id, product.quantity, product.unity];
+
+                                    orderDetailQueryParams = orderDetailQueryParams.concat(productParams);
+                                }
+
+                                if(newOrder.products.length > 0) {
+
+                                    connection.query(orderDetailQuery, orderDetailQueryParams, function(queryError, result) {
+
+                                        if(queryError)
+                                            deferred.reject(queryError);
+                                        else
+                                            deferred.resolve(resultInfo.insertId);
+                                    });
+                                } else {
+                                    deferred.resolve(resultInfo.insertId);
+                                }
+                            }
+
                         });
                 });
             },

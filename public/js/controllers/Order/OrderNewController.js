@@ -26,10 +26,14 @@
 
         $scope.save = function() {
 
+            $scope.order.products = $scope.products.filter(function(product) {
+                return !!product.quantity;
+            });
+
             OrderService.add($scope.order)
                 .success(function() {
 
-                    $location.url('/order');
+                    //$location.url('/order');
                 })
                 .error(function() {
 
@@ -56,7 +60,7 @@
             ProductService.getAll()
                 .success(function(products) {
 
-                    $scope.order.products = products;
+                    $scope.products = products;
                 })
                 .error(function(err) {
 
