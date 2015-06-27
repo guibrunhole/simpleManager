@@ -10,7 +10,6 @@
 
         function errorThrown(res) {
 
-            console.error(res);
             res.status(500).send('An error ocurred, please contact support. Thank you!');
         }
 

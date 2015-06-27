@@ -13,7 +13,8 @@
         user: process.env.DB_USER || 'app',
         password : process.env.DB_PASS || '',
         port : process.env.DB_PORT || 3306,
-        database: process.env.DB_NAME || 'church_manager'
+        database: process.env.DB_NAME || 'church_manager',
+        multipleStatements: true
     });
 
     var app = express();
