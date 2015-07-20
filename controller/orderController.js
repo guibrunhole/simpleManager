@@ -8,9 +8,9 @@
 
     module.exports = function(orderRepository, churchRepository, userRepository) {
 
-        function errorThrown(res) {
+        function errorThrown(err) {
 
-            res.status(500).send('An error ocurred, please contact support. Thank you!');
+            res.status(500).send(err || 'An error ocurred, please contact support. Thank you!');
         }
 
         return {
@@ -59,10 +59,33 @@
                         orderRepository.update(req.params.id, req.body).then(function () {
 
                             res.send('Order updated!');
-                        }, function () {
+                        }, function (err) {
 
-                            errorThrown(res);
+                            errorThrown(err);
                         });
+                    }
+                }, function() {
+
+                    errorThrown(res);
+                });
+            },
+            remove: function(req, res) {
+
+                orderRepository.getById(req.params.id).then(function(result) {
+
+                    if(!result || !result[0] || result.length < 1) {
+
+                        res.status(404).send('Order not found :(');
+                    } else {
+
+                        orderRepository.removeById(req.params.id)
+                            .then(function() {
+
+                                res.send('Order removed!');
+                            }, function(err) {
+
+                                errorThrown(err);
+                            });
                     }
                 }, function() {
 

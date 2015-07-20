@@ -135,6 +135,19 @@
                                 deferred.resolve(rows);
                         });
                 });
+            },
+            removeById: function(orderId) {
+
+                return queryFromPool(function(deferred, connection) {
+
+                    connection.query('DELETE FROM order_detail where order_id = ?; DELETE FROM orders WHERE id = ?;', [orderId, orderId], function(queryError) {
+
+                        if(queryError)
+                            deferred.reject(queryError);
+                        else
+                            deferred.resolve();
+                    });
+                });
             }
         };
     };

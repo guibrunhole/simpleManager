@@ -51,6 +51,7 @@
         app.post('/order', app.oauth.authorise(), OrderController.addNew);
         app.get('/order/:id', app.oauth.authorise(), OrderController.getById);
         app.put('/order/:id', app.oauth.authorise(), OrderController.update);
+        app.delete('/order/:id', app.oauth.authorise(), OrderController.remove);
         app.get('/order/:id/detailed', app.oauth.authorise(), OrderController.getDetailedOrder);
 
         // Chart
