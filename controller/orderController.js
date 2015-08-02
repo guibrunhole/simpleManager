@@ -38,13 +38,13 @@
 
                 orderRepository.getById(req.params.id).then(function(result) {
 
-                    if(!result || !result[0] || result.length < 1)
+                    if(!result)
                         res.status(404).send('Order not found :(');
                     else
-                        res.send(result[0]);
-                }, function() {
+                        res.send(result);
+                }, function(err) {
 
-                    errorThrown(res);
+                    errorThrown(err);
                 });
             },
             update: function(req, res) {

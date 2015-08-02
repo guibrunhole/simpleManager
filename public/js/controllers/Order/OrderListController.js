@@ -18,6 +18,9 @@
                 },
                 remove: {
                     onClickFunction: removeOrder
+                },
+                view: {
+                    onClickFunction: viewOrder
                 }
             },
             items: []
@@ -40,6 +43,11 @@
 
             $location.url('/order/new');
         };
+
+        function viewOrder(order) {
+
+            $location.url('/order/view/' + order.id);
+        }
 
         function editOrder(order) {
 

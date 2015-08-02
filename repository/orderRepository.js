@@ -93,12 +93,31 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('SELECT * FROM orders WHERE id = ?', [orderId], function(queryError, row) {
+                    connection.query('select c.name as church_name, o.created_at from orders o ' +
+                                        'inner join church c where c.id = o.church_id and o.id = ?',
+                                        [orderId], function(queryError, row) {
 
-                        if(queryError)
-                            deferred.reject();
-                        else
-                            deferred.resolve(row);
+                        if(queryError) {
+
+                            deferred.reject(queryError);
+                        } else {
+
+                            var order = row[0];
+
+                            connection.query('select p.name, o.product_quantity, o.product_unity from order_detail o ' +
+                                                'INNER JOIN products p where p.id = o.product_id and o.order_id = ?',
+                                                [orderId], function(innerQueryError, results) {
+
+                                if(innerQueryError) {
+
+                                    deferred.reject(innerQueryError);
+                                } else {
+
+                                    order.orderDetails = results;
+                                    deferred.resolve(order);
+                                }
+                            });
+                        }
                     });
                 });
             },
@@ -122,7 +141,6 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    console.log(orderId);
                     connection.query('SELECT order_detail.product_id, products.name, order_detail.product_quantity, order_detail.product_unity ' +
                                         'FROM order_detail ' +
                                         'INNER JOIN products ' +

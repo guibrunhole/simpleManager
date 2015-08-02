@@ -21,7 +21,9 @@
                         </span>
                     </div>
                 </td>
-                <td>
+                <td class="action-column">
+                    <span ng-if="!!tableDef.actions.view" class="glyphicon glyphicon-eye-open pointer view-btn"
+                          title="Visualizar" ng-click="tableDef.actions.view.onClickFunction(item)"></span>
                     <span ng-if="!!tableDef.actions.edit" class="glyphicon glyphicon-edit pointer edit-btn"
                           title="Editar" ng-click="tableDef.actions.edit.onClickFunction(item)"></span>
                     <span ng-if="!!tableDef.actions.remove" class="glyphicon glyphicon-trash pointer delete-btn"

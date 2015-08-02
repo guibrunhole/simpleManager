@@ -27,6 +27,10 @@ label {
     overflow: hidden;
 }
 
+.container {
+    text-align: center;
+}
+
 .login-container {
     border: 1px solid #e3e3e3;
     border-radius: 6px;
@@ -178,6 +182,10 @@ label {
     color: rgb(12, 31, 188);
 }
 
+.view-btn {
+    color: rgb(30, 191, 49);
+}
+
 .delete-btn {
     color: #d50000;
 }
@@ -197,6 +205,11 @@ label {
     box-shadow: 1px 1px 1px 0px rgba(189, 189, 189, 0.82);
 }
 
+.order-view-container {
+    display: inline-block;
+    width: 800px;
+}
+
 .form-buttons {
     display: inline-block;
     width: 100%;
@@ -205,6 +218,18 @@ label {
 .form-buttons button {
     float: right;
     margin-left: 10px;
+}
+
+.action-column {
+    text-align: center;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.view-title-cell {
+    min-width: 265px;
 }
 
 @font-face {
@@ -226,8 +251,4 @@ label {
 
 .table-hover>tbody>tr:hover {
     background-color: #eaeaea;
-}
-
-.full-height {
-    height: 100%;
 }
