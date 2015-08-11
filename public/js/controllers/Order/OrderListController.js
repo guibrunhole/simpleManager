@@ -51,23 +51,7 @@
 
         function editOrder(order) {
 
-            var modalInstance = $modal.open({
-                templateUrl: '../templates/views/Order/orderEdit.html',
-                backdropClass: 'full-height',
-                controller: 'OrderEditController',
-                resolve: {
-                    orderId: function() {
-
-                        return order.id;
-                    }
-                }
-            });
-
-            modalInstance.result.then(function() {
-
-                $route.reload();
-                console.log('Order updated like a champ!');
-            });
+            $location.url('/order/edit/' + order.id);
         }
 
         function removeOrder(order) {

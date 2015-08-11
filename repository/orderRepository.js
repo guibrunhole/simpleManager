@@ -93,7 +93,7 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('select c.name as church_name, o.created_at from orders o ' +
+                    connection.query('select c.id as church_id, c.name as church_name, o.created_at from orders o ' +
                                         'inner join church c where c.id = o.church_id and o.id = ?',
                                         [orderId], function(queryError, row) {
 
@@ -104,7 +104,7 @@
 
                             var order = row[0];
 
-                            connection.query('select p.name, o.product_quantity, o.product_unity from order_detail o ' +
+                            connection.query('select p.id, p.name, o.product_quantity, o.product_unity from order_detail o ' +
                                                 'INNER JOIN products p where p.id = o.product_id and o.order_id = ?',
                                                 [orderId], function(innerQueryError, results) {
 

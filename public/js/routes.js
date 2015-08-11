@@ -61,6 +61,13 @@
                     requireLogin: true
                 }
             })
+            .when('/order/edit/:orderId', {
+                templateUrl: '/templates/views/Order/orderEdit.html',
+                controller: 'OrderEditController',
+                access: {
+                    requireLogin: true
+                }
+            })
             .otherwise({
                 redirectTo: '/',
                 access: {
