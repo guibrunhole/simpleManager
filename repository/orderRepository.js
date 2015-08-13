@@ -148,13 +148,11 @@
                     params.push(updatedOrder.obs);
                     params.push(orderId);
 
-
                     connection.query(deleteOrderDetailQuery + orderDetailQuery + orderUpdateQuery, params,
                         function(queryError) {
 
                             if(queryError) {
 
-                                console.log(queryError);
                                 deferred.reject(queryError);
                             }
                             else {
