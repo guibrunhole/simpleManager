@@ -93,7 +93,7 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('select c.id as church_id, c.name as church_name, o.created_at from orders o ' +
+                    connection.query('select o.obs as obs, c.id as church_id, c.name as church_name, o.created_at from orders o ' +
                                         'inner join church c where c.id = o.church_id and o.id = ?',
                                         [orderId], function(queryError, row) {
 
@@ -104,7 +104,7 @@
 
                             var order = row[0];
 
-                            connection.query('select p.id, p.name, o.product_quantity, o.product_unity from order_detail o ' +
+                            connection.query('select p.id as productId, p.name, o.product_quantity, o.product_unity from order_detail o ' +
                                                 'INNER JOIN products p where p.id = o.product_id and o.order_id = ?',
                                                 [orderId], function(innerQueryError, results) {
 
@@ -125,15 +125,43 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('UPDATE orders SET order_number = ?, product_quantity = ?, church_id = ?, user_id = ?, product_id = ?, unity = ? WHERE id = ?',
-                        [updatedOrder.order_number, updatedOrder.product_quantity, updatedOrder.church_id, updatedOrder.user_id,
-                            updatedOrder.product_id, updatedOrder.unity, orderId],
+                    var params = [];
+
+                    var deleteOrderDetailQuery = 'DELETE FROM order_detail where order_id=?;';
+                    params.push(orderId);
+
+                    var orderDetailQuery = '';
+
+                    for(var i = 0; i < updatedOrder.products.length; i++) {
+
+                        var product = updatedOrder.products[i];
+                        orderDetailQuery = orderDetailQuery + ORDER_DETAIL_INSERT;
+
+                        var productParams = [orderId, product.id, product.quantity, product.unity];
+
+                        params = params.concat(productParams);
+                    }
+
+                    var orderUpdateQuery = 'UPDATE orders SET church_id = ?, obs = ? where id = ?;';
+
+                    params.push(updatedOrder.churchId);
+                    params.push(updatedOrder.obs);
+                    params.push(orderId);
+
+
+                    connection.query(deleteOrderDetailQuery + orderDetailQuery + orderUpdateQuery, params,
                         function(queryError) {
 
-                            if(queryError)
-                                deferred.reject();
-                            else
+                            if(queryError) {
+
+                                console.log(queryError);
+                                deferred.reject(queryError);
+                            }
+                            else {
+
                                 deferred.resolve();
+                            }
+
                         });
                 });
             },

@@ -1,3 +1,67 @@
 <div>
-    {{bindTest}}
+    <div class="form-container">
+        <form class="order-form">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label>Igreja</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <input type="text" ng-model="church" placeholder="Igreja"
+                                       typeahead="church.name for church in getChurches($viewValue)"
+                                       typeahead-loading="loadingChurches" typeahead-on-select="setChurch($item)" class="form-control">
+                                <div class="input-group-addon">
+                                    <span ng-show="loadingChurches" class="fa fa-circle-o-notch fa-spin"></span>
+                                    <span ng-show="!loadingChurches" class="fa fa-info"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label>Observa&ccedil;&otilde;es</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <textarea class="form-control textarea" placeholder="Observa&ccedil;&otilde;es" rows="6"
+                                      maxlength="255" name="Observation"
+                                      ng-model="order.obs"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 product-list-item" ng-repeat="product in products track by $index">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <label>{{product.name}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="number" class="form-control" ng-model="product.quantity" placeholder="Quantidade">
+                        </div>
+                        <div class="col-lg-6">
+                            <select class="form-control" ng-options="unity.value as unity.label for unity in unities" ng-model="product.unity">
+                                <option value="">--</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="form-buttons">
+            <button type="button" class="btn btn-default" ng-click="cancel()">Cancelar</button>
+            <button type="button" class="btn btn-primary" ng-click="save()">Salvar</button>
+        </div>
+    </div>
 </div>

@@ -51,7 +51,7 @@
 
                 orderRepository.getById(req.params.id).then(function(result) {
 
-                    if(!result || !result[0] || result.length < 1) {
+                    if(!result) {
 
                         res.status(404).send('Order not found :(');
                     } else {
