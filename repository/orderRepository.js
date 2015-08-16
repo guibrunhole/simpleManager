@@ -4,6 +4,29 @@
 
     var q = require('q');
     var ORDER_DETAIL_INSERT = 'INSERT INTO order_detail (order_id, product_id, product_quantity, product_unity) VALUES (?, ?, ?, ?);';
+    var GET_ORDER_PDF = 'select '+
+                            'o.obs as orderObservation, '+
+                            'c.address as churchAddress, '+
+                            'c.name as churchName, '+
+                            'c.city as churchCity, '+
+                            'c.state as churchState, '+
+                            'c.zipcode as churchZipCode, '+
+                            'c.cnpj as churchCnpj, '+
+                            'c.phone_number as churchPhoneNumber, '+
+                            'u.name as buyerName '+
+                        'from orders o '+
+                            'inner join church c on c.id = o.church_id '+
+                            'inner join user u on u.id = o.user_id '+
+                        'where o.id = ?;';
+
+    var GET_ORDER_DETAILS_PDF = 'select ' +
+                                    'od.product_id as productId, ' +
+                                    'p.name as productName, ' +
+                                    'od.product_quantity as productQuantity, ' +
+                                    'od.product_unity as productUnity ' +
+                                'from order_detail od ' +
+                                    'inner join products p on p.id = od.product_id ' +
+                                'where od.order_id = ?;';
 
     module.exports = function(dbPool) {
 
@@ -163,20 +186,38 @@
                         });
                 });
             },
-            getOrderDetails: function(orderId) {
+            getForPdf: function(orderId) {
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('SELECT order_detail.product_id, products.name, order_detail.product_quantity, order_detail.product_unity ' +
-                                        'FROM order_detail ' +
-                                        'INNER JOIN products ' +
-                                        'ON order_detail.product_id = products.id WHERE order_detail.order_id = ?', [orderId],
-                        function(queryError, rows) {
+                    connection.query(GET_ORDER_PDF, [orderId],
+                        function(queryError, result) {
 
-                            if(queryError)
+                            if(queryError) {
+
+                                console.log(queryError);
                                 deferred.reject(queryError);
-                            else
-                                deferred.resolve(rows);
+                            } else{
+
+                                var order = result[0];
+
+                                if(!order)
+                                    deferred.reject('Order not found!');
+
+                                connection.query(GET_ORDER_DETAILS_PDF, [orderId],
+                                    function(queryError, result) {
+
+                                        if(queryError) {
+
+                                            deferred.reject(queryError);
+                                        }
+                                        else {
+
+                                            order.orderDetail = result;
+                                            deferred.resolve(order);
+                                        }
+                                    });
+                            }
                         });
                 });
             },

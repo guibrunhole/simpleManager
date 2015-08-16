@@ -28,6 +28,8 @@
                           title="Editar" ng-click="tableDef.actions.edit.onClickFunction(item)"></span>
                     <span ng-if="!!tableDef.actions.remove" class="glyphicon glyphicon-trash pointer delete-btn"
                           title="Remover" ng-click="tableDef.actions.remove.onClickFunction(item)"></span>
+                    <span ng-if="!!tableDef.actions.getAsPdf" class="glyphicon glyphicon-save pointer save-btn"
+                          title="Download" ng-click="tableDef.actions.getAsPdf.onClickFunction(item)"></span>
                 </td>
             </tr>
         </tbody>

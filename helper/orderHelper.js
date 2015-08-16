@@ -8,69 +8,76 @@
 
     module.exports = function() {
 
-        function buildDeliveryHeader(order, church, buyer) {
+        function buildDeliveryHeader(order) {
 
             return  '<div class="col-xs-12">' +
                         '<div class="col-xs-12">' +
-                            '<label>Casa de oração:</label> ' + church.name +
+                            '<label>Casa de oração:</label> ' + order.churchName +
                         '</div>' +
                     '</div>' +
                     '<div class="col-xs-12">' +
                         '<div class="col-xs-12">' +
-                            '<label>Endereço:</label> ' + church.address +
+                            '<label>Endereço:</label> ' + order.churchAddress +
                         '</div>' +
                     '</div>' +
                     '<div class="col-xs-12">' +
-                        '<div class="col-xs-4">' +
-                            '<label>Cidade:</label> ' + church.city +
+                        '<div class="col-xs-3">' +
+                            '<label>Cidade:</label> ' + order.churchCity +
                         '</div>' +
-                        '<div class="col-xs-1">' +
-                            '<label>UF:</label> ' + church.state +
+                        '<div class="col-xs-2">' +
+                            '<label>UF:</label> ' + order.churchState +
                         '</div>' +
                         '<div class="col-xs-3">' +
-                            '<label>CEP:</label> ' + church.zipcode +
+                            '<label>CEP:</label> ' + order.churchZipCode +
                         '</div>' +
                         '<div class="col-xs-4">' +
-                            '<label>CNPJ:</label> ' + church.cnpj +
+                            '<label>CNPJ:</label> ' + order.churchCnpj +
                         '</div>' +
                     '</div>' +
                     '<div class="col-xs-12">' +
                         '<div class="col-xs-8">' +
-                            '<label>Comprador:</label> ' + buyer.name +
+                            '<label>Comprador:</label> ' + order.buyerName +
                         '</div>' +
                         '<div class="col-xs-4">' +
-                            '<label>Telefone:</label> ' + church.phone_number +
+                            '<label>Telefone:</label> ' + order.churchPhoneNumber +
                         '</div>' +
                     '</div>' +
                     '<div class="col-xs-12">' +
                         '<div class="col-xs-12">' +
-                            '<label>Observação:</label> ' + order.obs +
+                            '<label>Observação:</label> ' + order.orderObservation +
                         '</div>' +
                     '</div>';
         }
 
+        var unities = {
+            'UN': 'Unidade(s)',
+            'GL': 'Gal\u00e3o(\u00f5es)',
+            'LT': 'Litro(s)',
+            'PCT': 'Pacote(s)',
+            'CX': 'Caixa(s)'
+        };
 
-        function getProductRow(row){
+        function getProductRow(detail){
             return  '<tr>' +
-                        '<td>' + row.product_id + '</td>' +
-                        '<td>' + row.name + '</td>' +
-                        '<td>' + row.product_quantity + ' ' + row.product_unity +   '</td>' +
+                        '<td>' + detail.productId + '</td>' +
+                        '<td>' + detail.productName + '</td>' +
+                        '<td>' + detail.productQuantity + ' ' + unities[detail.productUnity] +   '</td>' +
                     '</tr>';
         }
 
-        function getProductTableContents(orderDetais) {
+        function getProductTableContents(orderDetail) {
 
             var contents = '';
 
-            for(var i = 0; i < orderDetais.length; i++) {
+            for(var i = 0; i < orderDetail.length; i++) {
 
-                contents = contents + getProductRow(orderDetais[i]);
+                contents = contents + getProductRow(orderDetail[i]);
             }
 
             return contents;
         }
 
-        function getProductsTable(orderDetails) {
+        function getProductsTable(orderDetail) {
 
             return '<table class="table table-striped">' +
                         '<thead>' +
@@ -81,12 +88,12 @@
                             '</tr>' +
                         '</thead>' +
                         '<tbody>' +
-                             getProductTableContents(orderDetails) +
+                             getProductTableContents(orderDetail) +
                         '</tbody>' +
                     '</table>';
         }
 
-        function parseToHtml(order, church, buyer, orderDetails) {
+        function parseToHtml(order) {
 
             return '<html>' +
                         '<head>' +
@@ -110,7 +117,7 @@
                                         'Local de entrega' +
                                     '</h4>' +
                                 '</div>' +
-                                buildDeliveryHeader(order, church, buyer) +
+                                buildDeliveryHeader(order) +
                             '</div>' +
                             '<hr />' +
                             '<div class="row">' +
@@ -121,7 +128,7 @@
                                 '</div>' +
                                 '<div class="col-xs-12">' +
                                     '<div class="col-xs-12">' +
-                                        getProductsTable(orderDetails) +
+                                        getProductsTable(order.orderDetail) +
                                     '</div>' +
                                 '</div>' +
                             '</div>' +
@@ -142,13 +149,13 @@
 
         return {
 
-            createPdf: function(order, church, buyer, orderDetails) {
+            createPdf: function(order) {
 
                 var deferred = q.defer();
 
                 var createdPdfPath = 'temp/' + uuid.v4() + '.pdf';
                 var pdf = new NodePDF(null, createdPdfPath, {
-                    content: parseToHtml(order, church, buyer, orderDetails),
+                    content: parseToHtml(order),
                     viewportSize: {
                         width: 3000,
                         height: 9000

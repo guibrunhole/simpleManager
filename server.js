@@ -22,7 +22,9 @@
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
 
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use('/', express.static(__dirname + '/public'));
+    app.use('/temp', express.static(__dirname + '/temp'));
+
     require('./routes')(app, pool);
 
     var server = app.listen(process.env.SV_PORT || 3010, function () {

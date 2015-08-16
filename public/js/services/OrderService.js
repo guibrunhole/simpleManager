@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function orderService($http, BASE_API_ADDRESS) {
+    function orderService($http, BASE_API_ADDRESS, $window) {
 
         return {
 
@@ -29,9 +29,17 @@
             update: function(orderId, updatedOrder) {
 
                 return $http.put(BASE_API_ADDRESS + '/order/' + orderId, updatedOrder);
+            },
+            getAsPdf: function(orderId, pdfName, sendTo) {
+
+                var data = {
+                    pdfName: pdfName,
+                    sendTo: sendTo
+                };
+                return $http.get(BASE_API_ADDRESS + '/order/' + orderId + '/pdf', {params: data});
             }
         };
     }
 
-    angular.module('app.services').service('OrderService', ['$http', 'BASE_API_ADDRESS', orderService]);
+    angular.module('app.services').service('OrderService', ['$http', 'BASE_API_ADDRESS', '$window', orderService]);
 })();

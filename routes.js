@@ -52,7 +52,7 @@
         app.get('/order/:id', app.oauth.authorise(), OrderController.getById);
         app.put('/order/:id', app.oauth.authorise(), OrderController.update);
         app.delete('/order/:id', app.oauth.authorise(), OrderController.remove);
-        app.get('/order/:id/detailed', app.oauth.authorise(), OrderController.getDetailedOrder);
+        app.get('/order/:id/pdf', app.oauth.authorise(), OrderController.getAsPdf);
 
         // Chart
         app.get('/chart', app.oauth.authorise(), ChartController.getQuantity);

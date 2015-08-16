@@ -190,6 +190,10 @@ label {
     color: #d50000;
 }
 
+.save-btn {
+    color: #c9d500;
+}
+
 .product-list-item {
     margin-top: 12px;
 }

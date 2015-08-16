@@ -21,6 +21,9 @@
                 },
                 view: {
                     onClickFunction: viewOrder
+                },
+                getAsPdf: {
+                    onClickFunction: getAsPdf
                 }
             },
             items: []
@@ -65,6 +68,43 @@
 
                     console.log(err);
                 });
+        }
+
+        function getAsPdf(order) {
+
+            $modal.open({
+                templateUrl: '../templates/views/Order/pdfPrint.html',
+                backdropClass: 'full-height',
+                controller: function($scope, $modalInstance, OrderService, orderId, $window, BASE_API_ADDRESS) {
+
+                    $scope.pdf = {
+                        name: undefined,
+                        address: undefined
+                    };
+
+                    $scope.cancel = function() {
+                        $modalInstance.dismiss('cancel');
+                    };
+
+                    $scope.download = function() {
+
+                        OrderService.getAsPdf(orderId, $scope.pdf.name, $scope.pdf.address)
+                            .success(function(result) {
+
+                                $window.open(BASE_API_ADDRESS + '/' + result);
+                            })
+                            .error(function(err) {
+
+                                console.log(err);
+                            });
+                    }
+                },
+                resolve: {
+                    orderId: function() {
+                        return order.id;
+                    }
+                }
+            });
         }
 
         function fetchOrders() {

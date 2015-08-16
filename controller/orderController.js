@@ -73,7 +73,7 @@
 
                 orderRepository.getById(req.params.id).then(function(result) {
 
-                    if(!result || !result[0] || result.length < 1) {
+                    if(!result) {
 
                         res.status(404).send('Order not found :(');
                     } else {
@@ -92,50 +92,16 @@
                     errorThrown(res);
                 });
             },
-            getDetailedOrder: function(req, res) {
+            getAsPdf: function(req, res) {
 
-                var orderDeferred = q.defer();
-                var churchDeferred = q.defer();
-                var userDeferred = q.defer();
-                var orderDetailsDeferred = q.defer();
+                orderRepository.getForPdf(req.params.id).then(function(order) {
 
-                orderRepository.getById(req.params.id).then(function(orderResult) {
-
-                    var order = orderResult[0];
-                    if(!order) {
-
-                        orderDeferred.reject();
-                        res.status(404).send('Order not found :(');
-                    } else {
-
-                        orderDeferred.resolve(order);
-
-                        userRepository.getById(order.user_id).then(function(userResult) {
-
-                            userDeferred.resolve(userResult[0]);
-                        });
-
-                        churchRepository.getById(order.church_id).then(function(churchResult) {
-
-                            churchDeferred.resolve(churchResult[0]);
-                        });
-
-                        orderRepository.getOrderDetails(order.id).then(function(orderDetails) {
-
-                            orderDetailsDeferred.resolve(orderDetails);
-                        });
-                    }
-                });
-
-                q.spread([orderDeferred.promise, churchDeferred.promise, userDeferred.promise, orderDetailsDeferred.promise],
-                    function(order, church, buyer, orderDetails) {
-
-                    orderHelper.createPdf(order, church, buyer, orderDetails).then(function(pdfPath) {
+                    orderHelper.createPdf(order).then(function(pdfPath) {
 
                         if(req.query.sendTo)
                             emailHelper.sendDetailedOrder(req.query.sendTo, req.query.pdfName, pdfPath);
 
-                        res.download(pdfPath, req.query.pdfName ? req.query.pdfName + '.pdf' : 'Pedido.pdf');
+                        res.send(pdfPath);
                     }, function() {
 
                         errorThrown(res);
