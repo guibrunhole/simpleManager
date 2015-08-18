@@ -93,6 +93,18 @@
                     '</table>';
         }
 
+        function currentDate(){
+            var data = new Date();
+            var dia = data.getDate();
+            if (dia.toString().length == 1)
+                dia = "0"+dia;
+            var mes = data.getMonth()+1;
+            if (mes.toString().length == 1)
+                mes = "0"+mes;
+            var ano = data.getFullYear();
+            return dia+"/"+mes+"/"+ano;
+        }
+
         function parseToHtml(order) {
 
             return '<html>' +
@@ -107,7 +119,7 @@
                             '</div>' +
                             '<div class="row">' +
                                 '<h2 class="text-center">' +
-                                    'Pedido de compra' +
+                                    'Pedido de compra - '+ currentDate() +
                                 '</h2>' +
                             '</div>' +
                             '<hr />' +

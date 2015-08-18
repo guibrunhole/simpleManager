@@ -20,7 +20,7 @@
                         'where o.id = ?;';
 
     var GET_ORDER_DETAILS_PDF = 'select ' +
-                                    'od.product_id as productId, ' +
+                                    'p.id_on_supplier as productId, ' +
                                     'p.name as productName, ' +
                                     'od.product_quantity as productQuantity, ' +
                                     'od.product_unity as productUnity ' +
