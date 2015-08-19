@@ -13,16 +13,16 @@
             <input type="text" class="form-control" ng-model="user.login" placeholder="Login do Usuário">
         </div>
         <div class="form-group">
-            <label>Senha</label>
-            <input type="number" class="form-control" ng-model="user.password" placeholder="Senha do Usuário">
+            <label>Nova Senha</label>
+            <input type="password" class="form-control" ng-model="user.password" placeholder="Nova Senha">
         </div>
         <div class="form-group">
             <label>Email</label>
-            <input type="number" class="form-control" ng-model="user.email" placeholder="Email do Usuário">
+            <input type="email" class="form-control" ng-model="user.email" placeholder="Email do Usuário">
         </div>
     </form>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="cancel()">Cancelar</button>
-    <button type="button" class="btn btn-primary" ng-click="save()">Salvar</button>
+    <button type="button" class="btn btn-primary" ng-click="update()">Salvar</button>
 </div>

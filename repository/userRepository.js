@@ -3,6 +3,7 @@
     'use strict';
 
     var q = require('q');
+    var bcrypt = require('bcrypt-nodejs');
 
     module.exports = function(dbPool){
 
@@ -39,9 +40,12 @@
             },
             add: function(newUser) {
 
+                var salt = bcrypt.genSaltSync(10);
+                var hash = bcrypt.hashSync(newUser.password, salt);
+
                 return queryFromPool(function(deferred, connection) {
                     connection.query('INSERT INTO user (name, login, password, email) VALUES (?, ?, ?, ?)',
-                        [newUser.name, newUser.login || null, newUser.password, newUser.email], function(queryError, resultInfo) {
+                        [newUser.name, newUser.login || null, hash, newUser.email], function(queryError, resultInfo) {
 
                             if(queryError)
                                 deferred.reject();
@@ -54,7 +58,7 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('SELECT * FROM user WHERE id = ?', [userId], function(queryError, row) {
+                    connection.query('SELECT name, login, email FROM user WHERE id = ?', [userId], function(queryError, row) {
 
                         if(queryError)
                             deferred.reject();
@@ -65,10 +69,13 @@
             },
             update: function(userId, updatedUser) {
 
+                var salt = bcrypt.genSaltSync(10);
+                var hash = bcrypt.hashSync(updatedUser.password, salt);
+
                 return queryFromPool(function(deferred, connection) {
 
                     connection.query('UPDATE user SET name = ?, login = ?, password = ?, email = ? WHERE id = ?',
-                        [updatedUser.name, updatedUser.login|| null, updatedUser.password, updatedUser.email, userId], function(queryError) {
+                        [updatedUser.name, updatedUser.login|| null, hash, updatedUser.email, userId], function(queryError) {
 
                             if(queryError)
                                 deferred.reject();
@@ -216,14 +223,24 @@
 
                 queryFromPool(function(deferred, connection) {
 
-                    connection.query('SELECT id FROM user WHERE login = ? AND password = ?',
+                    connection.query('SELECT * FROM user WHERE login = ?',
                         [username, password],
                         function(queryError, results) {
 
-                            if(queryError || !results[0])
+                            if(queryError)
                                 deferred.reject(queryError);
-                            else
-                                deferred.resolve(results[0].id);
+
+                            var user = results[0];
+
+                            bcrypt.compare(password, user.password, function(err, res) {
+                                if(err)
+                                    deferred.reject(err);
+
+                                if(!res)
+                                    deferred.reject('Incorrect password.');
+
+                                deferred.resolve(user.id);
+                            });
                         });
                 }).then(function(user) {
 
