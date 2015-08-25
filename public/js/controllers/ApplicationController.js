@@ -2,11 +2,17 @@
 
     'use strict';
 
-    function appController($scope, $interval, AuthorizationService, SessionService) {
+    function appController($scope, $interval, AuthorizationService, SessionService, $location) {
 
         $scope.onLoginScreen = false;
         $scope.loggedUser = undefined;
         $scope.locationTitle = undefined;
+        $scope.location = $location;
+
+        $scope.changeView = function(nextView) {
+
+            $location.url(nextView);
+        };
 
         $scope.setOnLoginScreen = function(onLoginScreen) {
 

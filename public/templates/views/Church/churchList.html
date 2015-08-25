@@ -1,18 +1,28 @@
 <div>
-    <div class="row">
-        <div class="col-xs-offset-2 col-xs-6">
-            <input type="text" class="form-control" placeholder="Buscar igrejas" ng-change="searchByParam(search.searchParam)" ng-model="search.searchParam">
-        </div>
-        <div class="col-xs-4">
-            <div class="product-button-container">
-                <button type="button" class="btn new-product-button pull-right"
-                        ng-click="newChurch()">Nova igreja</button>
+    <section class="content-header">
+        <h3>Lista de Igrejas</h3>
+    </section>
+    <section class="content">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-offset-2 col-xs-6">
+                        <input type="text" class="form-control" placeholder="Buscar igrejas" ng-change="searchByParam(search.searchParam)" ng-model="search.searchParam">
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="product-button-container">
+                            <button type="button" class="btn new-product-button pull-right"
+                                    ng-click="newChurch()">Nova igreja</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-offset-2 col-xs-8">
+                        <fn-list table-def="tableDef"></fn-list>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-offset-2 col-xs-8">
-            <fn-list table-def="tableDef"></fn-list>
-        </div>
-    </div>
+    </section>
 </div>
+

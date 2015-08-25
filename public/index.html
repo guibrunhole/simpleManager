@@ -8,6 +8,8 @@
 
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="libs/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+        <link href="libs/adminLTE/css/AdminLTE.min.css" rel="stylesheet">
+        <link href="libs/adminLTE/css/skins/skin-blue.min.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
 
         <script src="libs/jquery/jquery-2.1.3.min.js"></script>
@@ -23,6 +25,8 @@
         <script src="libs/angular-ui/ui-position.js"></script>
         <script src="libs/angular-ui/ui-bindHtml.js"></script>
         <script src="libs/angular-ui/ui-typeahead.js"></script>
+
+        <script src="libs/adminLTE/js/app.min.js"></script>
 
         <script src="js/controllers/ApplicationController.js"></script>
         <script src="js/controllers/MainController.js"></script>
@@ -54,14 +58,92 @@
         <script src="js/services/OrderService.js"></script>
         <script src="js/services/ChartService.js"></script>
 
-        <script src="js/directives/fn-top-bar-directive.js"></script>
         <script src="js/directives/fn-list-directive.js"></script>
     </head>
-    <body ng-controller="ApplicationController">
-        <header ng-if="!onLoginScreen">
-            <fn-top-bar></fn-top-bar>
-        </header>
-        <div class="container" ng-view></div>
+    <body ng-controller="ApplicationController" class="sidebar-mini skin-blue">
+        <div class="wrapper">
+            <div ng-show="!onLoginScreen">
+                <header class="main-header">
+                    <a href="#" class="logo">
+                            <span class="logo-mini">
+                                CCB
+                            </span>
+                            <span class="logo-lg">
+                                Sistema de Compras
+                            </span>
+                    </a>
+                    <nav class="navbar" role="navigation">
+                        <a class="sidebar-toggle" role="button" data-toggle="offcanvas">
+                            <span class="sr-only">Toggle navigation</span>
+                        </a>
+                        <div class="navbar-custom-menu">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown user user-menu">
+                                    <a class="dropdown-toggle" data-toggle="dropdown">
+                                        <img src="../../img/default_user_img.jpg" class="user-image" alt="User Image">
+                                        <span class="hidden-xs">El Koala</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="user-header">
+                                            <img src="../../img/default_user_img.jpg" class="img-circle" alt="User Image">
+                                            <p>
+                                                El Koala - Manager
+                                                <small>Member since Nov. 2012</small>
+                                            </p>
+                                        </li>
+                                        <li class="user-footer">
+                                            <div class="pull-left">
+                                                <a class="btn btn-default btn-flat">Profile</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a class="btn btn-default btn-flat">Sign out</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </header>
+                <aside class="main-sidebar">
+                    <section class="sidebar">
+                        <ul class="sidebar-menu">
+                            <li ng-class="{'active': location.path() == '/'}">
+                                <a ng-click="changeView('/')">
+                                    <i class="fa fa-dashboard"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active': location.path() == '/order'}">
+                                <a ng-click="changeView('/order')">
+                                    <i class="fa fa-truck"></i>
+                                    <span>Pedidos</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active': location.path() == '/church'}">
+                                <a ng-click="changeView('/church')">
+                                    <i class="fa fa-bell-o"></i>
+                                    <span>Igrejas</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active': location.path() == '/product'}">
+                                <a  ng-click="changeView('/product')">
+                                    <i class="fa fa-cubes"></i>
+                                    <span>Produtos</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active': location.path() == '/user'}">
+                                <a  ng-click="changeView('/user')">
+                                    <i class="fa fa-users"></i>
+                                    <span>Usu&aacute;rios</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </section>
+                </aside>
+            </div>
+            <div class="content-wrapper" ng-view ng-class="{'login-wrapper': onLoginScreen}"></div>
+        </div>
     </body>
 </html>
 
