@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function churchNewCtrl($scope, $location, ChurchService) {
+    function churchNewCtrl($scope, $location, ChurchService, AlertService) {
 
         $scope.church = {};
 
@@ -16,11 +16,8 @@
             ChurchService.add($scope.church)
                 .success(function() {
 
+                    AlertService.addSuccess('Igreja incluída com sucesso!');
                     $location.url('/church');
-                })
-                .error(function() {
-
-                    console.log('damn ;-;');
                 });
         };
     }

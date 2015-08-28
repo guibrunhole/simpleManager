@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function churchEditCtrl($scope, $location, ChurchService, $routeParams) {
+    function churchEditCtrl($scope, $location, ChurchService, $routeParams, AlertService) {
 
         $scope.church = {};
 
@@ -16,11 +16,8 @@
             ChurchService.update($routeParams.id, $scope.church)
                 .success(function() {
 
+                    AlertService.addSuccess('Igreja editada com sucesso!');
                     $location.url('/church');
-                })
-                .error(function() {
-
-                    console.log('damn ;-;');
                 });
         };
 
@@ -31,9 +28,9 @@
 
                     $scope.church = angular.copy(church);
                 })
-                .error(function () {
+                .error(function() {
 
-                    console.log('ohh mannn!');
+                    $location.url('/church');
                 });
         }
 

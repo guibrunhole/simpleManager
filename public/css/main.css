@@ -48,6 +48,21 @@ label {
     box-shadow:         4px 4px 8px 0 rgba(132, 132, 132, 0.71);
 }
 
+.alert-container {
+    position: absolute;
+    z-index: 10000;
+    width: 50%;
+    left: 100%;
+    margin-top: 10px;
+}
+
+.alert-container > div {
+    position: relative;
+    left: -150%;
+    margin: auto;
+    text-align: center;
+}
+
 .pointer { cursor: pointer; }
 
 #scrollTop {

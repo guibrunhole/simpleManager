@@ -25,6 +25,7 @@
         <script src="libs/angular-ui/ui-position.js"></script>
         <script src="libs/angular-ui/ui-bindHtml.js"></script>
         <script src="libs/angular-ui/ui-typeahead.js"></script>
+        <script src="libs/angular-ui/ui-alert.js"></script>
 
         <script src="libs/adminLTE/js/app.min.js"></script>
 
@@ -52,15 +53,20 @@
         <script src="js/services/AuthorizationService.js"></script>
         <script src="js/services/SessionService.js"></script>
         <script src="js/services/TokenInterceptor.js"></script>
+        <script src="js/services/ErrorInterceptor.js"></script>
         <script src="js/services/ProductService.js"></script>
         <script src="js/services/UserService.js"></script>
         <script src="js/services/ChurchService.js"></script>
         <script src="js/services/OrderService.js"></script>
         <script src="js/services/ChartService.js"></script>
+        <script src="js/services/AlertService.js"></script>
 
         <script src="js/directives/fn-list-directive.js"></script>
     </head>
     <body ng-controller="ApplicationController" class="sidebar-mini skin-blue">
+        <div class="alert-container">
+            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)" dismiss-on-timeout="5000" >{{alert.msg}}</alert>
+        </div>
         <div class="wrapper">
             <div ng-show="!onLoginScreen">
                 <header class="main-header">

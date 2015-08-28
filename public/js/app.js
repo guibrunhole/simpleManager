@@ -7,10 +7,11 @@
     angular.module('app.directives', []);
 
     var app = angular.module('app', ['app.services', 'app.controllers', 'app.directives',
-        'ngRoute', 'ngCookies', 'ui.bootstrap.modal', 'ui.bootstrap.typeahead']);
+        'ngRoute', 'ngCookies', 'ui.bootstrap.modal', 'ui.bootstrap.typeahead', 'ui.bootstrap.alert']);
 
     app.config(function ($httpProvider) {
         $httpProvider.interceptors.push('TokenInterceptor');
+        $httpProvider.interceptors.push('ErrorInterceptor');
     });
 
     app.run(function($rootScope, $location, SessionService) {

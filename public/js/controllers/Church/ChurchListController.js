@@ -2,7 +2,8 @@
 
     'use strict';
 
-    function churchListController($scope, ChurchService, $route, $modal, $location) {
+    function churchListController($scope, ChurchService, $route, AlertService, $location, $interval) {
+
 
         $scope.setLocationTitle('Igrejas');
 
@@ -30,10 +31,6 @@
                 success(function(churches) {
 
                     $scope.tableDef.items = angular.copy(churches);
-                })
-                .error(function(err) {
-
-                    console.error(err);
                 });
         };
 
@@ -53,10 +50,6 @@
                 .success(function() {
 
                     $route.reload();
-                })
-                .error(function(err) {
-
-                    console.log(err);
                 });
         }
 
@@ -69,10 +62,6 @@
 
                         $scope.tableDef.items = angular.copy(churches);
                     }
-                })
-                .error(function(err) {
-
-                    console.error(err);
                 });
         }
 
