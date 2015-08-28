@@ -44,23 +44,7 @@
 
         function editChurch (church) {
 
-            var modalInstance = $modal.open({
-                templateUrl: '../templates/views/Church/churchEdit.html',
-                backdropClass: 'full-height',
-                controller: 'ChurchEditController',
-                resolve: {
-                    churchId: function() {
-
-                        return church.id;
-                    }
-                }
-            });
-
-            modalInstance.result.then(function() {
-
-                $route.reload();
-                console.log('Church updated like a champ!');
-            });
+            $location.url('/church/edit/' + church.id);
         }
 
         function removeChurch(church) {

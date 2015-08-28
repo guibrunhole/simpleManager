@@ -2,21 +2,21 @@
 
     'use strict';
 
-    function churchEditCtrl($scope, $modalInstance, ChurchService, churchId) {
+    function churchEditCtrl($scope, $location, ChurchService, $routeParams) {
 
         $scope.church = {};
 
         $scope.cancel = function() {
 
-            $modalInstance.dismiss('cancel');
+            $location.url('/church');
         };
 
         $scope.update = function() {
 
-            ChurchService.update(churchId, $scope.church)
+            ChurchService.update($routeParams.id, $scope.church)
                 .success(function() {
 
-                    $modalInstance.close($scope.church);
+                    $location.url('/church');
                 })
                 .error(function() {
 
@@ -26,7 +26,7 @@
 
         function load() {
 
-            ChurchService.getById(churchId)
+            ChurchService.getById($routeParams.id)
                 .success(function(church) {
 
                     $scope.church = angular.copy(church);

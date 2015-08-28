@@ -19,13 +19,6 @@
                     requireLogin: true
                 }
             })
-            .when('/product', {
-                templateUrl: '/templates/views/Product/productList.html',
-                controller: 'ProductListController',
-                access: {
-                    requireLogin: true
-                }
-            })
             .when('/church', {
                 templateUrl: '/templates/views/Church/churchList.html',
                 controller: 'ChurchListController',
@@ -36,6 +29,20 @@
             .when('/church/new', {
                 templateUrl: '/templates/views/Church/churchNew.html',
                 controller: 'ChurchNewController',
+                access: {
+                    requireLogin: true
+                }
+            })
+            .when('/church/edit/:id', {
+                templateUrl: '/templates/views/Church/churchEdit.html',
+                controller: 'ChurchEditController',
+                access: {
+                    requireLogin: true
+                }
+            })
+            .when('/product', {
+                templateUrl: '/templates/views/Product/productList.html',
+                controller: 'ProductListController',
                 access: {
                     requireLogin: true
                 }
