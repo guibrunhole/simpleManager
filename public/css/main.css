@@ -183,6 +183,18 @@ label {
     src: url('../fonts/Roboto-Light.ttf');
 }
 
+.form-button button {
+    margin-right: 10px;
+}
+
+.form-button button:last-child {
+    margin-right: 0px;
+}
+
+.new-button-wrapper {
+    top: 19px;
+}
+
 /* bootstrap override */
 
 .table-hover>tbody>tr:hover {

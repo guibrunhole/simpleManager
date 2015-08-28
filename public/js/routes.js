@@ -33,6 +33,13 @@
                     requireLogin: true
                 }
             })
+            .when('/church/new', {
+                templateUrl: '/templates/views/Church/churchNew.html',
+                controller: 'ChurchNewController',
+                access: {
+                    requireLogin: true
+                }
+            })
             .when('/user', {
                 templateUrl: '/templates/views/User/userList.html',
                 controller: 'UserListController',

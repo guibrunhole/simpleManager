@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function churchListController($scope, ChurchService, $route, $modal) {
+    function churchListController($scope, ChurchService, $route, $modal, $location) {
 
         $scope.setLocationTitle('Igrejas');
 
@@ -39,17 +39,7 @@
 
         $scope.newChurch = function() {
 
-            var modalInstance = $modal.open({
-                templateUrl: '../templates/views/Church/churchNew.html',
-                backdropClass: 'full-height',
-                controller: 'ChurchNewController'
-            });
-
-            modalInstance.result.then(function() {
-
-                $route.reload();
-                console.log('Church saved like a boss!');
-            });
+            $location.url('/church/new');
         };
 
         function editChurch (church) {

@@ -2,13 +2,13 @@
 
     'use strict';
 
-    function churchNewCtrl($scope, $modalInstance, ChurchService) {
+    function churchNewCtrl($scope, $location, ChurchService) {
 
         $scope.church = {};
 
         $scope.cancel = function() {
 
-            $modalInstance.dismiss('cancel');
+            $location.url('/church');
         };
 
         $scope.save = function() {
@@ -16,7 +16,7 @@
             ChurchService.add($scope.church)
                 .success(function() {
 
-                    $modalInstance.close($scope.church);
+                    $location.url('/church');
                 })
                 .error(function() {
 
