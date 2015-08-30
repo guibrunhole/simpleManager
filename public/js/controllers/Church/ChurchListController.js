@@ -2,8 +2,7 @@
 
     'use strict';
 
-    function churchListController($scope, ChurchService, $route, AlertService, $location, $interval) {
-
+    function churchListController($scope, ChurchService, $route, $location) {
 
         $scope.setLocationTitle('Igrejas');
 
