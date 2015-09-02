@@ -4,10 +4,10 @@
 
     module.exports = function(churchRepository) {
 
-        function errorThrown(res) {
+        function errorThrown(err) {
 
-            console.error(res);
-            res.status(500).send('An error ocurred, please contact support. Thank you!');
+            console.error(err);
+            res.status(500).send(err);
         }
 
         return {
@@ -16,9 +16,9 @@
                 churchRepository.getAll(req.query.searchParam).then(function(results) {
 
                     res.send(results);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    errorThrown(err);
                 });
             },
             addNew: function(req, res) {
@@ -26,9 +26,9 @@
                 churchRepository.add(req.body).then(function(createdChurchId) {
 
                     res.send('Church created with Id: ' + createdChurchId);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    errorThrown(err);
                 });
             },
             getById: function(req, res) {
@@ -39,9 +39,9 @@
                         res.status(404).send('Church not found :(');
                     else
                         res.send(result[0]);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    errorThrown(err);
                 });
             },
             update: function(req, res) {
@@ -56,14 +56,14 @@
                         churchRepository.update(req.params.id, req.body).then(function () {
 
                             res.send('Church updated!');
-                        }, function () {
+                        }, function (err) {
 
-                            errorThrown(res);
+                            errorThrown(err);
                         });
                     }
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    errorThrown(err);
                 });
             },
             remove: function(req, res) {
@@ -78,14 +78,14 @@
                         churchRepository.removeById(req.params.id).then(function() {
 
                             res.send('Church removed!');
-                        }, function() {
+                        }, function(err) {
 
-                            errorThrown(res);
+                            errorThrown(err);
                         });
                     }
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    errorThrown(err);
                 });
             }
         };

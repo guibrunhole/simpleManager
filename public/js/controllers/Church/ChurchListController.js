@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function churchListController($scope, ChurchService, $route, $location) {
+    function churchListController($scope, ChurchService, $route, $location, AlertService) {
 
         $scope.setLocationTitle('Igrejas');
 
@@ -49,6 +49,7 @@
                 .success(function() {
 
                     $route.reload();
+                    AlertService.addSuccess("Igreja removida com sucesso!");
                 });
         }
 

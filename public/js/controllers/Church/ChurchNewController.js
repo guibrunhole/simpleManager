@@ -16,7 +16,7 @@
             ChurchService.add($scope.church)
                 .success(function() {
 
-                    AlertService.addSuccess('Igreja incluída com sucesso!');
+                    AlertService.addSuccess('Igreja incluida com sucesso!');
                     $location.url('/church');
                 });
         };

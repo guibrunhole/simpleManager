@@ -12,7 +12,7 @@
             dbPool.getConnection(function(connectionError, connection){
 
                 if(connectionError) {
-                    deferred.reject();
+                    deferred.reject(connectionError);
                 } else {
                     queryCallback(deferred, connection);
                     connection.release();
@@ -38,7 +38,7 @@
                     connection.query(query, queryParams, function(queryError, rows) {
 
                         if(queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve(rows);
                     });
@@ -54,7 +54,7 @@
                             newChurch.state, newChurch.zipcode || null, newChurch.phone_number, newChurch.responsible_buyer], function(queryError, resultInfo) {
 
                             if(queryError)
-                                deferred.reject();
+                                deferred.reject(queryError);
                             else
                                 deferred.resolve(resultInfo.insertId);
                         });
