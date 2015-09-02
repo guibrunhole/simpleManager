@@ -23,9 +23,9 @@
 
                     $scope.order = order;
                 })
-                .error(function(err) {
+                .error(function() {
 
-                    console.log(err)
+                    $location.url('/order');
                 });
         }
 

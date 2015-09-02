@@ -47,6 +47,20 @@
                     requireLogin: true
                 }
             })
+            .when('/product/new', {
+                templateUrl: '/templates/views/Product/productNew.html',
+                controller: 'ProductNewController',
+                access: {
+                    requireLogin: true
+                }
+            })
+            .when('/product/edit/:id', {
+                templateUrl: '/templates/views/Product/productEdit.html',
+                controller: 'ProductEditController',
+                access: {
+                    requireLogin: true
+                }
+            })
             .when('/user', {
                 templateUrl: '/templates/views/User/userList.html',
                 controller: 'UserListController',

@@ -2,13 +2,13 @@
 
     'use strict';
 
-    function productNewCtrl($scope, $modalInstance, ProductService) {
+    function productNewCtrl($scope, $location, ProductService, AlertService) {
 
         $scope.product = {};
 
         $scope.cancel = function() {
 
-            $modalInstance.dismiss('cancel');
+            $location.url('/product');
         };
 
         $scope.save = function() {
@@ -16,11 +16,8 @@
             ProductService.add($scope.product)
                 .success(function() {
 
-                    $modalInstance.close($scope.product);
-                })
-                .error(function() {
-
-                    console.log('damn ;-;');
+                    AlertService.addSuccess('Produto incluido com sucesso!');
+                    $location.url('/product');
                 });
         };
     }

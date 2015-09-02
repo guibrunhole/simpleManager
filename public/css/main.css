@@ -145,10 +145,6 @@ label {
     margin-top: 12px;
 }
 
-.order-form {
-    display: inline-block;
-}
-
 .form-container {
     padding: 10px;
     border: 1px solid #E2E2E2;
@@ -173,10 +169,6 @@ label {
 
 .action-column {
     text-align: center;
-}
-
-.full-height {
-    height: 100%;
 }
 
 .view-title-cell {

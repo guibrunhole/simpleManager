@@ -2,38 +2,35 @@
 
     'use strict';
 
-    function productEditCtrl($scope, $modalInstance, ProductService, productId) {
+    function productEditCtrl($scope, $location, ProductService, AlertService, $routeParams) {
 
         $scope.product = {};
 
         $scope.cancel = function() {
 
-            $modalInstance.dismiss('cancel');
+            $location.url('/product');
         };
 
         $scope.update = function() {
 
-            ProductService.update(productId, $scope.product)
+            ProductService.update($routeParams.id, $scope.product)
                 .success(function() {
 
-                    $modalInstance.close($scope.product);
-                })
-                .error(function() {
-
-                    console.log('damn ;-;');
+                    AlertService.addSuccess('Produto editado com sucesso!');
+                    $location.url('/product');
                 });
         };
 
         function load() {
 
-            ProductService.getById(productId)
+            ProductService.getById($routeParams.id)
                 .success(function(product) {
 
                     $scope.product = angular.copy(product);
                 })
                 .error(function () {
 
-                    console.log('ohh mannn!');
+                    $location.url('/product');
                 });
         }
 
