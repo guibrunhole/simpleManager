@@ -2,38 +2,35 @@
 
     'use strict';
 
-    function userEditCtrl($scope, $modalInstance, UserService, userId) {
+    function userEditCtrl($scope, $location, UserService, $routeParams, AlertService) {
 
         $scope.user = {};
 
         $scope.cancel = function() {
 
-            $modalInstance.dismiss('cancel');
+            $location.url('/user');
         };
 
         $scope.update = function() {
 
-            UserService.update(userId, $scope.user)
+            UserService.update($routeParams.id, $scope.user)
                 .success(function() {
 
-                    $modalInstance.close($scope.user);
-                })
-                .error(function() {
-
-                    console.log('damn ;-;');
+                    AlertService.addSuccess('Usuario editado com sucesso!');
+                    $location.url('/user');
                 });
         };
 
         function load() {
 
-            UserService.getById(userId)
+            UserService.getById($routeParams.id)
                 .success(function(user) {
 
                     $scope.user = angular.copy(user);
                 })
                 .error(function () {
 
-                    console.log('ohh mannn!');
+                    $location.url('/user');
                 });
         }
 

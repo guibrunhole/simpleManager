@@ -54,6 +54,20 @@
                     requireLogin: true
                 }
             })
+            .when('/user/new', {
+                templateUrl: '/templates/views/User/userNew.html',
+                controller: 'UserNewController',
+                access: {
+                    requireLogin: true
+                }
+            })
+            .when('/user/edit/:id', {
+                templateUrl: '/templates/views/User/userEdit.html',
+                controller: 'UserEditController',
+                access: {
+                    requireLogin: true
+                }
+            })
             .when('/order', {
                 templateUrl: '/templates/views/Order/orderList.html',
                 controller: 'OrderListController',

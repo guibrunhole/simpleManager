@@ -1,19 +1,24 @@
 <div>
     <section class="content-header">
-        <h3>Lista de Usu&aacute;rios</h3>
+        <div class="row">
+            <div class="col-lg-9">
+                <h3>Lista de Usu&aacute;rios</h3>
+            </div>
+            <div class="col-lg-3 new-button-wrapper">
+                <button type="button" class="btn btn-primary pull-right" ng-click="newUser()">Novo usu&aacute;rio</button>
+            </div>
+        </div>
     </section>
     <section class="content">
         <div class="box box-primary">
             <div class="box-body">
                 <div class="row">
-                    <div class="col-xs-offset-2 col-xs-6">
+                    <div class="input-group col-xs-offset-2 col-xs-8">
                         <input type="text" class="form-control" placeholder="Buscar usuários" ng-change="searchByParam(search.searchParam)" ng-model="search.searchParam">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
                     </div>
                     <div class="col-xs-4">
-                        <div class="product-button-container">
-                            <button type="button" class="btn new-product-button pull-right"
-                                    ng-click="newUser()">Novo usuário</button>
-                        </div>
+
                     </div>
                 </div>
                 <div class="row">
@@ -25,3 +30,33 @@
         </div>
     </section>
 </div>
+
+
+
+<!--<div>-->
+    <!--<section class="content-header">-->
+        <!--<h3>Lista de Usu&aacute;rios</h3>-->
+    <!--</section>-->
+    <!--<section class="content">-->
+        <!--<div class="box box-primary">-->
+            <!--<div class="box-body">-->
+                <!--<div class="row">-->
+                    <!--<div class="col-xs-offset-2 col-xs-6">-->
+                        <!--<input type="text" class="form-control" placeholder="Buscar usuários" ng-change="searchByParam(search.searchParam)" ng-model="search.searchParam">-->
+                    <!--</div>-->
+                    <!--<div class="col-xs-4">-->
+                        <!--<div class="product-button-container">-->
+                            <!--<button type="button" class="btn new-product-button pull-right"-->
+                                    <!--ng-click="newUser()">Novo usuário</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <!--<div class="col-xs-offset-2 col-xs-8">-->
+                        <!--<fn-list table-def="tableDef"></fn-list>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</section>-->
+<!--</div>-->

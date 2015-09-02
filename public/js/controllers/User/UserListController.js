@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function userListController($scope, UserService, $route, $modal) {
+    function userListController($scope, UserService, $route, $location, AlertService) {
 
         $scope.setLocationTitle('Usuários');
 
@@ -38,38 +38,12 @@
 
         $scope.newUser = function() {
 
-            var modalInstance = $modal.open({
-                templateUrl: '../templates/views/User/userNew.html',
-                backdropClass: 'full-height',
-                controller: 'UserNewController'
-            });
-
-            modalInstance.result.then(function() {
-
-                $route.reload();
-                console.log('User saved like a boss!');
-            });
+            $location.url('/user/new');
         };
 
         function editUser(user) {
 
-            var modalInstance = $modal.open({
-                templateUrl: '../templates/views/User/userEdit.html',
-                backdropClass: 'full-height',
-                controller: 'UserEditController',
-                resolve: {
-                    userId: function() {
-
-                        return user.id;
-                    }
-                }
-            });
-
-            modalInstance.result.then(function() {
-
-                $route.reload();
-                console.log('User updated like a champ!');
-            });
+            $location.url('/user/edit/' + user.id);
         }
 
         function removeUser(user) {
@@ -78,10 +52,7 @@
                 .success(function() {
 
                     $route.reload();
-                })
-                .error(function(err) {
-
-                    console.log(err);
+                    AlertService.addSuccess("Usuario removido com sucesso!");
                 });
         }
 
@@ -95,10 +66,6 @@
                         $scope.tableDef.items = angular.copy(users);
                     }
                 })
-                .error(function(err) {
-
-                    console.error(err);
-                });
         }
 
         fetchUsers();

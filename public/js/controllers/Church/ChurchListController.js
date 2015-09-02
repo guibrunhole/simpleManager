@@ -36,6 +36,7 @@
         $scope.newChurch = function() {
 
             $location.url('/church/new');
+
         };
 
         function editChurch (church) {

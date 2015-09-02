@@ -2,13 +2,13 @@
 
     'use strict';
 
-    function userNewCtrl($scope, $modalInstance, UserService) {
+    function userNewCtrl($scope, $location, UserService, AlertService) {
 
         $scope.user = {};
 
         $scope.cancel = function() {
 
-            $modalInstance.dismiss('cancel');
+            $location.url('/user');
         };
 
         $scope.save = function() {
@@ -16,11 +16,9 @@
             UserService.add($scope.user)
                 .success(function() {
 
-                    $modalInstance.close($scope.user);
-                })
-                .error(function() {
+                    AlertService.addSuccess('Usuario incluida com sucesso!');
+                    $location.url('/user');
 
-                    console.log('damn ;-;');
                 });
         };
     }
