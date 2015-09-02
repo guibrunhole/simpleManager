@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function productListController($scope, ProductService, $route, $modal) {
+    function productListController($scope, ProductService, $route, AlertService, $location) {
 
         $scope.setLocationTitle('Produtos');
 
@@ -30,47 +30,17 @@
                 success(function(products) {
 
                     $scope.tableDef.items = angular.copy(products);
-                })
-                .error(function(err) {
-
-                    console.error(err);
                 });
         };
 
         $scope.newProduct = function() {
 
-            var modalInstance = $modal.open({
-                templateUrl: '../templates/views/Product/productNew.html',
-                backdropClass: 'full-height',
-                controller: 'ProductNewController'
-            });
-
-            modalInstance.result.then(function() {
-
-                $route.reload();
-                console.log('Product saved like a boss!');
-            });
+            $location.url('/product/new');
         };
 
         function editProduct(product) {
 
-            var modalInstance = $modal.open({
-                templateUrl: '../templates/views/Product/productEdit.html',
-                backdropClass: 'full-height',
-                controller: 'ProductEditController',
-                resolve: {
-                    productId: function() {
-
-                        return product.id;
-                    }
-                }
-            });
-
-            modalInstance.result.then(function() {
-
-                $route.reload();
-                console.log('Product updated like a champ!');
-            });
+            $location.url('/product/edit/' + product.id);
         }
 
         function removeProduct(product) {
@@ -79,10 +49,7 @@
                 .success(function() {
 
                     $route.reload();
-                })
-                .error(function(err) {
-
-                    console.log(err);
+                    AlertService.addSuccess("Produto removido com sucesso!");
                 });
         }
 
@@ -95,10 +62,6 @@
 
                         $scope.tableDef.items = angular.copy(products);
                     }
-                })
-                .error(function(err) {
-
-                    console.error(err);
                 });
         }
 
