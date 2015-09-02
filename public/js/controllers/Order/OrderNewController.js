@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function orderNewCtrl($scope, OrderService, ProductService, ChurchService, $location) {
+    function orderNewCtrl($scope, OrderService, ProductService, ChurchService, $location, AlertService) {
 
         $scope.setLocationTitle('Pedidos > Novo');
 
@@ -33,11 +33,8 @@
             OrderService.add($scope.order)
                 .success(function() {
 
+                    AlertService.addSuccess('Pedido incluido com sucesso!');
                     $location.url('/order');
-                })
-                .error(function() {
-
-                    console.log('damn ;-;');
                 });
         };
 
@@ -61,10 +58,6 @@
                 .success(function(products) {
 
                     $scope.products = products;
-                })
-                .error(function(err) {
-
-                    console.log(err);
                 });
         }
 

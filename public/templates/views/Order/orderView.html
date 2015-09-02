@@ -1,29 +1,38 @@
 <div>
-    <div class="form-container order-view-container">
-        <div class="col-lg-offset-2 col-lg-8">
-            <table class="table table-hover">
-                <tbody>
-                    <tr>
-                        <td class="view-title-cell">Igreja</td>
-                        <td>{{order.church_name}}</td>
-                    </tr>
-                    <tr>
-                        <td class="view-title-cell">Criado em:</td>
-                        <td>{{order.created_at  | date: 'dd/MM/yyyy - HH:mm'}}</td>
-                    </tr>
-                    <tr>
-                        <td class="view-title-cell">Observações</td>
-                        <td>{{order.obs || 'Sem observações.'}}</td>
-                    </tr>
-                    <tr ng-repeat="orderDetail in order.orderDetails track by $index">
-                        <td class="view-title-cell">{{orderDetail.name}}</td>
-                        <td>{{orderDetail.product_quantity}}&nbsp;{{unities[orderDetail.product_unity]}}</td>
-                    </tr>
-                </tbody>
-            </table>
+    <section class="content-header">
+        <h3>Visualizar Pedido</h3>
+    </section>
+    <section class="content">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="col-lg-offset-2 col-lg-8">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <td class="view-title-cell">Igreja</td>
+                            <td>{{order.church_name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="view-title-cell">Criado em:</td>
+                            <td>{{order.created_at  | date: 'dd/MM/yyyy - HH:mm'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="view-title-cell">Observações</td>
+                            <td>{{order.obs || 'Sem observações.'}}</td>
+                        </tr>
+                        <tr ng-repeat="orderDetail in order.orderDetails track by $index">
+                            <td class="view-title-cell">{{orderDetail.name}}</td>
+                            <td>{{orderDetail.product_quantity}}&nbsp;{{unities[orderDetail.product_unity]}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="box-footer">
+                <div class="pull-right form-button">
+                    <button type="button" class="btn btn-default" ng-click="back()">Cancelar</button>
+                </div>
+            </div>
         </div>
-        <div class="form-buttons">
-            <button type="button" class="btn btn-primary" ng-click="back()">Voltar</button>
-        </div>
-    </div>
+    </section>
 </div>

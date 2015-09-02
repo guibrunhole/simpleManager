@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function orderListCtrl($scope, OrderService, $route, $modal, $location) {
+    function orderListCtrl($scope, OrderService, $route, $modal, $location, AlertService) {
 
         $scope.setLocationTitle('Pedidos');
 
@@ -35,10 +35,6 @@
                 success(function(orders) {
 
                     $scope.tableDef.items = angular.copy(orders);
-                })
-                .error(function(err) {
-
-                    console.error(err);
                 });
         };
 
@@ -62,11 +58,8 @@
             OrderService.remove(order.id)
                 .success(function() {
 
+                    AlertService.addSuccess('Pedido removido com sucesso!');
                     $route.reload();
-                })
-                .error(function(err) {
-
-                    console.log(err);
                 });
         }
 
@@ -113,10 +106,6 @@
                 success(function(orders) {
 
                     $scope.tableDef.items = angular.copy(orders);
-                })
-                .error(function(err) {
-
-                    console.error(err);
                 });
         }
 

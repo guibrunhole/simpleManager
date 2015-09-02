@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function orderEditController($scope, OrderService, $routeParams, ProductService, ChurchService, $location) {
+    function orderEditController($scope, OrderService, $routeParams, ProductService, ChurchService, $location, AlertService) {
 
         $scope.setLocationTitle('Pedidos > Editar');
 
@@ -24,19 +24,17 @@
 
         function load() {
 
-            ProductService.getAll()
-                .success(function(products) {
+            OrderService.getById($routeParams.orderId)
+                .success(function(order) {
 
-                    console.log(products);
-                    $scope.products = products;
+                    $scope.church = angular.copy(order.church_name);
+                    $scope.order.churchId = angular.copy(order.church_id);
+                    $scope.order.obs = angular.copy(order.obs);
 
-                    OrderService.getById($routeParams.orderId)
-                        .success(function(order) {
+                    ProductService.getAll()
+                        .success(function(products) {
 
-                            console.log(order);
-                            $scope.church = angular.copy(order.church_name);
-                            $scope.order.churchId = angular.copy(order.church_id);
-                            $scope.order.obs = angular.copy(order.obs);
+                            $scope.products = products;
 
                             angular.forEach(order.orderDetails, function(orderDetail) {
                                 angular.forEach($scope.products, function(product) {
@@ -48,16 +46,11 @@
 
                                 });
                             });
-                            //$scope.order = order;
-                        })
-                        .error(function(err) {
-
-                            console.log(err)
                         });
                 })
-                .error(function(err) {
+                .error(function(){
 
-                    console.log(err);
+                    $location.url('/order');
                 });
         }
 
@@ -72,11 +65,8 @@
             OrderService.update($routeParams.orderId, $scope.order)
                 .success(function() {
 
+                    AlertService.addSuccess('Pedido alterado com sucesso!');
                     $location.url('/order');
-                })
-                .error(function() {
-
-                    console.log('damn ;-;');
                 });
         };
 
