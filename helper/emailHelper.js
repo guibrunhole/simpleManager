@@ -21,8 +21,8 @@
                 var mailOptions = {
                     from:  'CCB - Sistema de Compras <' + process.env.MANDRILL_USER + '>',
                     to: recipientEmail,
-                    subject: 'Relatório',
-                    text: 'Segue em anexo o relatório do pedido.',
+                    subject: 'Relatorio',
+                    text: 'Segue em anexo o relatorio do pedido.',
                     attachments: [{
                         filename: pdfName ? pdfName + '.pdf' : 'Pedido.pdf',
                         path: spreadSheetPath
