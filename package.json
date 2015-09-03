@@ -12,7 +12,8 @@
     "node-uuid": "1.4.2",
     "nodepdf": "1.1.3",
     "node-oauth2-server": "2.2.2",
-    "bcrypt-nodejs": "~0.0.3"
+    "bcrypt-nodejs": "~0.0.3",
+    "cors": "2.7.1"
   },
   "devDependencies": {}
 }
