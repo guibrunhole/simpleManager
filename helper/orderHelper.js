@@ -165,6 +165,8 @@
 
                 var deferred = q.defer();
 
+                console.log("Started building report!");
+
                 var createdPdfPath = 'temp/' + uuid.v4() + '.pdf';
                 var pdf = new NodePDF(null, createdPdfPath, {
                     content: parseToHtml(order),

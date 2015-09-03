@@ -13,7 +13,8 @@
     "nodepdf": "1.1.3",
     "node-oauth2-server": "2.2.2",
     "bcrypt-nodejs": "~0.0.3",
-    "cors": "2.7.1"
+    "cors": "2.7.1",
+    "nodemailer-mandrill-transport": "0.3.0"
   },
   "devDependencies": {}
 }

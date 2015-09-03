@@ -96,6 +96,7 @@
 
                 orderRepository.getForPdf(req.params.id).then(function(order) {
 
+                    console.log("Order fetched!");
                     orderHelper.createPdf(order).then(function(pdfPath) {
 
                         if(req.query.sendTo)
