@@ -174,22 +174,22 @@
                 var createdPdfPath = 'temp/' + uuid.v4() + '.pdf';
                 console.log("Started building report!");
                 var pdf = new NodePDF(null, createdPdfPath, {
-                    content: parseToHtml(order),
-                    viewportSize: {
-                        width: 3000,
-                        height: 9000
+                    'content': parseToHtml(order),
+                    'viewportSize': {
+                        'width': 3000,
+                        'height': 9000
                     },
-                    paperSize: {
-                        pageFormat: 'A4',
-                        margin: {
-                            top: '2cm'
+                    'paperSize': {
+                        'pageFormat': 'A4',
+                        'margin': {
+                            'top': '2cm'
                         },
-                        footer: {
-                            height: '1cm',
-                            contents: '<div style="text-align: right;">{currentPage} / {pages}</div>'
+                        'footer': {
+                            'height': '1cm',
+                            'contents': '<div style="text-align: right;">{currentPage} / {pages}</div>'
                         }
                     },
-                    zoomFactor: 1
+                    'zoomFactor': 1
                 });
 
                 pdf.on('error', function(msg){
