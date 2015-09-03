@@ -107,56 +107,61 @@
 
         function parseToHtml(order) {
 
-            return '<html>' +
-                        '<head>' +
-                            '<link rel="stylesheet" href="' + process.env.BASE_API_ADDRESS + '/libs/bootstrap/css/bootstrap.css" media="print">' +
-                        '</head>' +
-                        '<body>' +
-                            '<div class="row">' +
-                                '<h1 class="text-center">' +
-                                    'CONGREGAÇÃO CRISTÃ NO BRASIL' +
-                                '</h1>' +
-                            '</div>' +
-                            '<div class="row">' +
-                                '<h2 class="text-center">' +
-                                    'Pedido de compra - '+ currentDate() +
-                                '</h2>' +
-                            '</div>' +
-                            '<hr />' +
-                            '<div class="row">' +
-                                '<div class="col-xs-12">' +
-                                    '<h4>' +
-                                        'Local de entrega' +
-                                    '</h4>' +
-                                '</div>' +
-                                buildDeliveryHeader(order) +
-                            '</div>' +
-                            '<hr />' +
-                            '<div class="row">' +
-                                '<div class="col-xs-12">' +
-                                    '<h4>' +
-                                        'Resumo da compra' +
-                                    '</h4>' +
-                                '</div>' +
-                                '<div class="col-xs-12">' +
-                                    '<div class="col-xs-12">' +
-                                        getProductsTable(order.orderDetail) +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                            '<hr />' +
-                            '<div class="row">' +
-                                '<div class="col-xs-5 col-xs-offset-1 text-center">' +
-                                    '<p>_________________________________________</p>' +
-                                    '<label>Assinatura Responsável</label>' +
-                                '</div>' +
-                                '<div class="col-xs-5 text-center">' +
-                                    '<p>_________________________________________</p>' +
-                                    '<label>Assinatura Comissão de Compras</label>' +
-                                '</div>' +
-                            '</div>' +
-                            '</body>' +
-                        '</html>';
+            var parsedHtml = '<html>' +
+                '<head>' +
+                '<link rel="stylesheet" href="' + process.env.BASE_API_ADDRESS + '/libs/bootstrap/css/bootstrap.css" media="print">' +
+                '</head>' +
+                '<body>' +
+                '<div class="row">' +
+                '<h1 class="text-center">' +
+                'CONGREGAÇÃO CRISTÃ NO BRASIL' +
+                '</h1>' +
+                '</div>' +
+                '<div class="row">' +
+                '<h2 class="text-center">' +
+                'Pedido de compra - '+ currentDate() +
+                '</h2>' +
+                '</div>' +
+                '<hr />' +
+                '<div class="row">' +
+                '<div class="col-xs-12">' +
+                '<h4>' +
+                'Local de entrega' +
+                '</h4>' +
+                '</div>' +
+                buildDeliveryHeader(order) +
+                '</div>' +
+                '<hr />' +
+                '<div class="row">' +
+                '<div class="col-xs-12">' +
+                '<h4>' +
+                'Resumo da compra' +
+                '</h4>' +
+                '</div>' +
+                '<div class="col-xs-12">' +
+                '<div class="col-xs-12">' +
+                getProductsTable(order.orderDetail) +
+                '</div>' +
+                '</div>' +
+                '</div>' +
+                '<hr />' +
+                '<div class="row">' +
+                '<div class="col-xs-5 col-xs-offset-1 text-center">' +
+                '<p>_________________________________________</p>' +
+                '<label>Assinatura Responsável</label>' +
+                '</div>' +
+                '<div class="col-xs-5 text-center">' +
+                '<p>_________________________________________</p>' +
+                '<label>Assinatura Comissão de Compras</label>' +
+                '</div>' +
+                '</div>' +
+                '</body>' +
+                '</html>';
+
+
+            console.log("Finished parsing html");
+
+            return parsedHtml;
         }
 
         return {
@@ -165,9 +170,9 @@
 
                 var deferred = q.defer();
 
-                console.log("Started building report!");
 
                 var createdPdfPath = 'temp/' + uuid.v4() + '.pdf';
+                console.log("Started building report!");
                 var pdf = new NodePDF(null, createdPdfPath, {
                     content: parseToHtml(order),
                     viewportSize: {
