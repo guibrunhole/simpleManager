@@ -189,7 +189,8 @@
                             contents: '<div style="text-align: right;">{currentPage} / {pages}</div>'
                         }
                     },
-                    zoomFactor: 1
+                    zoomFactor: 1,
+                    args: '--debug=true'
                 });
 
                 pdf.on('error', function(msg){
