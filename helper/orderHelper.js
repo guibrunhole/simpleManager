@@ -189,8 +189,7 @@
                             contents: '<div style="text-align: right;">{currentPage} / {pages}</div>'
                         }
                     },
-                    zoomFactor: 1,
-                    args: '--debug=true'
+                    zoomFactor: 1
                 });
 
                 pdf.on('error', function(msg){
@@ -201,6 +200,17 @@
                 pdf.on('done', function(pathToFile){
                     console.log('Done \\o/ :' + pathToFile);
                     deferred.resolve(createdPdfPath);
+                });
+
+                pdf.on('stdout', function(stdout){
+                    console.log("STDOUT");
+                    console.log(stdout);
+                });
+
+                pdf.on('stderr', function(stderr){
+                    console.log('STD ERROR!!');
+                    console.log(stderr);
+                    deferred.reject(stderr);
                 });
 
                 return deferred.promise;
