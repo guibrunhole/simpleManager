@@ -29,6 +29,12 @@
             $scope.locationTitle = newTitle;
         };
 
+        $scope.logout = function() {
+
+            SessionService.destroySession();
+            $location.url('/login');
+        };
+
         $interval(function() {
 
             var expirationDate = SessionService.getExpirationDate();
@@ -40,9 +46,8 @@
 
                         SessionService.updateSession(data);
                     })
-                    .error(function(err) {
+                    .error(function() {
 
-                        console.log(err);
                         SessionService.destroySession();
                     });
             }
