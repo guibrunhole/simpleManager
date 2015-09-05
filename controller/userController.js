@@ -13,7 +13,7 @@
         return {
             getAll: function(req, res) {
 
-                userRepository.getAll().then(function(results) {
+                userRepository.getAll(req.query.searchParam).then(function(results) {
 
                     res.send(results);
                 }, function() {

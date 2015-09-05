@@ -4,8 +4,6 @@
 
     function userListController($scope, UserService, $route, $location, AlertService) {
 
-        $scope.setLocationTitle('Usuários');
-
         $scope.tableDef = {
             structure: [
                 { header: 'Nome', cell: 'name', altCell: 'Sem nome'},
@@ -29,10 +27,6 @@
                 success(function(users) {
 
                     $scope.tableDef.items = angular.copy(users);
-                })
-                .error(function(err) {
-
-                    console.error(err);
                 });
         };
 

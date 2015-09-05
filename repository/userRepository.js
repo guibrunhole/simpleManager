@@ -25,13 +25,21 @@
         }
 
         return{
-            getAll: function() {
+            getAll: function(searchParam) {
 
-                return queryFromPool(function(deferred, connection) {
+                var query = 'SELECT * FROM user';
+                var queryParams = [];
 
-                    connection.query('SELECT * FROM user', null, function(queryError, rows) {
+                if (searchParam){
+                    query = query + ' WHERE name LIKE ?';
+                    queryParams = ['%' + searchParam + '%'];
+                }
 
-                        if(queryError)
+                return queryFromPool(function(deferred, connection){
+
+                    connection.query(query, queryParams, function(queryError, rows){
+
+                        if (queryError)
                             deferred.reject();
                         else
                             deferred.resolve(rows);
