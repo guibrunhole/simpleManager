@@ -16,7 +16,7 @@
             UserService.add($scope.user)
                 .success(function() {
 
-                    AlertService.addSuccess('Usuario incluida com sucesso!');
+                    AlertService.addSuccess('Usuario incluido com sucesso!');
                     $location.url('/user');
 
                 });
