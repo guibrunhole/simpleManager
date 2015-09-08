@@ -4,17 +4,16 @@
   "description": "It's so simple but yet, so pretty!",
   "main": "server.js",
   "dependencies": {
-    "express": "4.10.7",
-    "mysql": "2.5.4",
-    "body-parser": "1.11.0",
-    "q": "1.1.2",
-    "nodemailer": "1.1.2",
-    "node-uuid": "1.4.2",
-    "nodepdf": "1.1.3",
-    "node-oauth2-server": "2.2.2",
+    "express": "~4.10.7",
+    "mysql": "~2.5.4",
+    "body-parser": "~1.11.0",
+    "q": "~1.1.2",
+    "nodemailer": "~1.1.2",
+    "node-uuid": "~1.4.2",
+    "nodepdf": "~1.2.0",
+    "node-oauth2-server": "~2.2.2",
     "bcrypt-nodejs": "~0.0.3",
-    "cors": "2.7.1",
-    "nodemailer-mandrill-transport": "0.3.0"
+    "cors": "~2.7.1"
   },
   "devDependencies": {}
 }
