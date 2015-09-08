@@ -26,7 +26,7 @@
     app.use('/', express.static(__dirname + '/public'));
     app.use('/temp', express.static(__dirname + '/temp'));
 
-    require('./routes')(app, pool);
+    require('./api-mapping')(app, pool);
 
     var server = app.listen(process.env.SV_PORT || 3010, function () {
 
