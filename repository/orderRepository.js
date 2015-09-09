@@ -6,18 +6,18 @@
     var ORDER_DETAIL_INSERT = 'INSERT INTO order_detail (order_id, product_id, product_quantity, product_unity) ' +
                                 'VALUES (?, ?, ?, ?);';
 
-    var GET_ORDER_PDF = 'SELECT' +
-                            'o.obs AS orderObservation,' +
-                            'c.address AS churchAddress,' +
-                            'c.name AS churchName,' +
-                            'c.city AS churchCity,' +
-                            'c.state AS churchState,' +
-                            'c.zipcode AS churchZipCode,' +
-                            'c.cnpj AS churchCnpj,' +
-                            'c.phone_number AS churchPhoneNumber,' +
-                            'c.responsible_buyer AS buyerName' +
-                        'FROM orders o' +
-                            'INNER JOIN church c ON c.id = o.church_id' +
+    var GET_ORDER_PDF = 'SELECT ' +
+                            'o.obs AS orderObservation, ' +
+                            'c.address AS churchAddress, ' +
+                            'c.name AS churchName, ' +
+                            'c.city AS churchCity, ' +
+                            'c.state AS churchState, ' +
+                            'c.zipcode AS churchZipCode, ' +
+                            'c.cnpj AS churchCnpj, ' +
+                            'c.phone_number AS churchPhoneNumber, ' +
+                            'c.responsible_buyer AS buyerName ' +
+                        'FROM orders o ' +
+                            'INNER JOIN church c ON c.id = o.church_id ' +
                         'WHERE o.id = ?;';
 
     var GET_ORDER_DETAILS_PDF = 'select ' +
