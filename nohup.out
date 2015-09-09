@@ -1,0 +1,61 @@
+
+Running node-supervisor with
+  program 'server.js'
+  --watch '.'
+  --extensions 'node,js'
+  --exec 'node'
+
+Starting child process with 'node server.js'
+Watching directory '/home/ubuntu/simpleManager' for changes.
+Press rs for restarting the process.
+events.js:85
+      throw er; // Unhandled 'error' event
+            ^
+Error: EBADF, read
+    at Error (native)
+I'm running here bro 3010! Go check me out ;)
+
+Running node-supervisor with
+  program 'server.js'
+  --watch '.'
+  --extensions 'node,js'
+  --exec 'node'
+
+Starting child process with 'node server.js'
+Watching directory '/home/ubuntu/simpleManager' for changes.
+Press rs for restarting the process.
+events.js:85
+      throw er; // Unhandled 'error' event
+            ^
+Error: EBADF, read
+    at Error (native)
+events.js:85
+      throw er; // Unhandled 'error' event
+            ^
+Error: listen EADDRINUSE
+    at exports._errnoException (util.js:746:11)
+    at Server._listen2 (net.js:1156:14)
+    at listen (net.js:1182:10)
+    at Server.listen (net.js:1267:5)
+    at EventEmitter.app.listen (/home/ubuntu/simpleManager/node_modules/express/lib/application.js:559:24)
+    at /home/ubuntu/simpleManager/server.js:31:22
+    at Object.<anonymous> (/home/ubuntu/simpleManager/server.js:35:3)
+    at Module._compile (module.js:460:26)
+    at Object.Module._extensions..js (module.js:478:10)
+    at Module.load (module.js:355:32)
+Sun, 06 Sep 2015 12:59:37 GMT express deprecated res.send(status, body): Use res.status(status).send(body) instead at node_modules/node-oauth2-server/lib/oauth2server.js:130:9
+/home/ubuntu/simpleManager/node_modules/mysql/lib/protocol/Parser.js:82
+        throw err;
+              ^
+TypeError: Cannot read property 'password' of undefined
+    at Query._callback (/home/ubuntu/simpleManager/repository/userRepository.js:243:58)
+    at Query.Sequence.end (/home/ubuntu/simpleManager/node_modules/mysql/lib/protocol/sequences/Sequence.js:96:24)
+    at Query._handleFinalResultPacket (/home/ubuntu/simpleManager/node_modules/mysql/lib/protocol/sequences/Query.js:143:8)
+    at Query.EofPacket (/home/ubuntu/simpleManager/node_modules/mysql/lib/protocol/sequences/Query.js:127:8)
+    at Protocol._parsePacket (/home/ubuntu/simpleManager/node_modules/mysql/lib/protocol/Protocol.js:271:23)
+    at Parser.write (/home/ubuntu/simpleManager/node_modules/mysql/lib/protocol/Parser.js:77:12)
+    at Protocol.write (/home/ubuntu/simpleManager/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/home/ubuntu/simpleManager/node_modules/mysql/lib/Connection.js:82:28)
+    at Socket.emit (events.js:107:17)
+    at readableAddChunk (_stream_readable.js:163:16)
+I'm running here bro 3010! Go check me out ;)
