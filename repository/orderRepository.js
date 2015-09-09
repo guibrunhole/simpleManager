@@ -3,21 +3,22 @@
     'use strict';
 
     var q = require('q');
-    var ORDER_DETAIL_INSERT = 'INSERT INTO order_detail (order_id, product_id, product_quantity, product_unity) VALUES (?, ?, ?, ?);';
-    var GET_ORDER_PDF = 'select '+
-                            'o.obs as orderObservation, '+
-                            'c.address as churchAddress, '+
-                            'c.name as churchName, '+
-                            'c.city as churchCity, '+
-                            'c.state as churchState, '+
-                            'c.zipcode as churchZipCode, '+
-                            'c.cnpj as churchCnpj, '+
-                            'c.phone_number as churchPhoneNumber, '+
-                            'u.name as buyerName '+
-                        'from orders o '+
-                            'inner join church c on c.id = o.church_id '+
-                            'inner join user u on u.id = o.user_id '+
-                        'where o.id = ?;';
+    var ORDER_DETAIL_INSERT = 'INSERT INTO order_detail (order_id, product_id, product_quantity, product_unity) ' +
+                                'VALUES (?, ?, ?, ?);';
+
+    var GET_ORDER_PDF = 'SELECT' +
+                            'o.obs AS orderObservation,' +
+                            'c.address AS churchAddress,' +
+                            'c.name AS churchName,' +
+                            'c.city AS churchCity,' +
+                            'c.state AS churchState,' +
+                            'c.zipcode AS churchZipCode,' +
+                            'c.cnpj AS churchCnpj,' +
+                            'c.phone_number AS churchPhoneNumber,' +
+                            'c.responsible_buyer AS buyerName' +
+                        'FROM orders o' +
+                            'INNER JOIN church c ON c.id = o.church_id' +
+                        'WHERE o.id = ?;';
 
     var GET_ORDER_DETAILS_PDF = 'select ' +
                                     'p.id_on_supplier as productId, ' +
