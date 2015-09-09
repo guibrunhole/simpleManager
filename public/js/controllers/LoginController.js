@@ -2,27 +2,26 @@
 
     'use strict';
 
-    function loginController($scope, AuthorizationService, SessionService, $location) {
+    function loginController($scope, LoginService, AlertService, $location) {
 
         $scope.setOnLoginScreen(true);
 
         $scope.credentials = {
-            login: undefined,
+            username: undefined,
             password: undefined
         };
 
         $scope.login = function() {
 
-            AuthorizationService.attemptLogin($scope.credentials)
-                .success(function(data) {
+            LoginService.attemptLogin($scope.credentials)
+                .success(function() {
 
-                    SessionService.createSession(data);
-                    $scope.setLoggedUser($scope.credentials.login);
-                    $location.url('/');
+                    $scope.setOnLoginScreen(false);
+                    $location.path('/');
                 })
-                .error(function(err) {
+                .error(function() {
 
-                    console.log(err);
+                    AlertService.addError('Usu\u00e1rio e\/ou senha errados! Sorry mate :(');
                 });
         };
 

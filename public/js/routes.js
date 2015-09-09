@@ -2,119 +2,105 @@
 
     'use strict';
 
+    function verifyLogin ($q, $location, LoginService, AlertService) {
+
+        var deferred = $q.defer();
+
+        LoginService.verifyLogin()
+            .success(function(user){
+
+                if (user !== '0') {
+
+                    deferred.resolve();
+                } else {
+                    AlertService.addError('\u00c9 necess\u00e1rio efetuar o login!');
+                    deferred.reject();
+                    $location.url('/login');
+                }
+            });
+
+        return deferred.promise;
+    }
+
     function routesConfig($routeProvider) {
 
         $routeProvider
             .when('/login', {
                 templateUrl: '/templates/views/login.html',
-                controller: 'LoginController',
-                access: {
-                    requireLogin: false
-                }
+                controller: 'LoginController'
             })
             .when('/', {
                 templateUrl: '/templates/views/main.html',
                 controller: 'MainController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/church', {
                 templateUrl: '/templates/views/Church/churchList.html',
                 controller: 'ChurchListController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/church/new', {
                 templateUrl: '/templates/views/Church/churchNew.html',
                 controller: 'ChurchNewController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/church/edit/:id', {
                 templateUrl: '/templates/views/Church/churchEdit.html',
                 controller: 'ChurchEditController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/product', {
                 templateUrl: '/templates/views/Product/productList.html',
                 controller: 'ProductListController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/product/new', {
                 templateUrl: '/templates/views/Product/productNew.html',
                 controller: 'ProductNewController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/product/edit/:id', {
                 templateUrl: '/templates/views/Product/productEdit.html',
                 controller: 'ProductEditController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/user', {
                 templateUrl: '/templates/views/User/userList.html',
                 controller: 'UserListController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/user/new', {
                 templateUrl: '/templates/views/User/userNew.html',
                 controller: 'UserNewController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/user/edit/:id', {
                 templateUrl: '/templates/views/User/userEdit.html',
                 controller: 'UserEditController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/order', {
                 templateUrl: '/templates/views/Order/orderList.html',
                 controller: 'OrderListController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/order/new', {
                 templateUrl: '/templates/views/Order/orderNew.html',
                 controller: 'OrderNewController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/order/view/:orderId', {
                 templateUrl: '/templates/views/Order/orderView.html',
                 controller: 'OrderViewController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .when('/order/edit/:orderId', {
                 templateUrl: '/templates/views/Order/orderEdit.html',
                 controller: 'OrderEditController',
-                access: {
-                    requireLogin: true
-                }
+                resolve: { loggedIn: verifyLogin }
             })
             .otherwise({
-                redirectTo: '/',
-                access: {
-                    requireLogin: true
-                }
+                redirectTo: '/'
             });
     }
 

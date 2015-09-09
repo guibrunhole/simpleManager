@@ -2,9 +2,7 @@
 
     'use strict';
 
-    var oauthserver = require('node-oauth2-server');
-
-    module.exports = function(app, pool){
+    module.exports = function(app, pool, passport){
 
         var ProductRepository = require('./repository/productRepository')(pool);
         var UserRepository = require('./repository/userRepository')(pool);
@@ -18,45 +16,78 @@
         var OrderModule = require('./modules/orderModule')(OrderRepository, ChurchRepository, UserRepository);
         var ChartModule = require('./modules/chartModule')(ChartRepository);
 
-        app.oauth = oauthserver({
-            model: UserRepository,
-            grants: ['password', 'refresh_token']
+        app.post('/login', passport.authenticate('local'), function(req, res) {
+            delete req.user.password;
+            res.send(req.user);
         });
 
-        app.all('/oauth/token', app.oauth.grant());
+        app.get('/logout', function(req, res){
+            req.logout();
+            res.redirect('/');
+        });
+
+        app.get('/loggedIn', function(req, res) {
+
+            if(req.isAuthenticated()) {
+                delete req.user.password;
+                res.send(req.user);
+            } else {
+                res.send('0');
+            }
+        });
+
+        function ensureAuthenticated(req, res, next) {
+
+            if (req.isAuthenticated()) { return next(); }
+            req.session.error = 'Você precisa se logar primeiro ;)';
+            res.redirect('/');
+        }
 
         // Product
-        app.get('/product', app.oauth.authorise(), ProductModule.getAll);
-        app.post('/product', app.oauth.authorise(), ProductModule.addNew);
-        app.get('/product/:id', app.oauth.authorise(), ProductModule.getById);
-        app.put('/product/:id', app.oauth.authorise(), ProductModule.update);
-        app.delete('/product/:id', app.oauth.authorise(), ProductModule.remove);
+        app.get('/product', ensureAuthenticated, ProductModule.getAll);
+        app.post('/product', ensureAuthenticated, ProductModule.addNew);
+        app.get('/product/:id', ensureAuthenticated, ProductModule.getById);
+        app.put('/product/:id', ensureAuthenticated, ProductModule.update);
+        app.delete('/product/:id', ensureAuthenticated, ProductModule.remove);
 
         // User
-        app.get('/user', app.oauth.authorise(), UserModule.getAll);
-        app.post('/user', app.oauth.authorise(), UserModule.addNew);
-        app.get('/user/:id', app.oauth.authorise(), UserModule.getById);
-        app.put('/user/:id', app.oauth.authorise(), UserModule.update);
-        app.delete('/user/:id', app.oauth.authorise(), UserModule.remove);
+        app.get('/user', ensureAuthenticated, UserModule.getAll);
+        app.post('/user', ensureAuthenticated, UserModule.addNew);
+        app.get('/user/:id', ensureAuthenticated, UserModule.getById);
+        app.put('/user/:id', ensureAuthenticated, UserModule.update);
+        app.delete('/user/:id', ensureAuthenticated, UserModule.remove);
 
         // Church
-        app.get('/church', app.oauth.authorise(), ChurchModule.getAll);
-        app.post('/church', app.oauth.authorise(), ChurchModule.addNew);
-        app.get('/church/:id', app.oauth.authorise(), ChurchModule.getById);
-        app.put('/church/:id', app.oauth.authorise(), ChurchModule.update);
-        app.delete('/church/:id', app.oauth.authorise(), ChurchModule.remove);
+        app.get('/church', ensureAuthenticated, ChurchModule.getAll);
+        app.post('/church', ensureAuthenticated, ChurchModule.addNew);
+        app.get('/church/:id', ensureAuthenticated, ChurchModule.getById);
+        app.put('/church/:id', ensureAuthenticated, ChurchModule.update);
+        app.delete('/church/:id', ensureAuthenticated, ChurchModule.remove);
 
         // Order
-        app.get('/order', app.oauth.authorise(), OrderModule.getAll);
-        app.post('/order', app.oauth.authorise(), OrderModule.addNew);
-        app.get('/order/:id', app.oauth.authorise(), OrderModule.getById);
-        app.put('/order/:id', app.oauth.authorise(), OrderModule.update);
-        app.delete('/order/:id', app.oauth.authorise(), OrderModule.remove);
-        app.get('/order/:id/pdf', app.oauth.authorise(), OrderModule.getAsPdf);
+        app.get('/order', ensureAuthenticated, OrderModule.getAll);
+        app.post('/order', ensureAuthenticated, OrderModule.addNew);
+        app.get('/order/:id', ensureAuthenticated, OrderModule.getById);
+        app.put('/order/:id', ensureAuthenticated, OrderModule.update);
+        app.delete('/order/:id', ensureAuthenticated, OrderModule.remove);
+        app.get('/order/:id/pdf', ensureAuthenticated, OrderModule.getAsPdf);
 
         // Chart
-        app.get('/chart', app.oauth.authorise(), ChartModule.getQuantity);
+        app.get('/chart', ensureAuthenticated, ChartModule.getQuantity);
 
-        app.use(app.oauth.errorHandler());
+        app.use(function (req, res, next) {
+            var err = new Error('Not Found');
+            err.status = 404;
+            next(err);
+        });
+
+        app.use(function (err, req, res) {
+            console.log('sup');
+            res.status(err.status || 500);
+            res.send({
+                message: err.message,
+                error: err
+            });
+        });
     }
 })();

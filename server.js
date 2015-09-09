@@ -3,9 +3,12 @@
     'use strict';
 
     var express = require('express');
+    var session = require('express-session');
     var path = require('path');
     var bodyParser = require('body-parser');
+    var cookieParser = require('cookie-parser');
     var cors = require('cors');
+    var passport = require('passport');
 
     var mysql = require('mysql');
     var pool  = mysql.createPool({
@@ -18,15 +21,28 @@
         multipleStatements: true
     });
 
+    require('./passport-config')(passport, pool);
+
     var app = express();
-    app.use(cors());
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
 
     app.use('/', express.static(__dirname + '/public'));
     app.use('/temp', express.static(__dirname + '/temp'));
 
-    require('./api-mapping')(app, pool);
+    app.use(cors());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
+    app.use(cookieParser());
+
+    app.use(session({
+        secret: 'flying monkey',
+        resave: false,
+        saveUninitialized: false
+    }));
+
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    require('./api-mapping')(app, pool, passport);
 
     var server = app.listen(process.env.SV_PORT || 3010, function () {
 
