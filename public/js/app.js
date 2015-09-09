@@ -10,27 +10,8 @@
         'ngRoute', 'ngCookies', 'ui.bootstrap.modal', 'ui.bootstrap.typeahead', 'ui.bootstrap.alert']);
 
     app.config(function ($httpProvider) {
-        $httpProvider.interceptors.push('TokenInterceptor');
         $httpProvider.interceptors.push('ErrorInterceptor');
     });
 
-    app.run(function($rootScope, $location, SessionService) {
-
-        $rootScope.$on("$routeChangeStart", function(event, nextRoute) {
-
-            if (nextRoute.access.requireLogin && !SessionService.isLoggedIn()) {
-
-                $location.url('/login');
-            }
-        });
-    });
-
-    app.constant('SESSION_KEYS', {
-        accessToken: 'ACCESS_TOKEN_KEY',
-        refreshToken: 'REFRESH_TOKEN_KEY',
-        expirationDate: 'EXPIRATION_DATE_KEY'
-    });
-
     app.constant('BASE_API_ADDRESS', process.env.BASE_API_ADDRESS);
-    app.constant('CLIENT_ID', process.env.CLIENT_ID);
 })();

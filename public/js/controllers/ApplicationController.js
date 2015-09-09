@@ -2,7 +2,7 @@
 
     'use strict';
 
-    function appController($scope, $interval, AuthorizationService, SessionService, $location) {
+    function appController($scope, LoginService, $location) {
 
         $scope.onLoginScreen = false;
         $scope.loggedUser = undefined;
@@ -31,27 +31,12 @@
 
         $scope.logout = function() {
 
-            SessionService.destroySession();
-            $location.url('/login');
+            LoginService.logout()
+                .success(function() {
+
+                    $location.url('/login');
+                });
         };
-
-        $interval(function() {
-
-            var expirationDate = SessionService.getExpirationDate();
-
-            if(expirationDate && expirationDate < new Date().getTime()) {
-
-                AuthorizationService.refreshToken()
-                    .success(function(data) {
-
-                        SessionService.updateSession(data);
-                    })
-                    .error(function() {
-
-                        SessionService.destroySession();
-                    });
-            }
-        }, 1000);
     }
 
     angular.module('app.controllers').controller('ApplicationController', appController);

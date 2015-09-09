@@ -1,6 +1,3 @@
-/**
- * Created by asus on 26/06/2015.
- */
 (function(){
 
     'use strict';

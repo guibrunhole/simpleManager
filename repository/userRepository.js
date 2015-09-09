@@ -105,157 +105,17 @@
                     });
                 });
             },
-            getAccessToken: function(bearerToken, callback) {
+            getByUsername: function(username) {
 
-                queryFromPool(function(deferred, connection) {
+                return queryFromPool(function(deferred, connection) {
 
-                    connection.query('SELECT access_token, client_id, expires, user_id FROM access_tokens ' +
-                        'WHERE access_token = ?', [bearerToken],
-                        function(queryError, row) {
+                    connection.query('SELECT * FROM user WHERE login = ?', [username], function(queryError, row) {
 
-                        if(queryError || !row[0])
-                            deferred.reject(queryError);
+                        if(queryError)
+                            deferred.reject();
                         else
                             deferred.resolve(row[0]);
                     });
-                }).then(function(token) {
-
-                    callback(null, {
-                        accessToken: token.access_token,
-                        clientId: token.client_id,
-                        expires: token.expires,
-                        userId: token.user_id
-                    });
-                }, function(err) {
-
-                    return callback(err);
-                });
-            },
-            getClient: function(clientId, clientSecret, callback) {
-
-                queryFromPool(function(deferred, connection) {
-
-                    connection.query('SELECT client_id, client_secret, redirect_uri FROM clients WHERE ' +
-                        'client_id = ?', [clientId],
-                        function(queryError, row) {
-
-                            if(queryError || !row[0])
-                                deferred.reject(queryError);
-                            else
-                                deferred.resolve(row[0]);
-                        });
-                }).then(function(client) {
-
-                    callback(null, {
-                        clientId: client.client_id,
-                        clientSecret: client.client_secret
-                    });
-                }, function(err) {
-
-                    return callback(err);
-                });
-            },
-            getRefreshToken: function(bearerToken, callback) {
-
-                queryFromPool(function(deferred, connection) {
-
-                    connection.query('SELECT refresh_token, client_id, expires, user_id FROM refresh_tokens ' +
-                        'WHERE refresh_token = ?', [bearerToken],
-                        function(queryError, row) {
-
-                            if(queryError || !row[0])
-                                deferred.reject(queryError);
-                            else
-                                deferred.resolve(row[0]);
-                        });
-                }).then(function(refreshToken) {
-
-                    callback(null, {
-                        refreshToken: refreshToken.refresh_token,
-                        clientId: refreshToken.client_id,
-                        expires: refreshToken.expires,
-                        userId: refreshToken.user_id
-                    });
-                }, function(err) {
-
-                    return callback(err, false);
-                });
-            },
-            grantTypeAllowed: function(clientId, grantType, callback) {
-
-                callback(null, true);
-            },
-            saveAccessToken: function(accessToken, clientId, expires, userId, callback) {
-
-                queryFromPool(function(deferred, connection) {
-
-                    connection.query('INSERT INTO access_tokens(access_token, client_id, user_id, expires) ' +
-                        'VALUES (?, ?, ?, ?)', [accessToken, clientId, userId, expires],
-                        function(queryError) {
-
-                            if(queryError)
-                                deferred.reject(queryError);
-                            else
-                                deferred.resolve();
-                        });
-                }).then(function() {
-
-                    callback();
-                }, function(err) {
-
-                    return callback(err);
-                });
-            },
-            saveRefreshToken: function(refreshToken, clientId, expires, userId, callback) {
-
-                queryFromPool(function(deferred, connection) {
-
-                    connection.query('INSERT INTO refresh_tokens(refresh_token, client_id, user_id, ' +
-                        'expires) VALUES (?, ?, ?, ?)', [refreshToken, clientId, userId, expires],
-                        function(queryError) {
-
-                            if(queryError)
-                                deferred.reject(queryError);
-                            else
-                                deferred.resolve();
-                        });
-                }).then(function() {
-
-                    callback();
-                }, function(err) {
-
-                    return callback(err);
-                });
-            },
-            getUser: function(username, password, callback) {
-
-                queryFromPool(function(deferred, connection) {
-
-                    connection.query('SELECT * FROM user WHERE login = ?',
-                        [username, password],
-                        function(queryError, results) {
-
-                            if(queryError)
-                                deferred.reject(queryError);
-
-                            var user = results[0];
-
-                            bcrypt.compare(password, user.password, function(err, res) {
-                                if(err)
-                                    deferred.reject(err);
-
-                                if(!res)
-                                    deferred.reject('Incorrect password.');
-
-                                deferred.resolve(user.id);
-                            });
-                        });
-                }).then(function(user) {
-
-                    callback(null, user);
-                }, function(err) {
-
-                    return callback(err, false);
                 });
             }
         };

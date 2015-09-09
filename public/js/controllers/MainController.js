@@ -8,8 +8,6 @@
 
         ChartService.getQuantity().success(function(data) {
 
-            console.log(data);
-
             var chart = c3.generate({
                 data: {
                     json: data,

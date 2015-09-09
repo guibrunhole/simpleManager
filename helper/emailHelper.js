@@ -3,38 +3,38 @@
     'use strict';
 
     var nodemailer = require('nodemailer');
-    var mandrillTransport = require('nodemailer-mandrill-transport');
 
     module.exports = function() {
 
-        var transport = nodemailer.createTransport(mandrillTransport({
+        var transporter = nodemailer.createTransport({
+            host: 'smtp.mandrillapp.com',
+            port: 587,
             auth: {
-                apiKey: process.env.MANDRILL_KEY
+                user: process.env.MANDRILL_USER,
+                pass: process.env.MANDRILL_KEY
             }
-        }));
+        });
 
         return {
             sendDetailedOrder: function(recipientEmail, pdfName, spreadSheetPath) {
-
-                console.log("Sending report!");
 
                 var mailOptions = {
                     from:  'CCB - Sistema de Compras <' + process.env.MANDRILL_USER + '>',
                     to: recipientEmail,
                     subject: 'Relatorio',
-                    text: 'Segue em anexo o relatorio do pedido.',
+                    text: 'Segue me anexo o relatorio do pedido.',
                     attachments: [{
                         filename: pdfName ? pdfName + '.pdf' : 'Pedido.pdf',
                         path: spreadSheetPath
                     }]
                 };
 
-                transport.sendMail(mailOptions, function(error, info){
+                transporter.sendMail(mailOptions, function(error, info){
 
                     if(error)
                         console.log(error);
                     else
-                        console.log('Message sent: ' + info.messageId);
+                        console.log('Message sent: ' + info.response);
                 });
             }
         };
