@@ -6,7 +6,7 @@
     var orderHelper = require('../helper/orderHelper')();
     var q = require('q');
 
-    module.exports = function(orderRepository, churchRepository, userRepository) {
+    module.exports = function(orderRepository) {
 
         function errorThrown(err) {
 

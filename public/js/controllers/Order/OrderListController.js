@@ -66,7 +66,7 @@
         function getAsPdf(order) {
 
             $modal.open({
-                templateUrl: '../templates/views/Order/pdfPrint.html',
+                templateUrl: '../templates/views/Modal/pdfPrint.html',
                 backdropClass: 'full-height',
                 controller: function($scope, $modalInstance, OrderService, orderId, $window, BASE_API_ADDRESS) {
 

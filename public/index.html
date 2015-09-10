@@ -50,6 +50,8 @@
         <script src="js/controllers/Order/OrderViewController.js"></script>
         <script src="js/controllers/Order/OrderEditController.js"></script>
 
+        <script src="js/controllers/OpenOrder/OpenOrderListController.js"></script>
+
         <script src="js/services/ErrorInterceptor.js"></script>
         <script src="js/services/ProductService.js"></script>
         <script src="js/services/UserService.js"></script>
@@ -58,6 +60,7 @@
         <script src="js/services/ChartService.js"></script>
         <script src="js/services/AlertService.js"></script>
         <script src="js/services/LoginService.js"></script>
+        <script src="js/services/OpenOrderService.js"></script>
 
         <script src="js/directives/fn-list-directive.js"></script>
     </head>
@@ -119,6 +122,12 @@
                                 <a ng-click="changeView('/order')">
                                     <i class="fa fa-truck"></i>
                                     <span>Pedidos</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active': location.path() == '/openOrder'}">
+                                <a ng-click="changeView('/openOrder')">
+                                    <i class="fa fa-list"></i>
+                                    <span>Pedidos Abertos</span>
                                 </a>
                             </li>
                             <li ng-class="{'active': location.path() == '/church'}">

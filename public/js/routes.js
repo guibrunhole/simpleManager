@@ -99,6 +99,11 @@
                 controller: 'OrderEditController',
                 resolve: { loggedIn: verifyLogin }
             })
+            .when('/openOrder', {
+                templateUrl: '/templates/views/OpenOrder/openOrderList.html',
+                controller: 'OpenOrderListController',
+                resolve: { loggedIn: verifyLogin }
+            })
             .otherwise({
                 redirectTo: '/'
             });

@@ -9,12 +9,14 @@
         var OrderRepository = require('./repository/orderRepository')(pool);
         var ChurchRepository = require('./repository/churchRepository')(pool);
         var ChartRepository = require('./repository/chartRepository')(pool);
+        var OpenOrderRepository = require('./repository/openOrderRepository')(pool);
 
         var ProductModule = require('./modules/productModule')(ProductRepository);
         var UserModule = require('./modules/userModule')(UserRepository);
         var ChurchModule = require('./modules/churchModule')(ChurchRepository);
         var OrderModule = require('./modules/orderModule')(OrderRepository, ChurchRepository, UserRepository);
         var ChartModule = require('./modules/chartModule')(ChartRepository);
+        var OpenOrderModule = require('./modules/openOrderModule')(OpenOrderRepository);
 
         app.post('/login', passport.authenticate('local'), function(req, res) {
             delete req.user.password;
@@ -74,6 +76,9 @@
 
         // Chart
         app.get('/chart', ensureAuthenticated, ChartModule.getQuantity);
+
+        // Open Order
+        app.get('/openOrder', ensureAuthenticated, OpenOrderModule.getAll);
 
         app.use(function (req, res, next) {
             var err = new Error('Not Found');
