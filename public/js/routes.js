@@ -104,6 +104,11 @@
                 controller: 'OpenOrderListController',
                 resolve: { loggedIn: verifyLogin }
             })
+            .when('/openOrder/new', {
+                templateUrl: '/templates/views/OpenOrder/openOrderNew.html',
+                controller: 'OpenOrderNewController',
+                resolve: { loggedIn: verifyLogin }
+            })
             .otherwise({
                 redirectTo: '/'
             });

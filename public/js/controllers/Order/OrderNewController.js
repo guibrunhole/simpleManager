@@ -4,8 +4,6 @@
 
     function orderNewCtrl($scope, OrderService, ProductService, ChurchService, $location, AlertService) {
 
-        $scope.setLocationTitle('Pedidos > Novo');
-
         $scope.order = {
             churchId: undefined,
             products: []
