@@ -67,7 +67,7 @@
                     connection.query('SELECT * FROM church WHERE id = ?', [churchId], function(queryError, row) {
 
                         if(queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve(row);
                     });
@@ -84,7 +84,7 @@
                             updatedChurch.phone_number, churchId], function(queryError) {
 
                             if(queryError)
-                                deferred.reject();
+                                deferred.reject(queryError);
                             else
                                 deferred.resolve();
                         });
@@ -97,7 +97,7 @@
                     connection.query('DELETE FROM church WHERE id = ?', [churchId], function(queryError) {
 
                         if(queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve();
                     });

@@ -187,23 +187,14 @@
                 });
 
                 pdf.on('error', function(msg){
-                    console.log('Normal error: ' + msg);
                     deferred.reject(msg);
                 });
 
                 pdf.on('done', function(pathToFile){
-                    console.log('Done \\o/ :' + pathToFile);
                     deferred.resolve(createdPdfPath);
                 });
 
-                pdf.on('stdout', function(stdout){
-                    console.log("STDOUT");
-                    console.log(stdout);
-                });
-
                 pdf.on('stderr', function(stderr){
-                    console.log('STD ERROR!!');
-                    console.log(stderr);
                     deferred.reject(stderr);
                 });
 

@@ -68,7 +68,7 @@
             $modal.open({
                 templateUrl: '../templates/views/Modal/pdfPrint.html',
                 backdropClass: 'full-height',
-                controller: function($scope, $modalInstance, OrderService, orderId, $window, BASE_API_ADDRESS) {
+                controller: function($scope, $modalInstance, OrderService, orderId, $window, BASE_API_ADDRESS, AlertService) {
 
                     $scope.pdf = {
                         name: undefined,
@@ -85,10 +85,8 @@
                             .success(function(result) {
 
                                 $window.open(BASE_API_ADDRESS + '/' + result);
-                            })
-                            .error(function(err) {
-
-                                console.log(err);
+                                $modalInstance.close();
+                                AlertService.addSuccess('Relatório gerado com sucesso!');
                             });
                     }
                 },

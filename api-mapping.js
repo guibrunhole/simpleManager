@@ -81,18 +81,11 @@
         app.get('/openOrder', ensureAuthenticated, OpenOrderModule.getAll);
 
         app.use(function (req, res, next) {
-            var err = new Error('Not Found');
-            err.status = 404;
-            next(err);
+            res.status(404).send('Página não encontrada.');
         });
 
-        app.use(function (err, req, res) {
-            console.log('sup');
-            res.status(err.status || 500);
-            res.send({
-                message: err.message,
-                error: err
-            });
+        app.use(function (err, req, res, next) {
+            res.status(500).send('Um erro inesperado ocorreu. Por favor, entre em contato com um administrador do sistema.');
         });
     }
 })();

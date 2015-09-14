@@ -8,33 +8,28 @@
 
     module.exports = function(orderRepository) {
 
-        function errorThrown(err) {
-
-            res.status(500).send(err || 'An error ocurred, please contact support. Thank you!');
-        }
-
         return {
-            getAll: function(req, res) {
+            getAll: function(req, res, next) {
 
                 orderRepository.getAll(req.query.searchParam).then(function(results) {
 
                     res.send(results);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            addNew: function(req, res) {
+            addNew: function(req, res, next) {
 
                 orderRepository.add(req.body).then(function(createdOrderId) {
 
                     res.send('Order created with Id: ' + createdOrderId);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            getById: function(req, res) {
+            getById: function(req, res, next) {
 
                 orderRepository.getById(req.params.id).then(function(result) {
 
@@ -44,10 +39,10 @@
                         res.send(result);
                 }, function(err) {
 
-                    errorThrown(err);
+                    next(err);
                 });
             },
-            update: function(req, res) {
+            update: function(req, res, next) {
 
                 orderRepository.getById(req.params.id).then(function(result) {
 
@@ -59,17 +54,17 @@
                         orderRepository.update(req.params.id, req.body).then(function () {
 
                             res.send('Order updated!');
-                        }, function (err) {
+                        }, function(err) {
 
-                            errorThrown(err);
+                            next(err);
                         });
                     }
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            remove: function(req, res) {
+            remove: function(req, res, next) {
 
                 orderRepository.getById(req.params.id).then(function(result) {
 
@@ -84,28 +79,37 @@
                                 res.send('Order removed!');
                             }, function(err) {
 
-                                errorThrown(err);
+                                next(err);
                             });
                     }
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            getAsPdf: function(req, res) {
+            getAsPdf: function(req, res, next) {
 
                 orderRepository.getForPdf(req.params.id).then(function(order) {
 
-                    console.log("Order fetched!");
                     orderHelper.createPdf(order).then(function(pdfPath) {
 
-                        if(req.query.sendTo)
-                            emailHelper.sendDetailedOrder(req.query.sendTo, req.query.pdfName, pdfPath);
+                        if(req.query.sendTo) {
 
-                        res.send(pdfPath);
-                    }, function() {
+                            emailHelper.sendDetailedOrder(req.query.sendTo, req.query.pdfName, pdfPath)
+                                .then(function() {
 
-                        errorThrown(res);
+                                    res.send(pdfPath);
+                                }, function(err) {
+
+                                    next(err);
+                                });
+                        } else {
+
+                            res.send(pdfPath);
+                        }
+                    }, function(err) {
+
+                        next(err);
                     });
                 });
             }

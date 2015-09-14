@@ -3,6 +3,7 @@
     'use strict';
 
     var nodemailer = require('nodemailer');
+    var q = require('q');
 
     module.exports = function() {
 
@@ -18,6 +19,8 @@
         return {
             sendDetailedOrder: function(recipientEmail, pdfName, spreadSheetPath) {
 
+                var deferred = q.defer();
+
                 var mailOptions = {
                     from:  'CCB - Sistema de Compras <' + process.env.MANDRILL_USER + '>',
                     to: recipientEmail,
@@ -29,13 +32,15 @@
                     }]
                 };
 
-                transporter.sendMail(mailOptions, function(error, info){
+                transporter.sendMail(mailOptions, function(error){
 
                     if(error)
-                        console.log(error);
+                        deferred.reject(error);
                     else
-                        console.log('Message sent: ' + info.response);
+                        deferred.resolve();
                 });
+
+                return deferred.promise;
             }
         };
     };

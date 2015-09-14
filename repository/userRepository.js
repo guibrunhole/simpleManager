@@ -14,7 +14,7 @@
 
                 if(connectionError) {
 
-                    deferred.reject();
+                    deferred.reject(connectionError);
                 } else {
                     queryCallback(deferred, connection);
                     connection.release();
@@ -40,7 +40,7 @@
                     connection.query(query, queryParams, function(queryError, rows){
 
                         if (queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve(rows);
                     });
@@ -56,7 +56,7 @@
                         [newUser.name, newUser.login || null, hash, newUser.email], function(queryError, resultInfo) {
 
                             if(queryError)
-                                deferred.reject();
+                                deferred.reject(queryError);
                             else
                                 deferred.resolve(resultInfo.insertId);
                         });
@@ -69,7 +69,7 @@
                     connection.query('SELECT name, login, email FROM user WHERE id = ?', [userId], function(queryError, row) {
 
                         if(queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve(row);
                     });
@@ -86,7 +86,7 @@
                         [updatedUser.name, updatedUser.login|| null, hash, updatedUser.email, userId], function(queryError) {
 
                             if(queryError)
-                                deferred.reject();
+                                deferred.reject(queryError);
                             else
                                 deferred.resolve();
                         });
@@ -99,7 +99,7 @@
                     connection.query('DELETE FROM user WHERE id = ?', [userId], function(queryError) {
 
                         if(queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve();
                     });
@@ -112,7 +112,7 @@
                     connection.query('SELECT * FROM user WHERE login = ?', [username], function(queryError, row) {
 
                         if(queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve(row[0]);
                     });

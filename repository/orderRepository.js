@@ -66,7 +66,7 @@
                     connection.query(query, queryParams, function(queryError, rows) {
 
                         if(queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve(rows);
                     });
@@ -196,7 +196,6 @@
 
                             if(queryError) {
 
-                                console.log(queryError);
                                 deferred.reject(queryError);
                             } else{
 

@@ -13,7 +13,7 @@
 
                 if(connectionError) {
 
-                    deferred.reject();
+                    deferred.reject(connectionError);
                 } else {
                     queryCallback(deferred, connection);
                     connection.release();
@@ -39,7 +39,7 @@
                     connection.query(query, queryParams, function(queryError, rows) {
 
                         if(queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve(rows);
                     });
@@ -53,7 +53,7 @@
                         [newProduct.name, newProduct.description || null, newProduct.price, newProduct.id_on_supplier], function(queryError, resultInfo) {
 
                             if(queryError)
-                                deferred.reject();
+                                deferred.reject(queryError);
                             else
                                 deferred.resolve(resultInfo.insertId);
                         });
@@ -66,7 +66,7 @@
                     connection.query('SELECT * FROM products WHERE id = ?', [productId], function(queryError, row) {
 
                         if(queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve(row);
                     });
@@ -80,7 +80,7 @@
                         [updatedProduct.name, updatedProduct.description || null, updatedProduct.price, productId], function(queryError) {
 
                             if(queryError)
-                                deferred.reject();
+                                deferred.reject(queryError);
                             else
                                 deferred.resolve();
                         });
@@ -93,7 +93,7 @@
                     connection.query('DELETE FROM products WHERE id = ?', [productId], function(queryError) {
 
                         if(queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve();
                     });

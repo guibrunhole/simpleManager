@@ -4,34 +4,28 @@
 
     module.exports = function(churchRepository) {
 
-        function errorThrown(err) {
-
-            console.error(err);
-            res.status(500).send(err);
-        }
-
         return {
-            getAll: function(req, res) {
+            getAll: function(req, res, next) {
 
                 churchRepository.getAll(req.query.searchParam).then(function(results) {
 
                     res.send(results);
                 }, function(err) {
 
-                    errorThrown(err);
+                    next(err);
                 });
             },
-            addNew: function(req, res) {
+            addNew: function(req, res, next) {
 
                 churchRepository.add(req.body).then(function(createdChurchId) {
 
                     res.send('Church created with Id: ' + createdChurchId);
                 }, function(err) {
 
-                    errorThrown(err);
+                    next(err);
                 });
             },
-            getById: function(req, res) {
+            getById: function(req, res, next) {
 
                 churchRepository.getById(req.params.id).then(function(result) {
 
@@ -41,10 +35,10 @@
                         res.send(result[0]);
                 }, function(err) {
 
-                    errorThrown(err);
+                    next(err);
                 });
             },
-            update: function(req, res) {
+            update: function(req, res, next) {
 
                 churchRepository.getById(req.params.id).then(function(result) {
 
@@ -63,10 +57,10 @@
                     }
                 }, function(err) {
 
-                    errorThrown(err);
+                    next(err);
                 });
             },
-            remove: function(req, res) {
+            remove: function(req, res, next) {
 
                 churchRepository.getById(req.params.id).then(function(result) {
 
@@ -85,7 +79,7 @@
                     }
                 }, function(err) {
 
-                    errorThrown(err);
+                    next(err);
                 });
             }
         };

@@ -4,20 +4,15 @@
 
     module.exports = function(chartRepository){
 
-        function errorThrown(res) {
-
-            res.status(500).send('An error ocurred, please contact support. Thank you!');
-        }
-
         return {
-            getQuantity: function(req, res) {
+            getQuantity: function(req, res, next) {
 
                 chartRepository.getQuantity().then(function(results){
 
                     res.send(results);
-                }, function(){
+                }, function(err){
 
-                    errorThrown(res);
+                    next(err)
                 });
             }
         }

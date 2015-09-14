@@ -15,7 +15,7 @@
             dbPool.getConnection(function(connectionError, connection){
 
                 if(connectionError){
-                    deferred.reject();
+                    deferred.reject(connectionError);
                 } else {
                     queryCallBack(deferred, connection);
                     connection.release();
@@ -35,7 +35,7 @@
                     connection.query(query, function (queryError, rows) {
 
                         if (queryError)
-                            deferred.reject();
+                            deferred.reject(queryError);
                         else
                             deferred.resolve(rows);
                     });

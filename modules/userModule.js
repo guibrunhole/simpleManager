@@ -4,34 +4,28 @@
 
     module.exports = function(userRepository) {
 
-        function errorThrown(res) {
-
-            console.error(res);
-            res.status(500).send('An error ocurred, please contact support. Thank you!');
-        }
-
         return {
-            getAll: function(req, res) {
+            getAll: function(req, res, next) {
 
                 userRepository.getAll(req.query.searchParam).then(function(results) {
 
                     res.send(results);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            addNew: function(req, res) {
+            addNew: function(req, res, next) {
 
                 userRepository.add(req.body).then(function(createdUserId) {
 
                     res.send('User created with Id: ' + createdUserId);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            getById: function(req, res) {
+            getById: function(req, res, next) {
 
                 userRepository.getById(req.params.id).then(function(result) {
 
@@ -39,12 +33,12 @@
                         res.status(404).send('User not found :(');
                     else
                         res.send(result[0]);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            update: function(req, res) {
+            update: function(req, res, next) {
 
                 userRepository.getById(req.params.id).then(function(result) {
 
@@ -56,17 +50,17 @@
                         userRepository.update(req.params.id, req.body).then(function () {
 
                             res.send('User updated!');
-                        }, function () {
+                        }, function(err) {
 
-                            errorThrown(res);
+                            next(err);
                         });
                     }
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            remove: function(req, res) {
+            remove: function(req, res, next) {
 
                 userRepository.getById(req.params.id).then(function(result) {
 
@@ -78,14 +72,14 @@
                         userRepository.removeById(req.params.id).then(function() {
 
                             res.send('User removed!');
-                        }, function() {
+                        }, function(err) {
 
-                            errorThrown(res);
+                            next(err);
                         });
                     }
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             }
         };

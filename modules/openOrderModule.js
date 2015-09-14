@@ -4,21 +4,16 @@
 
     module.exports = function(openOrderRepository) {
 
-        function errorThrown(err) {
-
-            res.status(500).send(err || 'An error ocurred, please contact support. Thank you!');
-        }
-
         return {
 
-            getAll: function(req, res) {
+            getAll: function(req, res, next) {
 
                 openOrderRepository.getAll(req.query.searchParam).then(function(results) {
 
                     res.send(results);
                 }, function(err) {
 
-                    errorThrown(err);
+                    next(err);
                 });
             }
         };

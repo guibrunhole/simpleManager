@@ -2,90 +2,84 @@
 
     'use strict';
 
-    module.exports = function(productReposiroty) {
-
-        function errorThrown(res) {
-
-            console.error(res);
-            res.status(500).send('An error ocurred, please contact support. Thank you!');
-        }
+    module.exports = function(productRepository) {
 
         return {
-            getAll: function(req, res) {
+            getAll: function(req, res, next) {
 
-                productReposiroty.getAll(req.query.searchParam).then(function(results) {
+                productRepository.getAll(req.query.searchParam).then(function(results) {
 
                     res.send(results);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            addNew: function(req, res) {
+            addNew: function(req, res, next) {
 
-                productReposiroty.add(req.body).then(function(createdProductId) {
+                productRepository.add(req.body).then(function(createdProductId) {
 
                     res.send('Product created with Id: ' + createdProductId);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            getById: function(req, res) {
+            getById: function(req, res, next) {
 
-                productReposiroty.getById(req.params.id).then(function(result) {
+                productRepository.getById(req.params.id).then(function(result) {
 
                     if(!result || !result[0] || result.length < 1)
                         res.status(404).send('Product not found :(');
                     else
                         res.send(result[0]);
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            update: function(req, res) {
+            update: function(req, res, next) {
 
-                productReposiroty.getById(req.params.id).then(function(result) {
+                productRepository.getById(req.params.id).then(function(result) {
 
                     if(!result || !result[0] || result.length < 1) {
 
                         res.status(404).send('Product not found :(');
                     } else {
 
-                        productReposiroty.update(req.params.id, req.body).then(function () {
+                        productRepository.update(req.params.id, req.body).then(function () {
 
                             res.send('Product updated!');
-                        }, function () {
+                        }, function(err) {
 
-                            errorThrown(res);
+                            next(err);
                         });
                     }
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             },
-            remove: function(req, res) {
+            remove: function(req, res, next) {
 
-                productReposiroty.getById(req.params.id).then(function(result) {
+                productRepository.getById(req.params.id).then(function(result) {
 
                     if(!result || !result[0] || result.length < 1) {
 
                         res.status(404).send('Product not found :(');
                     } else {
 
-                        productReposiroty.removeById(req.params.id).then(function() {
+                        productRepository.removeById(req.params.id).then(function() {
 
                             res.send('Product removed!');
-                        }, function() {
+                        }, function(err) {
 
-                            errorThrown(res);
+                            next(err);
                         });
                     }
-                }, function() {
+                }, function(err) {
 
-                    errorThrown(res);
+                    next(err);
                 });
             }
         };
