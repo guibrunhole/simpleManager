@@ -87,6 +87,9 @@
                                 $window.open(BASE_API_ADDRESS + '/' + result);
                                 $modalInstance.close();
                                 AlertService.addSuccess('Relatório gerado com sucesso!');
+                            })
+                            .error(function(err){
+                                console.log(err)
                             });
                     }
                 },

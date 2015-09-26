@@ -7,6 +7,7 @@
                                 'VALUES (?, ?, ?, ?);';
 
     var GET_ORDER_PDF = 'SELECT' +
+                            'o.id AS orderId' +
                             'o.obs AS orderObservation, ' +
                             'c.address AS churchAddress, ' +
                             'c.name AS churchName, ' +

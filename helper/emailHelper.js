@@ -25,7 +25,7 @@
                     from:  'CCB - Sistema de Compras <' + process.env.MANDRILL_USER + '>',
                     to: recipientEmail,
                     subject: 'Relatorio',
-                    text: 'Segue me anexo o relatorio do pedido.',
+                    text: 'Segue em anexo o relatorio do pedido.',
                     attachments: [{
                         filename: pdfName ? pdfName + '.pdf' : 'Pedido.pdf',
                         path: spreadSheetPath
