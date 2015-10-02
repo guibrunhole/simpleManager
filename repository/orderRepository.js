@@ -6,8 +6,8 @@
     var ORDER_DETAIL_INSERT = 'INSERT INTO order_detail (order_id, product_id, product_quantity, product_unity) ' +
                                 'VALUES (?, ?, ?, ?);';
 
-    var GET_ORDER_PDF = 'SELECT' +
-                            'o.id AS orderId' +
+    var GET_ORDER_PDF = 'SELECT ' +
+                            'o.id AS orderId, ' +
                             'o.obs AS orderObservation, ' +
                             'c.address AS churchAddress, ' +
                             'c.name AS churchName, ' +
@@ -16,9 +16,9 @@
                             'c.zipcode AS churchZipCode, ' +
                             'c.cnpj AS churchCnpj, ' +
                             'c.phone_number AS churchPhoneNumber,' +
-                            'c.responsible_buyer AS buyerName' +
-                        'FROM orders o' +
-                            'INNER JOIN church c ON c.id = o.church_id' +
+                            'c.responsible_buyer AS buyerName ' +
+                        'FROM orders o ' +
+                            'INNER JOIN church c ON c.id = o.church_id ' +
                         'WHERE o.id = ?;';
 
     var GET_ORDER_DETAILS_PDF = 'select ' +

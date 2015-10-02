@@ -111,6 +111,9 @@
 
                         next(err);
                     });
+                }, function(err) {
+
+                    next(err);
                 });
             }
         };
