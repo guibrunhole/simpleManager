@@ -119,8 +119,13 @@
                     "</div>" +
                     "<div class='row'>" +
                         "<h2 class='text-center'>" +
-                        "Pedido de compra - " + currentDate() +
+                        "Pedido de compra - Nº " + order.orderId +
                         "</h2>" +
+                    "</div>" +
+                    "<div class='row'>" +
+                        "<h3 class='text-center'>" +
+                        "Pedido de compra - Nº " + currentDate() +
+                        "</h3>" +
                     "</div>" +
                     "<hr />" +
                     "<div class='row'>" +
