@@ -7,7 +7,7 @@
                                 'VALUES (?, ?, ?, ?);';
 
     var GET_ORDER_PDF = 'SELECT ' +
-                            'CAST(o.created_at AS DATE) AS orderDate, ' +
+                            'CAST(CAST(o.created_at AS DATE) AS CHAR) AS orderDate, ' +
                             'o.id AS orderId, ' +
                             'o.obs AS orderObservation, ' +
                             'c.address AS churchAddress, ' +
