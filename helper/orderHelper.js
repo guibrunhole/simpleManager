@@ -124,7 +124,7 @@
                     "</div>" +
                     "<div class='row'>" +
                         "<h4 class='text-center'>" +
-                         "Data: "+ currentDate() +
+                         "Data: "+ order.orderDate +
                         "</h4>" +
                     "</div>" +
                     "<hr />" +
