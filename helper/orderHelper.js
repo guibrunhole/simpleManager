@@ -123,9 +123,9 @@
                         "</h2>" +
                     "</div>" +
                     "<div class='row'>" +
-                        "<h3 class='text-center'>" +
-                        "Pedido de compra - Nº " + currentDate() +
-                        "</h3>" +
+                        "<h4 class='text-center'>" +
+                         + currentDate() +
+                        "</h4>" +
                     "</div>" +
                     "<hr />" +
                     "<div class='row'>" +
