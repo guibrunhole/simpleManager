@@ -1,0 +1,51 @@
+<div>
+    <section class="content-header">
+        <h3>Visualizar Pedido Aberto</h3>
+    </section>
+    <section class="content">
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="col-lg-12">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr>
+                            <td class="view-title-cell">Igreja</td>
+                            <td>{{order.church_name}}</td>
+                        </tr>
+                        <tr>
+                            <td class="view-title-cell">Criado em</td>
+                            <td>{{order.created_at  | date: 'dd/MM/yyyy - HH:mm'}}</td>
+                        </tr>
+                        <tr>
+                            <td class="view-title-cell">Observações</td>
+                            <td>{{order.obs || 'Sem observações.'}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <label class="view-label">Produtos</label>
+                    <table class="table table-hover table-bordered text-center table-open-products">
+                        <thead>
+                            <th>Nome</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Unidade</th>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in order.orderDetails track by $index">
+                                <td>{{product.name}}</td>
+                                <td>{{product.price}}</td>
+                                <td>{{product.quantity}}</td>
+                                <td>{{product.unity}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="box-footer">
+                <div class="pull-right form-button">
+                    <button type="button" class="btn btn-default" ng-click="back()">Voltar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

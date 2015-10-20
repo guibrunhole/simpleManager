@@ -13,6 +13,18 @@
                 };
 
                 return $http.get(BASE_API_ADDRESS + '/openOrder', {params: data});
+            },
+            add: function(openOrder) {
+
+                return $http.post(BASE_API_ADDRESS + '/openOrder', openOrder);
+            },
+            remove: function(id) {
+
+                return $http.delete(BASE_API_ADDRESS + '/openOrder/' + id);
+            },
+            getById: function(orderId) {
+
+                return $http.get(BASE_API_ADDRESS + '/openOrder/' + orderId);
             }
         };
     }

@@ -50,11 +50,6 @@
                             <h4>Produtos</h4>
                         </div>
                     </div>
-                    <div class="row" ng-repeat="product in order.products track by $index">
-                        <div class="col-lg-12">
-                            <label>{{product.name + ' - ' + product.price + ' - ' + product.quantity + ' - ' + product.unity}}</label>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="form-group col-lg-3">
                             <input type="text" class="form-control" ng-model="product.name" placeholder="Nome do produto">
@@ -70,6 +65,31 @@
                         </div>
                         <div class="col-lg-1">
                             <button class="btn btn-default" ng-click="addProduct()">+</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table class="table table-hover table-bordered text-center table-open-products">
+                                <thead>
+                                    <th>Nome</th>
+                                    <th>Preço</th>
+                                    <th>Quantidade</th>
+                                    <th>Unidade</th>
+                                    <th>Ações</th>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="product in order.products track by $index">
+                                        <td>{{product.name}}</td>
+                                        <td>{{product.price}}</td>
+                                        <td>{{product.quantity}}</td>
+                                        <td>{{product.unity}}</td>
+                                        <td class="action-column">
+                                            <span class="glyphicon glyphicon-remove pointer delete-btn text-center"
+                                                  title="Remover" ng-click="remove($index)"></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </form>

@@ -4,8 +4,6 @@
 
     function orderView($scope, OrderService, $routeParams, $location) {
 
-        $scope.setLocationTitle('Pedidos > Visualizar');
-
         $scope.order = undefined;
 
         $scope.unities = {

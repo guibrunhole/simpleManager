@@ -169,6 +169,7 @@ label {
 }
 
 .action-column {
+    line-height: inherit;
     text-align: center;
 }
 
@@ -203,8 +204,40 @@ label {
     top: 19px;
 }
 
+.table-open-products > tbody > tr > td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+}
+
+
+.view-label {
+    white-space: normal;
+    line-height: normal;
+    font-weight: normal;
+    font-size: medium;
+    font-variant: normal;
+    font-style: normal;
+    color: -webkit-text;
+    text-align: start;
+}
+
 /* bootstrap override */
 
 .table-hover>tbody>tr:hover {
     background-color: #eaeaea;
+}
+
+.table-bordered {
+    border: 1px solid #eaeaea;
+}
+
+.table-bordered>thead>tr>th,
+.table-bordered>tbody>tr>th,
+.table-bordered>tfoot>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>tbody>tr>td,
+.table-bordered>tfoot>tr>td {
+    border: 1px solid #DCDADA;
 }

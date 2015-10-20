@@ -11,9 +11,6 @@
                 { header: 'Data', cell: 'created_at', type: 'date'}
             ],
             actions: {
-                edit: {
-                    onClickFunction: editOrder
-                },
                 remove: {
                     onClickFunction: removeOrder
                 },
@@ -44,11 +41,6 @@
         function viewOrder(order) {
 
             $location.url('/openOrder/view/' + order.id);
-        }
-
-        function editOrder(order) {
-
-            $location.url('/openOrder/edit/' + order.id);
         }
 
         function removeOrder(order) {

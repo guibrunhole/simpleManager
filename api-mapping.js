@@ -79,6 +79,9 @@
 
         // Open Order
         app.get('/openOrder', ensureAuthenticated, OpenOrderModule.getAll);
+        app.post('/openOrder', ensureAuthenticated, OpenOrderModule.addNew);
+        app.get('/openOrder/:id', ensureAuthenticated, OpenOrderModule.getById);
+        app.delete('/openOrder/:id', ensureAuthenticated, OpenOrderModule.remove);
 
         app.use(function (req, res, next) {
             res.status(404).send('Página não encontrada.');
