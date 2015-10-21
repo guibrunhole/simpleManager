@@ -91,7 +91,7 @@
 
                 orderRepository.getForPdf(req.params.id).then(function(order) {
 
-                    orderHelper.createPdf(order).then(function(pdfPath) {
+                    orderHelper.createPdf(order, false).then(function(pdfPath) {
 
                         if(req.query.sendTo) {
 

@@ -25,6 +25,14 @@
             getById: function(orderId) {
 
                 return $http.get(BASE_API_ADDRESS + '/openOrder/' + orderId);
+            },
+            getAsPdf: function(orderId, pdfName, sendTo) {
+
+                var data = {
+                    pdfName: pdfName,
+                    sendTo: sendTo
+                };
+                return $http.get(BASE_API_ADDRESS + '/openOrder/' + orderId + '/pdf', {params: data});
             }
         };
     }

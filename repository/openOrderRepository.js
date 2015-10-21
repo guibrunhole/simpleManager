@@ -3,8 +3,32 @@
     'use strict';
 
     var q = require('q');
+
     var ORDER_DETAIL_INSERT = 'INSERT INTO open_order_details (order_id, product_quantity, product_name, product_price, product_unity) ' +
         'VALUES (?, ?, ?, ?, ?);';
+
+    var GET_ORDER_PDF = 'SELECT ' +
+                            'CAST(CAST(o.created_at AS DATE) AS CHAR) AS orderDate, ' +
+                            'o.id AS orderId, ' +
+                            'o.obs AS orderObservation, ' +
+                            'c.address AS churchAddress, ' +
+                            'c.name AS churchName, ' +
+                            'c.city AS churchCity, ' +
+                            'c.state AS churchState, ' +
+                            'c.zipcode AS churchZipCode, ' +
+                            'c.cnpj AS churchCnpj, ' +
+                            'c.phone_number AS churchPhoneNumber, ' +
+                            'c.responsible_buyer AS buyerName ' +
+                        'FROM open_orders o ' +
+                            'INNER JOIN church c ON c.id = o.church_id ' +
+                        'WHERE o.id = ?;';
+
+    var GET_ORDER_DETAILS_PDF = 'select ' +
+                                    'od.product_name as productName, ' +
+                                    'od.product_quantity as productQuantity, ' +
+                                    'od.product_unity as productUnity ' +
+                                'from open_order_details od ' +
+                                'where od.order_id = ?;';
 
     module.exports = function(dbPool) {
 
@@ -134,6 +158,40 @@
                         else
                             deferred.resolve();
                     });
+                });
+            },
+            getForPdf: function(orderId) {
+
+                return queryFromPool(function(deferred, connection) {
+
+                    connection.query(GET_ORDER_PDF, [orderId],
+                        function(queryError, result) {
+
+                            if(queryError) {
+
+                                deferred.reject(queryError);
+                            } else{
+
+                                var order = result[0];
+
+                                if(!order)
+                                    deferred.reject('Order not found!');
+
+                                connection.query(GET_ORDER_DETAILS_PDF, [orderId],
+                                    function(queryError, result) {
+
+                                        if(queryError) {
+
+                                            deferred.reject(queryError);
+                                        }
+                                        else {
+
+                                            order.orderDetail = result;
+                                            deferred.resolve(order);
+                                        }
+                                    });
+                            }
+                        });
                 });
             }
         };

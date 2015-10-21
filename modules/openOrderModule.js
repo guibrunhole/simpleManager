@@ -2,6 +2,9 @@
 
     'use strict';
 
+    var emailHelper = require('../helper/emailHelper')();
+    var orderHelper = require('../helper/orderHelper')();
+
     module.exports = function(openOrderRepository) {
 
         return {
@@ -57,6 +60,35 @@
                         res.status(404).send('Open order not found :(');
                     else
                         res.send(result);
+                }, function(err) {
+
+                    next(err);
+                });
+            },
+            getAsPdf: function(req, res, next) {
+
+                openOrderRepository.getForPdf(req.params.id).then(function(order) {
+
+                    orderHelper.createPdf(order, true).then(function(pdfPath) {
+
+                        if(req.query.sendTo) {
+
+                            emailHelper.sendDetailedOrder(req.query.sendTo, req.query.pdfName, pdfPath)
+                                .then(function() {
+
+                                    res.send(pdfPath);
+                                }, function(err) {
+
+                                    next(err);
+                                });
+                        } else {
+
+                            res.send(pdfPath);
+                        }
+                    }, function(err) {
+
+                        next(err);
+                    });
                 }, function(err) {
 
                     next(err);

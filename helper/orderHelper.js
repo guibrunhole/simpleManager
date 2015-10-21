@@ -28,7 +28,7 @@
                             "<label>UF:</label> " + order.churchState +
                         "</div>" +
                         "<div class='col-xs-3'>" +
-                            "<label>CEP:</label> " + order.churchZipCode +
+                            "<label>CEP:</label> " + (order.churchZipCode ? order.churchZipCode : 'Não informado') +
                         "</div>" +
                         "<div class='col-xs-4'>" +
                             "<label>CNPJ:</label> " + order.churchCnpj +
@@ -57,55 +57,43 @@
             'CX': 'Caixa(s)'
         };
 
-        function getProductRow(detail){
+        function getProductRow(detail, openOrder){
             return  "<tr>" +
-                        "<td>" + detail.productId + "</td>" +
+                        (!openOrder ? "<td>" + detail.productId + "</td>" : '') +
                         "<td>" + detail.productName + "</td>" +
-                        "<td>" + detail.productQuantity + ' ' + unities[detail.productUnity] +   "</td>" +
+                        "<td>" + detail.productQuantity + ' ' + (!openOrder ? unities[detail.productUnity] : detail.productUnity) +   "</td>" +
                     "</tr>";
         }
 
-        function getProductTableContents(orderDetail) {
+        function getProductTableContents(orderDetail, openOrder) {
 
             var contents = '';
 
             for(var i = 0; i < orderDetail.length; i++) {
 
-                contents = contents + getProductRow(orderDetail[i]);
+                contents = contents + getProductRow(orderDetail[i], openOrder);
             }
 
             return contents;
         }
 
-        function getProductsTable(orderDetail) {
+        function getProductsTable(orderDetail, openOrder) {
 
             return "<table class='table table-striped' style='font-size: 1.2em;'>" +
                         "<thead>" +
                             "<tr>" +
-                                "<th>Código</th>" +
+                                (!openOrder ? "<th>Código</th>" : '') +
                                 "<th>Descrição</th>" +
                                 "<th>Quantidade</th>" +
                             "</tr>" +
                         "</thead>" +
                         "<tbody>" +
-                             getProductTableContents(orderDetail) +
+                             getProductTableContents(orderDetail, openOrder) +
                         "</tbody>" +
                     "</table>";
         }
 
-        function currentDate(){
-            var data = new Date();
-            var dia = data.getDate();
-            if (dia.toString().length == 1)
-                dia = "0"+dia;
-            var mes = data.getMonth()+1;
-            if (mes.toString().length == 1)
-                mes = "0"+mes;
-            var ano = data.getFullYear();
-            return dia+"/"+mes+"/"+ano;
-        }
-
-        function parseToHtml(order) {
+        function parseToHtml(order, openOrder) {
 
             var parsedHtml = "<html>" +
                 "<head>" +
@@ -145,7 +133,7 @@
                         "</div>" +
                         "<div class='col-xs-12'>" +
                             "<div class='col-xs-12'>" +
-                                getProductsTable(order.orderDetail) +
+                                getProductsTable(order.orderDetail, openOrder) +
                             "</div>" +
                         "</div>" +
                     "</div>" +
@@ -168,12 +156,12 @@
 
         return {
 
-            createPdf: function(order) {
+            createPdf: function(order, openOrder) {
 
                 var deferred = q.defer();
                 var createdPdfPath = 'temp/' + uuid.v4() + '.pdf';
                 var pdf = new NodePDF(null, createdPdfPath, {
-                    'content': parseToHtml(order),
+                    'content': parseToHtml(order, openOrder),
                     'viewportSize': {
                         'width': 3000,
                         'height': 9000
