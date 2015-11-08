@@ -48,10 +48,10 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('INSERT INTO church (name, user_id, cnpj, address, city, state, zipcode, phone_number, responsible_buyer) ' +
-                                        'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    connection.query('INSERT INTO church (name, user_id, cnpj, address, city, state, zipcode, phone_number, responsible_buyer, state_registration) ' +
+                                        'VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                         [newChurch.name, newChurch.user_id || null, newChurch.cnpj, newChurch.address, newChurch.city,
-                            newChurch.state, newChurch.zipcode || null, newChurch.phone_number, newChurch.responsible_buyer], function(queryError, resultInfo) {
+                            newChurch.state, newChurch.zipcode || null, newChurch.phone_number, newChurch.responsible_buyer, newChurch.state_registration], function(queryError, resultInfo) {
 
                             if(queryError)
                                 deferred.reject(queryError);
@@ -78,10 +78,11 @@
                 return queryFromPool(function(deferred, connection) {
 
                     connection.query('UPDATE church SET name = ?, user_id = ?, cnpj = ?' +
-                        ', address = ?, city = ?, state = ?, zipcode = ?, phone_number = ? WHERE id = ?',
+                        ', address = ?, city = ?, state = ?, zipcode = ?, phone_number = ?, responsible_buyer = ?' +
+                        ', state_registration = ? WHERE id = ?',
                         [updatedChurch.name, updatedChurch.user_id || null, updatedChurch.cnpj,
                             updatedChurch.address, updatedChurch.city, updatedChurch.state, updatedChurch.zipcode || null,
-                            updatedChurch.phone_number, churchId], function(queryError) {
+                            updatedChurch.phone_number, updatedChurch.responsible_buyer, updatedChurch.state_registration ,churchId], function(queryError) {
 
                             if(queryError)
                                 deferred.reject(queryError);
