@@ -11,8 +11,11 @@
         function buildDeliveryHeader(order) {
 
             return  "<div class='col-xs-12'>" +
-                        "<div class='col-xs-12'>" +
+                        "<div class='col-xs-8'>" +
                             "<label>Casa de oração:</label> " + order.churchName +
+                        "</div>" +
+                        "<div class='col-xs-4'>" +
+                            "<label>Inscrição Municipal:</label> " + order.churchRegistration +
                         "</div>" +
                     "</div>" +
                     "<div class='col-xs-12'>" +

@@ -11,6 +11,7 @@
                             'o.id AS orderId, ' +
                             'o.obs AS orderObservation, ' +
                             'c.address AS churchAddress, ' +
+                            'c.state_registration AS churchRegistration, ' +
                             'c.name AS churchName, ' +
                             'c.city AS churchCity, ' +
                             'c.state AS churchState, ' +
