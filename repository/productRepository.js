@@ -26,7 +26,7 @@
         return {
             getAll: function(searchParam) {
 
-                var query = 'SELECT * FROM products ORDER BY id';
+                var query = 'SELECT * FROM products ORDER BY name';
                 var queryParams = [];
 
                 if(searchParam) {
