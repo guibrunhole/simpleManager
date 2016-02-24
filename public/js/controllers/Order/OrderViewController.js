@@ -11,7 +11,8 @@
             GL: 'Gal\u00e3o(\u00f5es)',
             LT: 'Litro(s)',
             PCT: 'Pacote(s)',
-            CX: 'Caixa(s)'
+            CX: 'Caixa(s)',
+            FD: 'Fardo(s)'
         };
 
         function loadOrder() {

@@ -30,7 +30,7 @@
                 var queryParams = [];
 
                 if(searchParam) {
-                    query = query + ' WHERE name like ?';
+                    query = 'SELECT * FROM products WHERE name LIKE ?';
                     queryParams = ['%' + searchParam + '%'];
                 }
 

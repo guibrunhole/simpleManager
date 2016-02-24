@@ -94,7 +94,7 @@
                                     var product = newOrder.products[i];
                                     orderDetailQuery = orderDetailQuery + ORDER_DETAIL_INSERT;
 
-                                    var productParams = [resultInfo.insertId, product.id, product.quantity, product.unity];
+                                    var productParams = [resultInfo.insertId, product.productId, product.quantity, product.unity];
 
                                     orderDetailQueryParams = orderDetailQueryParams.concat(productParams);
                                 }
