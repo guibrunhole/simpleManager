@@ -55,7 +55,7 @@
             getAll: function(searchParam) {
 
                 var query = 'SELECT o.id, c.name AS church_name, o.created_at FROM orders o ' +
-                    'INNER JOIN church c ON o.church_id = c.id ORDER BY o.id';
+                    'INNER JOIN church c ON (o.church_id = c.id)';
 
                 var queryParams = [];
 
@@ -63,6 +63,8 @@
                     query = query + ' WHERE c.name like ?';
                     queryParams = ['%' + searchParam + '%'];
                 }
+
+                query += ' ORDER BY o.id';
 
                 return queryFromPool(function(deferred, connection) {
 
@@ -158,36 +160,30 @@
                     params.push(orderId);
 
                     var orderDetailQuery = '';
+                    var orderDetailQueryParams = [orderId];
 
-                    for(var i = 0; i < updatedOrder.products.length; i++) {
-
-                        var product = updatedOrder.products[i];
+                    for (var i = 0; i < updatedOrder.orderDetails.length; i++) {
+                        var product = updatedOrder.orderDetails[i];
                         orderDetailQuery = orderDetailQuery + ORDER_DETAIL_INSERT;
 
-                        var productParams = [orderId, product.id, product.quantity, product.unity];
+                        var productParams = [orderId, product.productId, product.product_quantity, product.product_unity];
 
-                        params = params.concat(productParams);
+                        orderDetailQueryParams = orderDetailQueryParams.concat(productParams);
                     }
 
-                    var orderUpdateQuery = 'UPDATE orders SET church_id = ?, obs = ? where id = ?;';
+                    if (updatedOrder.orderDetails.length > 0) {
 
-                    params.push(updatedOrder.churchId);
-                    params.push(updatedOrder.obs);
-                    params.push(orderId);
+                        console.log(orderDetailQueryParams);
+                        connection.query(deleteOrderDetailQuery + orderDetailQuery, orderDetailQueryParams, function (queryError, result) {
 
-                    connection.query(deleteOrderDetailQuery + orderDetailQuery + orderUpdateQuery, params,
-                        function(queryError) {
-
-                            if(queryError) {
-
+                            if (queryError)
                                 deferred.reject(queryError);
-                            }
-                            else {
-
-                                deferred.resolve();
-                            }
-
+                            else
+                                deferred.resolve(result.insertId);
                         });
+                    } else {
+                        deferred.resolve(result.insertId);
+                    }
                 });
             },
             getForPdf: function(orderId) {

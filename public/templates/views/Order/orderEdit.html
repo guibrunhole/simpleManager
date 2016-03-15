@@ -44,25 +44,74 @@
                             </div>
                         </div>
                     </div>
+                    <hr class="faded" />
+                    <!--<div class="row">-->
+                        <!--<div class="col-lg-6 product-list-item" ng-repeat="product in products track by $index">-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-lg-12">-->
+                                    <!--<label>{{product.name}}</label>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-lg-6">-->
+                                    <!--<input type="number" class="form-control" ng-model="product.quantity" placeholder="Quantidade">-->
+                                <!--</div>-->
+                                <!--<div class="col-lg-6">-->
+                                    <!--<select class="form-control" ng-options="unity.value as unity.label for unity in unities" ng-model="product.unity">-->
+                                        <!--<option value="">--</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="row">
-                        <div class="col-lg-6 product-list-item" ng-repeat="product in products track by $index">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <label>{{product.name}}</label>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <input type="number" class="form-control" ng-model="product.quantity" placeholder="Quantidade">
-                                </div>
-                                <div class="col-lg-6">
-                                    <select class="form-control" ng-options="unity.value as unity.label for unity in unities" ng-model="product.unity">
-                                        <option value="">--</option>
-                                    </select>
+                        <div class="col-lg-12">
+                            <h4>Produtos</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="product.name" placeholder="Nome do Produto"
+                                       typeahead="product.name for product in getProducts($viewValue)"
+                                       typeahead-loading="loadingProducts" typeahead-on-select="setProduct($item)" class="form-control">
+                                <div class="input-group-addon">
+                                    <span ng-show="loadingProducts" class="fa fa-circle-o-notch fa-spin"></span>
+                                    <span ng-show="!loadingProducts" class="fa fa-info"></span>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-2">
+                            <input type="number" class="form-control" ng-model="product.product_quantity" placeholder="Quantidade">
+                        </div>
+                        <div class="col-lg-3">
+                            <select class="form-control" ng-options="unity.value as unity.label for unity in unities" ng-model="product.product_unity">
+                                <option value="">--</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-1">
+                            <button class="btn btn-default" ng-click="addProduct()">+</button>
+                        </div>
                     </div>
+                    <table class="table table-hover table-bordered text-center table-open-products">
+                        <thead>
+                        <th>Nome</th>
+                        <th>Quantidade</th>
+                        <th>Unidade</th>
+                        <th>Ações</th>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="orderDetail in order.orderDetails track by $index">
+                            <td>{{orderDetail.name}}</td>
+                            <td>{{orderDetail.product_quantity}}</td>
+                            <td>{{unities[orderDetail.product_unity]}}</td>
+                            <td class="action-column">
+                                            <span class="glyphicon glyphicon-remove pointer delete-btn text-center"
+                                                  title="Remover" ng-click="remove($index)"></span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </form>
             </div>
             <div class="box-footer">

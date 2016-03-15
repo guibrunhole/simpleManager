@@ -14,53 +14,37 @@
 
         $scope.church = undefined;
 
-        $scope.unities = [
-            {label: 'Unidade(s)', value: 'UN'},
-            {label: 'Gal\u00e3o(\u00f5es)', value: 'GL'},
-            {label: 'Litro(s)', value: 'LT'},
-            {label: 'Pacote(s)', value: 'PCT'},
-            {label: 'Caixa(s)', value: 'CX'}
-        ];
+        $scope.unities = {
+            'UN': 'Unidade(s)',
+            'GL': 'Gal\u00e3o(\u00f5es)',
+            'LT': 'Litro(s)',
+            'PCT': 'Pacote(s)',
+            'CX': 'Caixa(s)',
+            'FD': 'Fardo(s)'
+        };
 
-        function load() {
+        $scope.product = {
+            name: undefined,
+            product_quantity: undefined,
+            product_unity: undefined
+        };
+
+        function loadOrder() {
 
             OrderService.getById($routeParams.orderId)
                 .success(function(order) {
-
-                    $scope.church = angular.copy(order.church_name);
-                    $scope.order.churchId = angular.copy(order.church_id);
-                    $scope.order.obs = angular.copy(order.obs);
-
-                    ProductService.getAll()
-                        .success(function(products) {
-
-                            $scope.products = products;
-
-                            angular.forEach(order.orderDetails, function(orderDetail) {
-                                angular.forEach($scope.products, function(product) {
-
-                                    if(product.id === orderDetail.productId) {
-                                        product.quantity = orderDetail.product_quantity;
-                                        product.unity = orderDetail.product_unity;
-                                    }
-
-                                });
-                            });
-                        });
+                    console.log(order);
+                    $scope.order = order;
                 })
-                .error(function(){
+                .error(function() {
 
                     $location.url('/order');
                 });
         }
 
-        load();
+        loadOrder();
 
         $scope.save = function() {
-
-            $scope.order.products = $scope.products.filter(function(product) {
-                return !!product.quantity;
-            });
 
             OrderService.update($routeParams.orderId, $scope.order)
                 .success(function() {
@@ -70,18 +54,38 @@
                 });
         };
 
-        $scope.getChurches = function(searchParam) {
+        $scope.addProduct = function() {
 
-            return ChurchService.getAll(searchParam)
+            if(!$scope.product.name || !$scope.product.product_quantity || !$scope.product.product_unity) {
+                AlertService.addError("É necessário informar todos os campos do produto.");
+                return;
+            }
+
+            $scope.order.orderDetails.push(angular.copy($scope.product));
+
+            $scope.product.name = undefined;
+            $scope.product.product_unity = undefined;
+            $scope.product.product_unity = undefined;
+        };
+
+        $scope.getProducts = function(searchParam) {
+
+            return ProductService.getAll(searchParam)
                 .then(function(res) {
 
                     return res.data;
                 });
         };
 
-        $scope.setChurch = function(selectedItem) {
+        $scope.setProduct = function(selectedItem) {
 
-            $scope.order.churchId = angular.copy(selectedItem.id);
+            debugger;
+            $scope.product.productId = angular.copy(selectedItem.id);
+        };
+
+        $scope.remove = function(itemIndex) {
+
+            $scope.order.orderDetails.splice(itemIndex, 1);
         };
 
         $scope.back = function() {
@@ -89,6 +93,8 @@
             $location.url('/order');
         };
     }
+
+
 
     angular.module('app.controllers').controller('OrderEditController', orderEditController);
 })();

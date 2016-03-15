@@ -69,14 +69,23 @@
                         $modalInstance.dismiss('cancel');
                     };
 
-                    $scope.download = function() {
-
-                        OpenOrderService.getAsPdf(orderId, $scope.pdf.name, $scope.pdf.address)
-                            .success(function(result) {
-
-                                $window.open(BASE_API_ADDRESS + '/' + result);
-                            });
+                    //AQUI OU ELE ENVIA O EMAIL OU FAZ O DOWNLOAD
+                    if($scope.pdf.address != null) {
+                        $scope.download = function () {
+                            OpenOrderService.getAsPdf(orderId, $scope.pdf.name, null)
+                                .success(function (result) {
+                                    $window.open(BASE_API_ADDRESS + '/' + result);
+                                });
+                        }
                     }
+                    else
+                        $scope.sendEmail = function () {
+
+                            OpenOrderService.getAsPdf(orderId, $scope.pdf.name, $scope.pdf.address)
+                                .success(function (result) {
+                                    $window.open(BASE_API_ADDRESS + '/' + result);
+                                });
+                        }
                 },
                 resolve: {
                     orderId: function() {

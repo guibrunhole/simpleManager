@@ -31,7 +31,7 @@
                 return $http.put(BASE_API_ADDRESS + '/order/' + orderId, updatedOrder);
             },
             getAsPdf: function(orderId, pdfName, sendTo) {
-
+                //ALTEREI AQUI PARA ACEITAR O CORPO DO EMAIL
                 var data = {
                     pdfName: pdfName,
                     sendTo: sendTo
