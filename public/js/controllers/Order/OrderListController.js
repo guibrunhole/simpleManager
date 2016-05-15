@@ -10,7 +10,8 @@
             structure: [
                 { header: 'Nº Pedido', cell: 'id'},
                 { header: 'Nome da Igreja', cell: 'church_name'},
-                { header: 'Data', cell: 'created_at', type: 'date'}
+                { header: 'Data', cell: 'created_at', type: 'date'},
+                { header: 'Total', cell: 'total'}
             ],
             actions: {
                 edit: {

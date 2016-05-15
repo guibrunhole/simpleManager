@@ -54,8 +54,12 @@
         return {
             getAll: function(searchParam) {
 
-                var query = 'SELECT o.id, c.name AS church_name, o.created_at FROM orders o ' +
-                    'INNER JOIN church c ON (o.church_id = c.id)';
+                var query = 'SELECT o.id,c.name AS church_name,o.created_at,CONCAT(\'R$ \',CAST(CAST(SUM(p.price) AS DECIMAL(10,2)) AS CHAR(20))) AS total ' +
+                    'FROM orders o ' +
+                    'INNER JOIN church c ON o.church_id = c.id ' +
+                    'INNER JOIN order_detail od ON o.id = od.order_id ' +
+                    'INNER JOIN products p ON od.product_id = p.id ' +
+                    'GROUP BY o.id ,c.name,o.created_at';
 
                 var queryParams = [];
 
@@ -173,7 +177,7 @@
 
                     if (updatedOrder.orderDetails.length > 0) {
 
-                        console.log(orderDetailQueryParams);
+                        //console.log(orderDetailQueryParams);
                         connection.query(deleteOrderDetailQuery + orderDetailQuery, orderDetailQueryParams, function (queryError, result) {
 
                             if (queryError)

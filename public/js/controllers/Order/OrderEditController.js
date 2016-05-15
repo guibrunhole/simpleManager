@@ -14,14 +14,14 @@
 
         $scope.church = undefined;
 
-        $scope.unities = {
-            'UN': 'Unidade(s)',
-            'GL': 'Gal\u00e3o(\u00f5es)',
-            'LT': 'Litro(s)',
-            'PCT': 'Pacote(s)',
-            'CX': 'Caixa(s)',
-            'FD': 'Fardo(s)'
-        };
+        $scope.unities = [
+            {label: 'Unidade', value: 'UN'},
+            {label: 'Galão', value: 'GL'},
+            {label: 'Litro', value: 'LT'},
+            {label: 'Pacote', value: 'PCT'},
+            {label: 'Caixa', value: 'CX'},
+            {label: 'Fardo', value: 'FD'}
+        ];
 
         $scope.product = {
             name: undefined,
@@ -33,7 +33,6 @@
 
             OrderService.getById($routeParams.orderId)
                 .success(function(order) {
-                    console.log(order);
                     $scope.order = order;
                 })
                 .error(function() {
@@ -79,7 +78,6 @@
 
         $scope.setProduct = function(selectedItem) {
 
-            debugger;
             $scope.product.productId = angular.copy(selectedItem.id);
         };
 
