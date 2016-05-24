@@ -76,8 +76,8 @@
 
                 return queryFromPool(function(deferred, connection) {
 
-                    connection.query('UPDATE products SET name = ?, description = ?, price = ? WHERE id = ?',
-                        [updatedProduct.name, updatedProduct.description || null, updatedProduct.price, productId], function(queryError) {
+                    connection.query('UPDATE products SET name = ?, description = ?, price = ?, id_on_supplier = ? WHERE id = ?',
+                        [updatedProduct.name, updatedProduct.description || null, updatedProduct.price, updatedProduct.id_on_supplier,productId], function(queryError) {
 
                             if(queryError)
                                 deferred.reject(queryError);
