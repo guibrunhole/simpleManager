@@ -58,7 +58,7 @@
             $modal.open({
                 templateUrl: '../templates/views/Modal/pdfPrint.html',
                 backdropClass: 'full-height',
-                controller: function($scope, $modalInstance, OpenOrderService, orderId, $window, BASE_API_ADDRESS) {
+                controller: function($scope, $modalInstance, OpenOrderService, orderId, $window, BASE_API_ADDRESS, AlertService) {
 
                     $scope.pdf = {
                         name: undefined,
@@ -69,23 +69,19 @@
                         $modalInstance.dismiss('cancel');
                     };
 
-                    //AQUI OU ELE ENVIA O EMAIL OU FAZ O DOWNLOAD
-                    if($scope.pdf.address != null) {
-                        $scope.download = function () {
-                            OpenOrderService.getAsPdf(orderId, $scope.pdf.name, null)
-                                .success(function (result) {
-                                    $window.open(BASE_API_ADDRESS + '/' + result);
-                                });
-                        }
-                    }
-                    else
-                        $scope.sendEmail = function () {
+                    $scope.download = function() {
 
-                            OpenOrderService.getAsPdf(orderId, $scope.pdf.name, $scope.pdf.address)
-                                .success(function (result) {
-                                    $window.open(BASE_API_ADDRESS + '/' + result);
-                                });
-                        }
+                        OrderService.getAsPdf(orderId, $scope.pdf.name, $scope.pdf.address)
+                            .success(function(result) {
+
+                                $window.open(BASE_API_ADDRESS + '/' + result);
+                                $modalInstance.close();
+                                AlertService.addSuccess('Relatório gerado com sucesso!');
+                            })
+                            .error(function(err){
+                                console.log(err)
+                            });
+                    }
                 },
                 resolve: {
                     orderId: function() {
