@@ -71,7 +71,7 @@
 
                     $scope.download = function() {
 
-                        OrderService.getAsPdf(orderId, $scope.pdf.name, $scope.pdf.address)
+                        OpenOrderService.getAsPdf(orderId, $scope.pdf.name, $scope.pdf.address)
                             .success(function(result) {
 
                                 $window.open(BASE_API_ADDRESS + '/' + result);
