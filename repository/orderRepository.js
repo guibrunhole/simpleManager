@@ -27,7 +27,8 @@
                                     'p.id_on_supplier as productId, ' +
                                     'p.name as productName, ' +
                                     'od.product_quantity as productQuantity, ' +
-                                    'od.product_unity as productUnity ' +
+                                    'od.product_unity as productUnity, ' +
+                                    'p.price as productPrice ' +
                                 'from order_detail od ' +
                                     'inner join products p on p.id = od.product_id ' +
                                 'where od.order_id = ?;';

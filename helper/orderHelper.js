@@ -65,6 +65,7 @@
                         (!openOrder ? "<td>" + detail.productId + "</td>" : '') +
                         "<td>" + detail.productName + "</td>" +
                         "<td>" + detail.productQuantity + ' ' + (!openOrder ? unities[detail.productUnity] : detail.productUnity) +   "</td>" +
+                        "<td>" + detail.productPrice + "</td>" +
                     "</tr>";
         }
 
@@ -88,6 +89,7 @@
                                 (!openOrder ? "<th>Código</th>" : '') +
                                 "<th>Descrição</th>" +
                                 "<th>Quantidade</th>" +
+                                "<th>Valor Unitario</th>" +
                             "</tr>" +
                         "</thead>" +
                         "<tbody>" +
