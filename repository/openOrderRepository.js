@@ -26,6 +26,7 @@
     var GET_ORDER_DETAILS_PDF = 'select ' +
                                     'od.product_name as productName, ' +
                                     'od.product_quantity as productQuantity, ' +
+                                    'od.product_unity as productUnity, ' +
                                     'od.product_price as productPrice ' +
                                 'from open_order_details od ' +
                                 'where od.order_id = ?;';
