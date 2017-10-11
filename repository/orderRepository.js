@@ -23,15 +23,19 @@
                             'INNER JOIN church c ON c.id = o.church_id ' +
                         'WHERE o.id = ?;';
 
-    var GET_ORDER_DETAILS_PDF = 'select ' +
-                                    'p.id_on_supplier as productId, ' +
-                                    'p.name as productName, ' +
-                                    'od.product_quantity as productQuantity, ' +
-                                    'od.product_unity as productUnity, ' +
-                                    'p.price as productPrice ' +
-                                'from order_detail od ' +
-                                    'inner join products p on p.id = od.product_id ' +
-                                'where od.order_id = ?;';
+//    var GET_ORDER_DETAILS_PDF = 'select ' +
+//                                    'p.id_on_supplier as productId, ' +
+//                                    'p.name as productName, ' +
+//                                    'od.product_quantity as productQuantity, ' +
+//                                    'od.product_unity as productUnity, ' +
+//                                    'p.price as productPrice ' +
+//                                'from order_detail od ' +
+//                                    'inner join products p on p.id = od.product_id ' +
+//                                'where od.order_id = ?;';
+
+    var GET_ORDER_DETAILS_PDF = 'select productId, productName, productQuantity, productUnity, productPrice from vw_order_details '+
+                                'where order_id = ? or order_id = \'\' '+
+                                'order by rn;';
 
     module.exports = function(dbPool) {
 
