@@ -64,7 +64,7 @@
             return  "<tr>" +
                         (!openOrder ? "<td>" + detail.productId + "</td>" : '') +
                         "<td>" + detail.productName + "</td>" +
-                        "<td>" + detail.productQuantity + ' ' + (!openOrder ? unities[detail.productUnity] : '-') +   "</td>" +
+                        "<td>" + (detail.productQuantity ? detail.productQuantity : '') + ' ' + (!openOrder ? unities[detail.productUnity] : '') +   "</td>" +
                         "<td>" + detail.productPrice + "</td>" +
                     "</tr>";
         }
