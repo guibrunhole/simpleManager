@@ -63,6 +63,8 @@
                     queryParams = ['%' + searchParam + '%'];
                 }
 
+                query += ' ORDER BY o.id';
+
                 return queryFromPool(function(deferred, connection) {
 
                     connection.query(query, queryParams, function(queryError, rows) {
