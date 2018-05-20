@@ -73,7 +73,7 @@
                     queryParams = ['%' + searchParam + '%'];
                 }
 
-                query += ' ORDER BY o.id';
+                query += ' ORDER BY o.id DESC';
 
                 return queryFromPool(function(deferred, connection) {
 
